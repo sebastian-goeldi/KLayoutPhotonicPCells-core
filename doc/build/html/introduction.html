@@ -1,0 +1,146 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction &#8212; KLayout Photonic PCells 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="First Steps" href="first_steps.html" />
+    <link rel="prev" title="Photonic PCell Library Extension Documentation" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="first_steps.html" title="First Steps"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Photonic PCell Library Extension Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>pcell_lib_ext</cite> module is an extension for KLayout PCells to facilitate photonic PCells.
+Photonics often works with the concept of ports.
+Ports are defined by a coordinate and a direction. In the case of this module ports will be stored in PCell parameters in the background.
+They are serialized <a class="reference external" href="https://www.klayout.de/doc/code/class_ICplxTrans.html">KLayout Trans</a> objects. For an introduction on how to build your own PCell Library, have a look at
+how to create <a class="reference internal" href="example_library.html"><span class="doc">Example Library</span></a>.</p>
+<p>When building PCell Libraries it is recommended to build it with three packages as shown in <a class="reference internal" href="#p-format"><span class="std std-numref">Fig. 1</span></a></p>
+<div class="figure" id="p-format">
+<a class="reference internal image-reference" href="_images/package_format.png"><img alt="The intended use for this library extension is to work with 3 packages per PCell-Library. First this one, second a technology specific package which contains techfile and import from techfile and finally the PCell Library." src="_images/package_format.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">The recommend structure for working with the photonic PCell extension:
+* Photonic Library Extension: New functionalities for KLayout PCells</span></p>
+<div class="legend">
+<blockquote>
+<div><ul class="simple">
+<li>Ports, DR-Cleaning, DataPrep</li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p class="first">Technology: Contains manufacturer specific data</p>
+<blockquote>
+<div><ul class="simple">
+<li>Design rules</li>
+<li>Layermapping from abstract to manufacturer layers</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">PCell-Library:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Definitions of PCells</li>
+<li>Library specific modules if required</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Photonic PCell Library Extension Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="first_steps.html"
+                        title="next chapter">First Steps</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/introduction.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="first_steps.html" title="First Steps"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Photonic PCell Library Extension Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Sebastian Goeldi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

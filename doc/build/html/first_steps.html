@@ -1,0 +1,138 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>First Steps &#8212; KLayout Photonic PCells 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Ports" href="ports.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ports.html" title="Ports"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="first-steps">
+<h1>First Steps<a class="headerlink" href="#first-steps" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>To use the library extension, make sure you have installed Cython. Part of the cleaning process relies on a C++ module that needs to be compiled first. To compile it we use pythons <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/index.html" title="(in setuptools v40.6.2)"><span class="xref std std-doc">Setuptools</span></a> and <a class="reference external" href="https://cython.readthedocs.io/en/latest/index.html" title="(in Cython v3.0)"><span class="xref std std-doc">Cython</span></a>. Make sure you have these packages before starting. It is sufficient to install Cython, as setuptools is either built-in of python or installed along Cython.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>This installation procedure is solely written for Linux. For this installation Cython is required. So get Cython either from the package manager of your distribution or through pip. The package is tested on Python 3.5+. No special python3 modules are used, therefore it should work with python 2.7, too. The Python version used should be the same KLayout uses. By default, this is the system interpreter for Python3.
+If you installed the package manually, move the unpackaged package into <code class="docutils literal notranslate"><span class="pre">~/.klayout/salt</span></code> or into the KLayout folder if you used a custom directory. This tutorial assumes default pathes.
+After unpacking and moving you should have a <code class="docutils literal notranslate"><span class="pre">~/.klayout/salt/zccmos/pcell_ext_lib</span></code> folder. If you installed the FreePDK45_Cells &amp; FreePDK45_tech, then you should have the folders <code class="docutils literal notranslate"><span class="pre">~/.klayout/salt/zccmos/FreePDK45_Cells</span></code> and <code class="docutils literal notranslate"><span class="pre">~/.klayout/salt/zccmos/FreePDK45_tech</span></code>, too. The library extension package needs manual setup before being usable.</p>
+<p>Use a console and execute the following commands. If you are familiar with setuptools you can skip these instructions. For further information consult the <a class="reference internal" href="drc.html#module-drc" title="drc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drc</span></code></a> documentation.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ~/.klayout/salt/zccmos/pcell_ext_lib/python/drc/</span>
+<span class="go">./setup</span>
+</pre></div>
+</div>
+<div class="figure" id="id1">
+<a class="reference internal image-reference" href="_images/Cython.png"><img alt="Compile the C++Python module with Cython" src="_images/Cython.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Change directory to the drc folder and execute the setup script.</span></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">First Steps</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ports.html"
+                        title="next chapter">Ports</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/first_steps.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ports.html" title="Ports"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Sebastian Goeldi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

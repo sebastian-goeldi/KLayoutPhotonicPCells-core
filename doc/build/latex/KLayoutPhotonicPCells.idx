@@ -1,0 +1,56 @@
+\indexentry{drc (module)|hyperpage}{11}
+\indexentry{clean() (in module drc)|hyperpage}{11}
+\indexentry{drc.slcleaner.PyDrcSl (class in drc)|hyperpage}{11}
+\indexentry{init\_list() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{12}
+\indexentry{sort() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{12}
+\indexentry{clean() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{12}
+\indexentry{printvector() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{12}
+\indexentry{get\_row() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{13}
+\indexentry{get\_row\_types() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{13}
+\indexentry{clean\_space() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{13}
+\indexentry{clean\_width() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{13}
+\indexentry{switch\_dimensions() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{13}
+\indexentry{s() (drc.drc.slcleaner.PyDrcSl method)|hyperpage}{13}
+\indexentry{photonics (module)|hyperpage}{25}
+\indexentry{InstanceHolder (class in photonics)|hyperpage}{25}
+\indexentry{move() (photonics.InstanceHolder method)|hyperpage}{25}
+\indexentry{port() (photonics.InstanceHolder method)|hyperpage}{26}
+\indexentry{port\_to\_port() (photonics.InstanceHolder method)|hyperpage}{26}
+\indexentry{PhotDevice (class in photonics)|hyperpage}{26}
+\indexentry{add\_layer() (photonics.PhotDevice method)|hyperpage}{27}
+\indexentry{add\_params() (photonics.PhotDevice method)|hyperpage}{27}
+\indexentry{add\_pcell\_variant() (photonics.PhotDevice method)|hyperpage}{27}
+\indexentry{add\_pcells() (photonics.PhotDevice method)|hyperpage}{27}
+\indexentry{calculate\_ports() (photonics.PhotDevice method)|hyperpage}{27}
+\indexentry{clear\_ports() (photonics.PhotDevice method)|hyperpage}{27}
+\indexentry{coerce\_parameters\_impl() (photonics.PhotDevice method)|hyperpage}{27}
+\indexentry{connect\_port() (photonics.PhotDevice method)|hyperpage}{28}
+\indexentry{connect\_port\_to\_port() (photonics.PhotDevice method)|hyperpage}{28}
+\indexentry{create\_param\_inst() (photonics.PhotDevice method)|hyperpage}{28}
+\indexentry{create\_path() (photonics.PhotDevice method)|hyperpage}{28}
+\indexentry{create\_polygon() (photonics.PhotDevice method)|hyperpage}{29}
+\indexentry{create\_port() (photonics.PhotDevice method)|hyperpage}{29}
+\indexentry{decl() (photonics.PhotDevice method)|hyperpage}{29}
+\indexentry{flip\_shape\_xaxis() (photonics.PhotDevice method)|hyperpage}{29}
+\indexentry{flip\_shape\_yaxis() (photonics.PhotDevice method)|hyperpage}{29}
+\indexentry{get\_layer() (photonics.PhotDevice method)|hyperpage}{29}
+\indexentry{get\_transformations() (photonics.PhotDevice method)|hyperpage}{30}
+\indexentry{insert\_shape() (photonics.PhotDevice method)|hyperpage}{30}
+\indexentry{move\_instance() (photonics.PhotDevice method)|hyperpage}{30}
+\indexentry{produce\_impl() (photonics.PhotDevice method)|hyperpage}{30}
+\indexentry{set\_transformation() (photonics.PhotDevice method)|hyperpage}{30}
+\indexentry{shapes() (photonics.PhotDevice method)|hyperpage}{30}
+\indexentry{update\_parameter\_list() (photonics.PhotDevice method)|hyperpage}{30}
+\indexentry{PortCreation (class in photonics)|hyperpage}{31}
+\indexentry{length (photonics.PortCreation attribute)|hyperpage}{31}
+\indexentry{rot (photonics.PortCreation attribute)|hyperpage}{31}
+\indexentry{x (photonics.PortCreation attribute)|hyperpage}{31}
+\indexentry{y (photonics.PortCreation attribute)|hyperpage}{31}
+\indexentry{isnamedtupleinstance() (in module photonics)|hyperpage}{31}
+\indexentry{photonics.dataprep (module)|hyperpage}{31}
+\indexentry{add() (in module photonics.dataprep)|hyperpage}{31}
+\indexentry{dataprep() (in module photonics.dataprep)|hyperpage}{31}
+\indexentry{file\_len() (in module photonics.dataprep)|hyperpage}{32}
+\indexentry{sub() (in module photonics.dataprep)|hyperpage}{32}
+\indexentry{photonics.layermaps (module)|hyperpage}{32}
+\indexentry{load() (in module photonics.layermaps)|hyperpage}{32}

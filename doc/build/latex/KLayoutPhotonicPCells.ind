@@ -1,0 +1,101 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+
+  \bigletter A
+  \item add() (in module photonics.dataprep), \hyperpage{31}
+  \item add\_layer() (photonics.PhotDevice method), \hyperpage{27}
+  \item add\_params() (photonics.PhotDevice method), \hyperpage{27}
+  \item add\_pcell\_variant() (photonics.PhotDevice method), \hyperpage{27}
+  \item add\_pcells() (photonics.PhotDevice method), \hyperpage{27}
+
+  \indexspace
+  \bigletter C
+  \item calculate\_ports() (photonics.PhotDevice method), \hyperpage{27}
+  \item clean() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{12}
+  \item clean() (in module drc), \hyperpage{11}
+  \item clean\_space() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{13}
+  \item clean\_width() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{13}
+  \item clear\_ports() (photonics.PhotDevice method), \hyperpage{27}
+  \item coerce\_parameters\_impl() (photonics.PhotDevice method), \hyperpage{27}
+  \item connect\_port() (photonics.PhotDevice method), \hyperpage{28}
+  \item connect\_port\_to\_port() (photonics.PhotDevice method), \hyperpage{28}
+  \item create\_param\_inst() (photonics.PhotDevice method), \hyperpage{28}
+  \item create\_path() (photonics.PhotDevice method), \hyperpage{28}
+  \item create\_polygon() (photonics.PhotDevice method), \hyperpage{29}
+  \item create\_port() (photonics.PhotDevice method), \hyperpage{29}
+
+  \indexspace
+  \bigletter D
+  \item dataprep() (in module photonics.dataprep), \hyperpage{31}
+  \item decl() (photonics.PhotDevice method), \hyperpage{29}
+  \item drc (module), \hyperpage{11}
+  \item drc.slcleaner.PyDrcSl (class in drc), \hyperpage{11}
+
+  \indexspace
+  \bigletter F
+  \item file\_len() (in module photonics.dataprep), \hyperpage{32}
+  \item flip\_shape\_xaxis() (photonics.PhotDevice method), \hyperpage{29}
+  \item flip\_shape\_yaxis() (photonics.PhotDevice method), \hyperpage{29}
+
+  \indexspace
+  \bigletter G
+  \item get\_layer() (photonics.PhotDevice method), \hyperpage{29}
+  \item get\_row() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{13}
+  \item get\_row\_types() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{13}
+  \item get\_transformations() (photonics.PhotDevice method), \hyperpage{30}
+
+  \indexspace
+  \bigletter I
+  \item init\_list() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{12}
+  \item insert\_shape() (photonics.PhotDevice method), \hyperpage{30}
+  \item InstanceHolder (class in photonics), \hyperpage{25}
+  \item isnamedtupleinstance() (in module photonics), \hyperpage{31}
+
+  \indexspace
+  \bigletter L
+  \item length (photonics.PortCreation attribute), \hyperpage{31}
+  \item load() (in module photonics.layermaps), \hyperpage{32}
+
+  \indexspace
+  \bigletter M
+  \item move() (photonics.InstanceHolder method), \hyperpage{25}
+  \item move\_instance() (photonics.PhotDevice method), \hyperpage{30}
+
+  \indexspace
+  \bigletter P
+  \item PhotDevice (class in photonics), \hyperpage{26}
+  \item photonics (module), \hyperpage{25}
+  \item photonics.dataprep (module), \hyperpage{31}
+  \item photonics.layermaps (module), \hyperpage{32}
+  \item port() (photonics.InstanceHolder method), \hyperpage{26}
+  \item port\_to\_port() (photonics.InstanceHolder method), \hyperpage{26}
+  \item PortCreation (class in photonics), \hyperpage{31}
+  \item printvector() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{12}
+  \item produce\_impl() (photonics.PhotDevice method), \hyperpage{30}
+
+  \indexspace
+  \bigletter R
+  \item rot (photonics.PortCreation attribute), \hyperpage{31}
+
+  \indexspace
+  \bigletter S
+  \item s() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{13}
+  \item set\_transformation() (photonics.PhotDevice method), \hyperpage{30}
+  \item shapes() (photonics.PhotDevice method), \hyperpage{30}
+  \item sort() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{12}
+  \item sub() (in module photonics.dataprep), \hyperpage{32}
+  \item switch\_dimensions() (drc.drc.slcleaner.PyDrcSl method), \hyperpage{13}
+
+  \indexspace
+  \bigletter U
+  \item update\_parameter\_list() (photonics.PhotDevice method), \hyperpage{30}
+
+  \indexspace
+  \bigletter X
+  \item x (photonics.PortCreation attribute), \hyperpage{31}
+
+  \indexspace
+  \bigletter Y
+  \item y (photonics.PortCreation attribute), \hyperpage{31}
+
+\end{sphinxtheindex}

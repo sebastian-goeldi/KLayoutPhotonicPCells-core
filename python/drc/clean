@@ -1,0 +1,8 @@
+#!/bin/bash
+cd ../
+rm -r drc/__pycache__
+rm -r photonics/__pycache__
+cd drc
+rm slcleaner.cpy*
+rm slcleaner_source/slcleaner.cp*
+rm -r slcleaner_source/build
