@@ -6,8 +6,7 @@
  <version>0.0.1</version>
  <api-version>0.25</api-version>
  <title>PCell Core Extension</title>
- <doc>This library extends the pya to allow ports and make it easier to create PCells for Photonics.
-Online Documentation can be found in the github repository in https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core/blob/master/doc/build/latex/KLayoutPhotonicPCells.pdf</doc>
+ <doc>This library extends KLayoutPCells with the concept of ports and make it easier to create PCells for Photonics.</doc>
  <doc-url>doc/build/html/index.html</doc-url>
  </url>
  <license>AGPLv3</license>
