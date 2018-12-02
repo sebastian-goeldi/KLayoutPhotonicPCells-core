@@ -8,7 +8,7 @@
  <title>PCell Core Extension</title>
  <doc>This library extends KLayoutPCells with the concept of ports and make it easier to create PCells for Photonics.</doc>
  <doc-url>doc/build/html/index.html</doc-url>
- </url>
+ <url>https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core.git</url>
  <license>AGPLv3</license>
  <author>Sebastian Goeldi</author>
  <author-contact>sebastian.goeldi@protonmail.com</author-contact>
