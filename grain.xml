@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <salt-grain>
- <name>KLayoutPhotonics/core</name>
+ <name>KLayoutPhotonicPCells/core</name>
  <token/>
  <hidden>false</hidden>
  <version>0.0.1</version>
  <api-version>0.25</api-version>
  <title>PCell Core Extension</title>
- <doc>This library extends the pya to allow ports and make it easier to create PCells for Photonics.</doc>
+ <doc>This library extends the pya to allow ports and make it easier to create PCells for Photonics.
+Online Documentation can be found in the github repository in https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core/blob/master/doc/build/latex/KLayoutPhotonicPCells.pdf</doc>
  <doc-url>doc/build/html/index.html</doc-url>
- <url/>
+ </url>
  <license>AGPLv3</license>
  <author>Sebastian Goeldi</author>
  <author-contact>sebastian.goeldi@protonmail.com</author-contact>
