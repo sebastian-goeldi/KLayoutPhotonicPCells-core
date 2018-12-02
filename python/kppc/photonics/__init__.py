@@ -17,7 +17,7 @@
 """Photonic PCell-Extension Module
 
 .. warning ::
-    Before using this module for the first time, make sure the `drc.slcleaner` submodule is compiled and importable, as this  module
+    Before using this module for the first time, make sure the `kppc.drc.slcleaner` submodule is compiled and importable, as this  module
     relies on the drc package for DR-Cleaning. See :py:mod:`drc` for further details.
 
 A Module which provides extensions for standard KLyaout-PCells. This extension mainly provides functionalities for
@@ -38,10 +38,9 @@ The main functionality for this module is in the class :class:`~photonics.PhotDe
 
 import pya
 import math
-import drc
+import kppc.drc
 from collections import namedtuple
-import photonics.layermaps as lm
-import photonics.dataprep as prep
+import kppc.photonics.dataprep
 import numpy as np
 from time import clock
 
@@ -160,7 +159,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
         all child-cells will be preserved at the end. If set to False only the Dataprep Sub-Cell will be preserved.
     :ivar bool dataprep: If this flag is set, :func:`photonics.dataprep.dataprep` will be performed on the cell. The variable
         :attr:`dataprep_config` holds the path to the instructions for dataprep.
-    :ivar bool clean: If this flag is set, :func:`drc.clean` will be performed on the cell. Rules for the DR-Cleaning
+    :ivar bool clean: If this flag is set, :func:`kppc.drc.clean` will be performed on the cell. Rules for the DR-Cleaning
         are pulled from :attr:`clean_rules`.
     :ivar bool top: Hidden parameter that indicates whether this cell is a top_cell. Default is yes. When an instance is
         added through :meth:`.add_pcell_variant` these cells will not be set to top_cells as they are instantiated from
@@ -687,7 +686,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
             if self.dataprep:
                 prep_cell = self.layout.create_cell('DataPrep')
                 prep_cell._create()
-                prep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config, layers_org=self.layermap)
+                kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config, layers_org=self.layermap)
                 self.cell.insert(pya.CellInstArray(prep_cell.cell_index(), pya.Trans.R0))
             if self.drc_clean:
                 rules = self.clean_rules
@@ -695,14 +694,14 @@ class PhotDevice(pya.PCellDeclarationHelper):
                 for cr in rules:
                     cr[1] = int(cr[1] / self.layout.dbu)
                     cr[2] = int(cr[2] / self.layout.dbu)
-                drc.clean(prep_cell, rules)
+                kppc.drc.clean(prep_cell, rules)
 
         else:
             # the dataprep will clean all children and shapes and then insert cleaned ones
             if self.dataprep:
                 temp_cell = self.layout.create_cell('DataPrep_del')
                 temp_cell._create()
-                prep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config, layers_org=self.layermap)
+                kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config, layers_org=self.layermap)
 
                 if self.drc_clean:
                     rules = self.clean_rules
@@ -710,7 +709,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
                     for cr in rules:
                         cr[1] = int(cr[1] / self.layout.dbu)
                         cr[2] = int(cr[2] / self.layout.dbu)
-                    drc.clean(temp_cell, rules)
+                    kppc.drc.clean(temp_cell, rules)
                 # Delete all child cells
                 self.cell.clear()
                 self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))

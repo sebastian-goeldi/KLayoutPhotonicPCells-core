@@ -25,7 +25,7 @@ def load(filename: 'str'):
     :rtype: dict
 
     :Examples:
-        >>> import PhotPCells.layermaps as lm
+        >>> import kppc.photonics.layermaps as lm
         >>> lm.load(os.path.expanduser('~/.klayout/salt/zccmos/FreePDK45_tech/tech/FreePDK45.layermap'))
         {'pwell': {'blockage': ('109', '1'), 'drawing': ('109', '0')}, ... }
     """

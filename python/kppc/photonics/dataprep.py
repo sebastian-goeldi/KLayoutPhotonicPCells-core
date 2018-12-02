@@ -15,7 +15,6 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import pya
-import photonics.layermaps as lm
 import numpy as np
 
 qtprogress = True

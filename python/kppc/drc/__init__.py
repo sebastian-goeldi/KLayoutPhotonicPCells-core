@@ -43,7 +43,7 @@ The bash script executes the following commands:
 import pya
 
 from importlib.util import find_spec
-sl_path = find_spec('drc.slcleaner')
+sl_path = find_spec('kppc.drc.slcleaner')
 
 # Check if C++ cleaner is compiled
 
@@ -54,10 +54,10 @@ if not sl_path:
     msg.text = 'To run the cleaner module, it has to be compiled first. Please execute {}/compile.sh before using the module and reopen KLayout'.format(os.path.dirname(__file__))
     msg.windowTitle = 'ImportError'
     msg.exec_()
-    
 
-import drc.slcleaner
-    
+
+import kppc.drc.slcleaner
+
 
 qtprogress = True
 
@@ -70,13 +70,13 @@ def clean(cell: 'pya. Cell', cleanrules: list):
     :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
         purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
     """
-    sl = drc.slcleaner.PyDrcSl()
+    sl = kppc.drc.slcleaner.PyDrcSl()
 
     if qtprogress:
         progress = pya.RelativeProgress('Cleaning Design Rule Violations',len(cleanrules))
 
     for cr in cleanrules:
-        
+
         # split the rules into their parts
         layer_spec, viowidth, viospace = cr
         ln, ld = layer_spec

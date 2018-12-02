@@ -6,6 +6,7 @@
 slcleaner.cpp
 python/drc/slcleaner_source/build/
 .idea
+slcleaner.o
 
 # From template https://github.com/github/gitignore/blob/master/Python.gitignore
 

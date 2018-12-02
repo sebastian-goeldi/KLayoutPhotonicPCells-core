@@ -16,8 +16,8 @@
  <dsl-interpreter-name/>
  <text>import pya
 import math
-from photonics import PhotDevice, PortCreation
-import photonics.layermaps as lm
+from kppc.photonics import PhotDevice, PortCreation
+import kppc.photonics.layermaps as lm
 import numpy as np
 import os
 
@@ -103,7 +103,7 @@ class ExMMIBody(FreePDK45Example):
     
     def __init__(self):
         FreePDK45Example.__init__(self)
-        self.add_layer('lay',"active.drawing")
+        self.add_layer('lay',"phot_silicon.drawing")
         # Important: If it should be a floating point parameter, use x.0 instead of x for default values that fall on integers, or it will be interpreted as integer 
         params = dict(length=15.,
                       width=5.,
@@ -129,7 +129,7 @@ class ExLinTaper(FreePDK45Example):
     
     def __init__(self):
         FreePDK45Example.__init__(self)
-        self.add_layer('lay',"active.drawing")
+        self.add_layer('lay',"phot_silicon.drawing")
         params = dict(width_0 = .5,
                       width_1 = 1.0,
                       length = 2.0,
@@ -157,7 +157,7 @@ class Ex2x2MMI(FreePDK45Example):
     
     def __init__(self):
         FreePDK45Example.__init__(self)
-        self.add_layer('lay','active.drawing')
+        self.add_layer('lay','phot_silicon.drawing')
         params = dict(wg_width=.5,
                       length=15.0,
                       taper_width=1.0,
