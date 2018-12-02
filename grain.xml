@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <salt-grain>
- <name>klayout_photonics/core</name>
+ <name>KLayoutPhotonics/core</name>
  <token/>
  <hidden>false</hidden>
  <version>0.0.1</version>
