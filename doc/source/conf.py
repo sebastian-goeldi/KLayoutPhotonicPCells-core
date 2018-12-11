@@ -62,7 +62,6 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.imgconverter',
     'sphinx_autodoc_typehints',
-    'sphinx_markdown_builder',
 ]
 # 'sphinx_autodoc_typehints',
 # Add any paths that contain templates here, relative to this directory.
