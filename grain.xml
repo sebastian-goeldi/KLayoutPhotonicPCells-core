@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <salt-grain>
- <name>KLayoutPhotonicPCells-dev/core</name>
- <token/>
+ <name>KLayoutPhotonicPCells/core</name>
  <hidden>false</hidden>
  <version>0.0.2</version>
  <api-version>0.25</api-version>
- <title>PCell Core Extension</title>
+ <title>KLayoutPhotonicPCells Core Extension</title>
  <doc>This library extends KLayoutPCells with the concept of ports and make it easier to create PCells for Photonics. Local Documentation: [Path to Package]/doc/build/html/index.html</doc>
  <doc-url>https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core/blob/master/doc/build/latex/KLayoutPhotonicPCells.pdf</doc-url>
  <url>https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core.git</url>
