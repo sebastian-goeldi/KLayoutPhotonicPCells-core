@@ -6,30 +6,30 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>drc &#8212; KLayout Photonic PCells 0.1 documentation</title>
-    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <title>kppc.drc &#8212; KLayout Photonic PCells 0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -38,7 +38,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for drc</h1><div class="highlight"><pre>
+  <h1>Source code for kppc.drc</h1><div class="highlight"><pre>
 <span></span><span class="c1"># This file is part of KLayoutPhotonicPcells, an extension for Photonic Layouts in KLayout.</span>
 <span class="c1"># Copyright (c) 2018, Sebastian Goeldi</span>
 <span class="c1">#</span>
@@ -60,7 +60,7 @@
 <span class="sd">extension.</span>
 
 <span class="sd">To compile the module execute the setup script :file:`python/drc/compile.sh`.</span>
-<span class="sd">Or alternatively execute the :file:`python/drc/slcleaner_source/setup.py` with the python3 executable</span>
+<span class="sd">Or alternatively execute the :file:`python/kppc/drc/slcleaner_source/setup.py` with the python3 executable</span>
 <span class="sd">and copy/move the resulting :file:`slcleaner.[...].so` library file ino the :file:`python/drc/` folder.</span>
 
 <span class="sd">For further information consult the `Cython Documentation`_.</span>
@@ -69,12 +69,12 @@
 
 <span class="sd">.. code-block:: console</span>
 
-<span class="sd">    cd ~/.klayout/salt/zccmos/pcell_ext_lib/python/drc</span>
-<span class="sd">    ./compile.sh</span>
+<span class="sd">    cd ~/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc</span>
+<span class="sd">    sh compile.sh</span>
 
 <span class="sd">The bash script executes the following commands:</span>
 
-<span class="sd">.. literalinclude:: ../../python/drc/compile.sh</span>
+<span class="sd">.. literalinclude:: ../../python/kppc/drc/compile.sh</span>
 <span class="sd">    :language: bash</span>
 
 <span class="sd">.. _Cython Documentation: http://cython.org/</span>
@@ -84,7 +84,7 @@
 <span class="kn">import</span> <span class="nn">pya</span>
 
 <span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">find_spec</span>
-<span class="n">sl_path</span> <span class="o">=</span> <span class="n">find_spec</span><span class="p">(</span><span class="s1">&#39;drc.slcleaner&#39;</span><span class="p">)</span>
+<span class="n">sl_path</span> <span class="o">=</span> <span class="n">find_spec</span><span class="p">(</span><span class="s1">&#39;kppc.drc.slcleaner&#39;</span><span class="p">)</span>
 
 <span class="c1"># Check if C++ cleaner is compiled</span>
 
@@ -95,14 +95,14 @@
     <span class="n">msg</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;To run the cleaner module, it has to be compiled first. Please execute </span><span class="si">{}</span><span class="s1">/compile.sh before using the module and reopen KLayout&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
     <span class="n">msg</span><span class="o">.</span><span class="n">windowTitle</span> <span class="o">=</span> <span class="s1">&#39;ImportError&#39;</span>
     <span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-    
 
-<span class="kn">import</span> <span class="nn">drc.slcleaner</span>
-    
+
+<span class="kn">import</span> <span class="nn">kppc.drc.slcleaner</span>
+
 
 <span class="n">qtprogress</span> <span class="o">=</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="clean"><a class="viewcode-back" href="../drc.html#drc.clean">[docs]</a><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">cell</span><span class="p">:</span> <span class="s1">&#39;pya. Cell&#39;</span><span class="p">,</span> <span class="n">cleanrules</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="clean"><a class="viewcode-back" href="../../drc.html#kppc.drc.clean">[docs]</a><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">cell</span><span class="p">:</span> <span class="s1">&#39;pya. Cell&#39;</span><span class="p">,</span> <span class="n">cleanrules</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Clean a cell for width and space violations.</span>
 <span class="sd">    This function will clear the output layers of any shapes and insert a cleaned region.</span>
@@ -111,13 +111,13 @@
 <span class="sd">    :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,</span>
 <span class="sd">        purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sl</span> <span class="o">=</span> <span class="n">drc</span><span class="o">.</span><span class="n">slcleaner</span><span class="o">.</span><span class="n">PyDrcSl</span><span class="p">()</span>
+    <span class="n">sl</span> <span class="o">=</span> <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">slcleaner</span><span class="o">.</span><span class="n">PyDrcSl</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">qtprogress</span><span class="p">:</span>
         <span class="n">progress</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">RelativeProgress</span><span class="p">(</span><span class="s1">&#39;Cleaning Design Rule Violations&#39;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">cleanrules</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">cleanrules</span><span class="p">:</span>
-        
+
         <span class="c1"># split the rules into their parts</span>
         <span class="n">layer_spec</span><span class="p">,</span> <span class="n">viowidth</span><span class="p">,</span> <span class="n">viospace</span> <span class="o">=</span> <span class="n">cr</span>
         <span class="n">ln</span><span class="p">,</span> <span class="n">ld</span> <span class="o">=</span> <span class="n">layer_spec</span>
@@ -181,7 +181,7 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
+    <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -198,13 +198,13 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

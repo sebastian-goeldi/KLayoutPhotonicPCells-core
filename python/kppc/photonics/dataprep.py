@@ -72,7 +72,7 @@ def add(layout, cell, slayers, dlayers, ex_amount, layers, out_cell=None):
 
 
 def sub(layout, cell, slayers, dlayers, ex_amount, layers, out_cell=None):
-    """Analogous to :func:`~photonics.dataprep.add`
+    """Analogous to :func:`~kppc.photonics.dataprep.add`
 
     Instead of perfoming a combination with the destination layers, this function will substract the input region.
     """

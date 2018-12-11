@@ -1,12 +1,12 @@
 .. _slcleaner:
 
-drc.slcleaner module
-^^^^^^^^^^^^^^^^^^^^
+kppc.drc.slcleaner module
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 An interface to the DrcSl.cpp Class.
 
-.. class:: drc.slcleaner.PyDrcSl
+.. class:: kppc.drc.slcleaner.PyDrcSl
 
 
     .. method:: def add_data(x1, x2, y1, y2)
@@ -109,5 +109,5 @@ of the polygon edges.
 
 C++ Code:
 
-.. literalinclude:: ../../python/drc/slcleaner_source/DrcSl.cpp
+.. literalinclude:: ../../python/kppc/drc/slcleaner_source/DrcSl.cpp
     :language: c++

@@ -19,7 +19,7 @@ This package is a library extension for KLayout to provide functionalities for p
 Module contents
 ---------------
 
-.. automodule:: photonics
+.. automodule:: kppc.photonics
     :members:
     :undoc-members:
     :show-inheritance:
@@ -30,7 +30,7 @@ Submodules
 photonics.dataprep module
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. automodule:: photonics.dataprep
+.. automodule:: kppc.photonics.dataprep
     :members:
     :undoc-members:
     :show-inheritance:
@@ -38,7 +38,7 @@ photonics.dataprep module
 photonics.layermaps module
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. automodule:: photonics.layermaps
+.. automodule:: kppc.photonics.layermaps
     :members:
     :undoc-members:
     :show-inheritance:

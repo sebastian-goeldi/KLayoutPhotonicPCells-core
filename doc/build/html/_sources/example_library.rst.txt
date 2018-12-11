@@ -4,7 +4,7 @@ Example: Create Sample Library
 In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. The finished file can
 be found in :download:`MMI_Example.lym`. This file can be copied into the KLayout pymacros folder (:file:`~/.klayout/pymacros/`) and executed. The chapter is an in-depth explanation of the example.
 
-All photonic libraries are derived from :class:`~photonics.PhotDevice`.
+All photonic libraries are derived from :class:`~kppc.photonics.PhotDevice`.
 
 As an example, we will use a modified FreePDK45_Cell. We will create a 2x2 MMI.
 To create a new PCell Library open the MacroDevelopment of Klayout in the menu Macros->MacroDevelopment.
@@ -46,13 +46,13 @@ First let's import modules we will need.
 
     import pya
     import math
-    from photonics import PhotDevice, PortCreation
-    import photonics.layermaps as lm
+    from kppc.photonics import PhotDevice, PortCreation
+    import kppc.photonics.layermaps as lm
     import numpy as np
     import os
 
 
-After the imports we will create a helper class. The class photonics.PhotDevice is technology-independent and
+After the imports we will create a helper class. The class kppc.photonics.PhotDevice is technology-independent and
 thus needs to be supplied with information about layers, i.e. how to map layers during dataprep and finally about
 the constraints for the DR-Cleaning. So let's define a helper class that all of our FreePDK45-PCells will use.
 
@@ -197,7 +197,7 @@ each side. The box will have four ports and each port of the box is the same siz
                                 [self.length/2,-self.width_1/2],],
                                 self.lay)
 
-.. note:: If we only declare one :py:class:`~photonics.PortCreation` in self.create_param_inst(self), we have to return it as: ``return [port]``
+.. note:: If we only declare one :py:class:`~kppc.photonics.PortCreation` in self.create_param_inst(self), we have to return it as: ``return [port]``
 
 Now let's declare the MMI. In it we will create 4 instances of tapers and one box and then connect the tapers to
 the box.

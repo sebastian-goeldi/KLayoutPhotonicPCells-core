@@ -4,7 +4,7 @@ drc package
 Module contents
 ---------------
 
-.. automodule:: drc
+.. automodule:: kppc.drc
     :members:
     :undoc-members:
     :show-inheritance:

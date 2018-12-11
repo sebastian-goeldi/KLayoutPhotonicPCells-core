@@ -1,7 +1,7 @@
 Introduction
 ============
 
-The `pcell_lib_ext` module is an extension for KLayout PCells to facilitate photonic PCells.
+The KLayoutPhotonicPCells`kppc` module is an extension for KLayout PCells to facilitate photonic PCells.
 Photonics often works with the concept of ports.
 Ports are defined by a coordinate and a direction. In the case of this module ports will be stored in PCell parameters in the background.
 They are serialized `KLayout Trans`_ objects. For an introduction on how to build your own PCell Library, have a look at

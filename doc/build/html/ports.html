@@ -54,7 +54,7 @@ two waveguides are connected, the connected endings have to point on the opposit
 be the same size.</p>
 <p>This module implements the concept of ports into KLayout PCells. Currently ports track location, orientation and length.
 If two ports have a mismatch in width, they cannot be connected. New ports can be created in PCells with the
-<a class="reference internal" href="photonics.html#photonics.PortCreation" title="photonics.PortCreation"><code class="xref py py-class docutils literal notranslate"><span class="pre">photonics.PortCreation</span></code></a> when overriding the <a class="reference internal" href="photonics.html#photonics.PhotDevice.create_param_inst" title="photonics.PhotDevice.create_param_inst"><code class="xref py py-meth docutils literal notranslate"><span class="pre">photonics.PhotDevice.create_param_inst()</span></code></a> method
+<a class="reference internal" href="photonics.html#kppc.photonics.PortCreation" title="kppc.photonics.PortCreation"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.PortCreation</span></code></a> when overriding the <a class="reference internal" href="photonics.html#kppc.photonics.PhotDevice.create_param_inst" title="kppc.photonics.PhotDevice.create_param_inst"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kppc.photonics.PhotDevice.create_param_inst()</span></code></a> method
 in the PCell Library. If any instantiated child cells in a PCell have any open ports (not connected to another port of another
 child cell), they are passed upwards to the cell itself and are announced as ports of this cell.
 This hierarchical design allows to create arbitrary Devices independent of the order when assembling them.</p>

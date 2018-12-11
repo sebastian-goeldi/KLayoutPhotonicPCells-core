@@ -26,10 +26,10 @@ They indicate where multiple Cells/Devices should interact with each other. For 
 with a linear taper. This module provides the classes and functions for this functionality. Additionally, this module
 provides a lot of convenience functions for interactions with the KLayout-API.
 
-The main functionality for this module is in the class :class:`~photonics.PhotDevice`.
+The main functionality for this module is in the class :class:`~kppc.photonics.PhotDevice`.
 
 .. warning ::  When using this module to extend a PCell-Library any PCell class has to assign valid values to the
-    parameters ``layermap`` , ``dataprep_config`` , ``clean_rules`` . These are accessed by :py:class:`~photonics.PhotDevice`. If they
+    parameters ``layermap`` , ``dataprep_config`` , ``clean_rules`` . These are accessed by :py:class:`~kppc.photonics.PhotDevice`. If they
     aren't declared, a runtime error will occur.
 
 """
@@ -76,7 +76,7 @@ def isnamedtupleinstance(x):
 
 class InstanceHolder:
     """Class to keep track and hold the information of a pcell instance. The information will be processed to a PCell in
-     :func:`~photonics.PhotDevice.produce_impl`
+     :func:`~kppc.photonics.PhotDevice.produce_impl`
     """
 
     def __init__(self, cell_name, lib, pcell_decl, params=None, params_mod=None, id=0):
@@ -157,7 +157,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
         DR-Cleaning will not work without dataprep, or will be without any effect.
     :ivar bool keep: Parameter created during :func:`__init__` via pya.DeclarationHelper. If set to True in the PCell,
         all child-cells will be preserved at the end. If set to False only the Dataprep Sub-Cell will be preserved.
-    :ivar bool dataprep: If this flag is set, :func:`photonics.dataprep.dataprep` will be performed on the cell. The variable
+    :ivar bool dataprep: If this flag is set, :func:`kppc.photonics.dataprep.dataprep` will be performed on the cell. The variable
         :attr:`dataprep_config` holds the path to the instructions for dataprep.
     :ivar bool clean: If this flag is set, :func:`kppc.drc.clean` will be performed on the cell. Rules for the DR-Cleaning
         are pulled from :attr:`clean_rules`.
@@ -408,7 +408,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
     def calculate_ports(self, instances: list):
         """Calculates port locations in the cell layout. This is to propagate the port locations upwards
 
-        :param instances: list containing :class:`photonics.InstanceHolder`
+        :param instances: list containing :class:`kppc.photonics.InstanceHolder`
         """
         porttrans = []
         if self.transformations != '':
@@ -463,7 +463,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
 
         :param params: parameter list from which to create pcells
         :param number: Number of instances to create
-        :return: list of :class:`photonics.InstanceHolder`
+        :return: list of :class:`kppc.photonics.InstanceHolder`
         """
         params_copy = params.copy()
         cellname = params_copy.pop('cellname')
@@ -485,7 +485,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
     def add_pcells(self, instance_list: list):
         """Creates list of instances of PCells. These are the effective Klayout cell instances.
         
-        :param instance_list: list of :class:`photonics.InstanceHolder`
+        :param instance_list: list of :class:`kppc.photonics.InstanceHolder`
         :return: list of instantiated pya.CellInstArray
         """
         id = 0

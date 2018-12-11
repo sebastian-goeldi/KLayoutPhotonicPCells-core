@@ -19,7 +19,7 @@
 extension.
 
 To compile the module execute the setup script :file:`python/drc/compile.sh`.
-Or alternatively execute the :file:`python/drc/slcleaner_source/setup.py` with the python3 executable
+Or alternatively execute the :file:`python/kppc/drc/slcleaner_source/setup.py` with the python3 executable
 and copy/move the resulting :file:`slcleaner.[...].so` library file ino the :file:`python/drc/` folder.
 
 For further information consult the `Cython Documentation`_.
@@ -28,12 +28,12 @@ To execute the script open a console and execute the following commands:
 
 .. code-block:: console
 
-    cd ~/.klayout/salt/zccmos/pcell_ext_lib/python/drc
-    ./compile.sh
+    cd ~/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc
+    sh compile.sh
 
 The bash script executes the following commands:
 
-.. literalinclude:: ../../python/drc/compile.sh
+.. literalinclude:: ../../python/kppc/drc/compile.sh
     :language: bash
 
 .. _Cython Documentation: http://cython.org/

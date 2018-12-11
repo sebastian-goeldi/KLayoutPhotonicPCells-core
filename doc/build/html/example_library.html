@@ -48,8 +48,8 @@
   <div class="section" id="example-create-sample-library">
 <h1>Example: Create Sample Library<a class="headerlink" href="#example-create-sample-library" title="Permalink to this headline">¶</a></h1>
 <p>In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. The finished file can
-be found in <a class="reference download internal" download="" href="_downloads/f3758374ddaedb1c85d2db8f9efb9e40/MMI_Example.lym"><code class="xref download docutils literal notranslate"><span class="pre">MMI_Example.lym</span></code></a>. This file can be copied into the KLayout pymacros folder (<code class="file docutils literal notranslate"><span class="pre">~/.klayout/pymacros/</span></code>) and executed. The chapter is an in-depth explanation of the example.</p>
-<p>All photonic libraries are derived from <a class="reference internal" href="photonics.html#photonics.PhotDevice" title="photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>.</p>
+be found in <a class="reference download internal" download="" href="_downloads/0a8a771c7919df6b4618128589eb23a4/MMI_Example.lym"><code class="xref download docutils literal notranslate"><span class="pre">MMI_Example.lym</span></code></a>. This file can be copied into the KLayout pymacros folder (<code class="file docutils literal notranslate"><span class="pre">~/.klayout/pymacros/</span></code>) and executed. The chapter is an in-depth explanation of the example.</p>
+<p>All photonic libraries are derived from <a class="reference internal" href="photonics.html#kppc.photonics.PhotDevice" title="kppc.photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>.</p>
 <p>As an example, we will use a modified FreePDK45_Cell. We will create a 2x2 MMI.
 To create a new PCell Library open the MacroDevelopment of Klayout in the menu Macros-&gt;MacroDevelopment.</p>
 <div class="figure" id="id1">
@@ -80,13 +80,13 @@ uses some flags to define it as a PCell library.</p>
 5
 6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pya</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">photonics</span> <span class="kn">import</span> <span class="n">PhotDevice</span><span class="p">,</span> <span class="n">PortCreation</span>
-<span class="kn">import</span> <span class="nn">photonics.layermaps</span> <span class="kn">as</span> <span class="nn">lm</span>
+<span class="kn">from</span> <span class="nn">kppc.photonics</span> <span class="kn">import</span> <span class="n">PhotDevice</span><span class="p">,</span> <span class="n">PortCreation</span>
+<span class="kn">import</span> <span class="nn">kppc.photonics.layermaps</span> <span class="kn">as</span> <span class="nn">lm</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
 </pre></div>
 </td></tr></table></div>
-<p>After the imports we will create a helper class. The class photonics.PhotDevice is technology-independent and
+<p>After the imports we will create a helper class. The class kppc.photonics.PhotDevice is technology-independent and
 thus needs to be supplied with information about layers, i.e. how to map layers during dataprep and finally about
 the constraints for the DR-Cleaning. So let’s define a helper class that all of our FreePDK45-PCells will use.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 9
@@ -350,7 +350,7 @@ each side. The box will have four ports and each port of the box is the same siz
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If we only declare one <a class="reference internal" href="photonics.html#photonics.PortCreation" title="photonics.PortCreation"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortCreation</span></code></a> in self.create_param_inst(self), we have to return it as: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">[port]</span></code></p>
+<p class="last">If we only declare one <a class="reference internal" href="photonics.html#kppc.photonics.PortCreation" title="kppc.photonics.PortCreation"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortCreation</span></code></a> in self.create_param_inst(self), we have to return it as: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">[port]</span></code></p>
 </div>
 <p>Now let’s declare the MMI. In it we will create 4 instances of tapers and one box and then connect the tapers to
 the box.</p>

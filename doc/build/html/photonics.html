@@ -66,35 +66,35 @@ reopen KLayout.</p>
 </div>
 </div>
 </div>
-<div class="section" id="module-photonics">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-photonics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-kppc.photonics">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kppc.photonics" title="Permalink to this headline">¶</a></h2>
 <p>Photonic PCell-Extension Module</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Before using this module for the first time, make sure the <cite>drc.slcleaner</cite> submodule is compiled and importable, as this  module
-relies on the drc package for DR-Cleaning. See <a class="reference internal" href="drc.html#module-drc" title="drc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drc</span></code></a> for further details.</p>
+<p class="last">Before using this module for the first time, make sure the <cite>kppc.drc.slcleaner</cite> submodule is compiled and importable, as this  module
+relies on the drc package for DR-Cleaning. See <code class="xref py py-mod docutils literal notranslate"><span class="pre">drc</span></code> for further details.</p>
 </div>
 <p>A Module which provides extensions for standard KLyaout-PCells. This extension mainly provides functionalities for
 photonics. One main feature of photonics are so-called ports. These define a position and a direction on a Cell.
 They indicate where multiple Cells/Devices should interact with each other. For example, one can connect a waveguide
 with a linear taper. This module provides the classes and functions for this functionality. Additionally, this module
 provides a lot of convenience functions for interactions with the KLayout-API.</p>
-<p>The main functionality for this module is in the class <a class="reference internal" href="#photonics.PhotDevice" title="photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>.</p>
+<p>The main functionality for this module is in the class <a class="reference internal" href="#kppc.photonics.PhotDevice" title="kppc.photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">When using this module to extend a PCell-Library any PCell class has to assign valid values to the
-parameters <code class="docutils literal notranslate"><span class="pre">layermap</span></code> , <code class="docutils literal notranslate"><span class="pre">dataprep_config</span></code> , <code class="docutils literal notranslate"><span class="pre">clean_rules</span></code> . These are accessed by <a class="reference internal" href="#photonics.PhotDevice" title="photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>. If they
+parameters <code class="docutils literal notranslate"><span class="pre">layermap</span></code> , <code class="docutils literal notranslate"><span class="pre">dataprep_config</span></code> , <code class="docutils literal notranslate"><span class="pre">clean_rules</span></code> . These are accessed by <a class="reference internal" href="#kppc.photonics.PhotDevice" title="kppc.photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>. If they
 aren’t declared, a runtime error will occur.</p>
 </div>
 <dl class="class">
-<dt id="photonics.InstanceHolder">
-<em class="property">class </em><code class="descclassname">photonics.</code><code class="descname">InstanceHolder</code><span class="sig-paren">(</span><em>cell_name</em>, <em>lib</em>, <em>pcell_decl</em>, <em>params=None</em>, <em>params_mod=None</em>, <em>id=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#InstanceHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.InstanceHolder" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.InstanceHolder">
+<em class="property">class </em><code class="descclassname">kppc.photonics.</code><code class="descname">InstanceHolder</code><span class="sig-paren">(</span><em>cell_name</em>, <em>lib</em>, <em>pcell_decl</em>, <em>params=None</em>, <em>params_mod=None</em>, <em>id=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#InstanceHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.InstanceHolder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to keep track and hold the information of a pcell instance. The information will be processed to a PCell in
-<a class="reference internal" href="#photonics.PhotDevice.produce_impl" title="photonics.PhotDevice.produce_impl"><code class="xref py py-func docutils literal notranslate"><span class="pre">produce_impl()</span></code></a></p>
+<a class="reference internal" href="#kppc.photonics.PhotDevice.produce_impl" title="kppc.photonics.PhotDevice.produce_impl"><code class="xref py py-func docutils literal notranslate"><span class="pre">produce_impl()</span></code></a></p>
 <dl class="method">
-<dt id="photonics.InstanceHolder.move">
-<code class="descname">move</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>rot=0</em>, <em>mirrx=False</em>, <em>mag=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#InstanceHolder.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.InstanceHolder.move" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.InstanceHolder.move">
+<code class="descname">move</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>rot=0</em>, <em>mirrx=False</em>, <em>mag=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#InstanceHolder.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.InstanceHolder.move" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves an instance. Units of microns relative to origin.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -114,8 +114,8 @@ aren’t declared, a runtime error will occur.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.InstanceHolder.port">
-<code class="descname">port</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#InstanceHolder.port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.InstanceHolder.port" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.InstanceHolder.port">
+<code class="descname">port</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#InstanceHolder.port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.InstanceHolder.port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a reference to itself and the port number. No checks are made whether this port is valid or not!
 Available ports can be seen if such an object is instantiated.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -131,8 +131,8 @@ Available ports can be seen if such an object is instantiated.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.InstanceHolder.port_to_port">
-<code class="descname">port_to_port</code><span class="sig-paren">(</span><em>port</em>, <em>inst_holder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#InstanceHolder.port_to_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.InstanceHolder.port_to_port" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.InstanceHolder.port_to_port">
+<code class="descname">port_to_port</code><span class="sig-paren">(</span><em>port</em>, <em>inst_holder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#InstanceHolder.port_to_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.InstanceHolder.port_to_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attach one of this instance’s ports to another instance’s port.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -152,8 +152,8 @@ This is a tuple returned from &lt;InstanceHolder object&gt;.port(&lt;portnumber&
 </dd></dl>
 
 <dl class="class">
-<dt id="photonics.PhotDevice">
-<em class="property">class </em><code class="descclassname">photonics.</code><code class="descname">PhotDevice</code><a class="reference internal" href="_modules/photonics.html#PhotDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice">
+<em class="property">class </em><code class="descclassname">kppc.photonics.</code><code class="descname">PhotDevice</code><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.autodoc.importer._MockObject</span></code></p>
 <p>Wrapper for calls to the Klayout API.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -170,12 +170,12 @@ If left empty, DR-Cleaning will do nothing. If the cells are built similar to th
 DR-Cleaning will not work without dataprep, or will be without any effect.</li>
 <li><strong>keep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Parameter created during <code class="xref py py-func docutils literal notranslate"><span class="pre">__init__()</span></code> via pya.DeclarationHelper. If set to True in the PCell,
 all child-cells will be preserved at the end. If set to False only the Dataprep Sub-Cell will be preserved.</li>
-<li><a class="reference internal" href="#module-photonics.dataprep" title="photonics.dataprep"><strong>dataprep</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="#photonics.dataprep.dataprep" title="photonics.dataprep.dataprep"><code class="xref py py-func docutils literal notranslate"><span class="pre">photonics.dataprep.dataprep()</span></code></a> will be performed on the cell. The variable
+<li><a class="reference internal" href="#module-kppc.photonics.dataprep" title="kppc.photonics.dataprep"><strong>dataprep</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="#kppc.photonics.dataprep.dataprep" title="kppc.photonics.dataprep.dataprep"><code class="xref py py-func docutils literal notranslate"><span class="pre">kppc.photonics.dataprep.dataprep()</span></code></a> will be performed on the cell. The variable
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">dataprep_config</span></code> holds the path to the instructions for dataprep.</li>
-<li><a class="reference internal" href="cleaner.html#drc.slcleaner.PyDrcSl.clean" title="drc.slcleaner.PyDrcSl.clean"><strong>clean</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="drc.html#drc.clean" title="drc.clean"><code class="xref py py-func docutils literal notranslate"><span class="pre">drc.clean()</span></code></a> will be performed on the cell. Rules for the DR-Cleaning
+<li><a class="reference internal" href="cleaner.html#kppc.drc.slcleaner.PyDrcSl.clean" title="kppc.drc.slcleaner.PyDrcSl.clean"><strong>clean</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="drc.html#kppc.drc.clean" title="kppc.drc.clean"><code class="xref py py-func docutils literal notranslate"><span class="pre">kppc.drc.clean()</span></code></a> will be performed on the cell. Rules for the DR-Cleaning
 are pulled from <code class="xref py py-attr docutils literal notranslate"><span class="pre">clean_rules</span></code>.</li>
 <li><strong>top</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Hidden parameter that indicates whether this cell is a top_cell. Default is yes. When an instance is
-added through <a class="reference internal" href="#photonics.PhotDevice.add_pcell_variant" title="photonics.PhotDevice.add_pcell_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_pcell_variant()</span></code></a> these cells will not be set to top_cells as they are instantiated from
+added through <a class="reference internal" href="#kppc.photonics.PhotDevice.add_pcell_variant" title="kppc.photonics.PhotDevice.add_pcell_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_pcell_variant()</span></code></a> these cells will not be set to top_cells as they are instantiated from
 another cell.</li>
 <li><strong>only_top_ports</strong> – GUI parameter. If set to true, only ports of the top most hierarchy level (top_cell) will be
 annotated by text.</li>
@@ -185,8 +185,8 @@ annotated by text.</li>
 </tbody>
 </table>
 <dl class="method">
-<dt id="photonics.PhotDevice.add_layer">
-<code class="descname">add_layer</code><span class="sig-paren">(</span><em>var_name</em>, <em>name=''</em>, <em>layer=0</em>, <em>datatype=0</em>, <em>ld=()</em>, <em>field_name=''</em>, <em>hidden=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.add_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.add_layer" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.add_layer">
+<code class="descname">add_layer</code><span class="sig-paren">(</span><em>var_name</em>, <em>name=''</em>, <em>layer=0</em>, <em>datatype=0</em>, <em>ld=()</em>, <em>field_name=''</em>, <em>hidden=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.add_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.add_layer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a layer to the layer list of the pcell by name.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -210,8 +210,8 @@ annotated by text.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.add_params">
-<code class="descname">add_params</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.add_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.add_params" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.add_params">
+<code class="descname">add_params</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.add_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.add_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the PCell conform dictionary from a parameter list</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -224,8 +224,8 @@ annotated by text.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.add_pcell_variant">
-<code class="descname">add_pcell_variant</code><span class="sig-paren">(</span><em>params</em>, <em>number=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.add_pcell_variant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.add_pcell_variant" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.add_pcell_variant">
+<code class="descname">add_pcell_variant</code><span class="sig-paren">(</span><em>params</em>, <em>number=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.add_pcell_variant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.add_pcell_variant" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add variants of PCells. Creates a list of InstanceHolders and modifies their parameters accordingly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -237,7 +237,7 @@ annotated by text.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of <a class="reference internal" href="#photonics.InstanceHolder" title="photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">photonics.InstanceHolder</span></code></a></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of <a class="reference internal" href="#kppc.photonics.InstanceHolder" title="kppc.photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.InstanceHolder</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -245,14 +245,14 @@ annotated by text.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.add_pcells">
-<code class="descname">add_pcells</code><span class="sig-paren">(</span><em>instance_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.add_pcells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.add_pcells" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.add_pcells">
+<code class="descname">add_pcells</code><span class="sig-paren">(</span><em>instance_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.add_pcells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.add_pcells" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates list of instances of PCells. These are the effective Klayout cell instances.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instance_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list of <a class="reference internal" href="#photonics.InstanceHolder" title="photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">photonics.InstanceHolder</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instance_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list of <a class="reference internal" href="#kppc.photonics.InstanceHolder" title="kppc.photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.InstanceHolder</span></code></a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of instantiated pya.CellInstArray</td>
 </tr>
@@ -261,28 +261,28 @@ annotated by text.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.calculate_ports">
-<code class="descname">calculate_ports</code><span class="sig-paren">(</span><em>instances</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.calculate_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.calculate_ports" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.calculate_ports">
+<code class="descname">calculate_ports</code><span class="sig-paren">(</span><em>instances</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.calculate_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.calculate_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates port locations in the cell layout. This is to propagate the port locations upwards</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instances</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list containing <a class="reference internal" href="#photonics.InstanceHolder" title="photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">photonics.InstanceHolder</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instances</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list containing <a class="reference internal" href="#kppc.photonics.InstanceHolder" title="kppc.photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.InstanceHolder</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.clear_ports">
-<code class="descname">clear_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.clear_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.clear_ports" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.clear_ports">
+<code class="descname">clear_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.clear_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.clear_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears self.portlist and by that delete all ports. This is used when updating the Ports</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.coerce_parameters_impl">
-<code class="descname">coerce_parameters_impl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.coerce_parameters_impl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.coerce_parameters_impl" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.coerce_parameters_impl">
+<code class="descname">coerce_parameters_impl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.coerce_parameters_impl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.coerce_parameters_impl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method called by Klayout to update a PCell. For photonic PCells the ports are updated/calculated in the
 parameter of the PCell. And desired movement transformations are performed.</p>
 <p>Because the calculated ports of our own PCell are used by parent cells and are needed before
@@ -300,8 +300,8 @@ the majority of computation time.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.connect_port">
-<code class="descname">connect_port</code><span class="sig-paren">(</span><em>pos1</em>, <em>portlist1</em>, <em>port1</em>, <em>pos2</em>, <em>portlist2</em>, <em>port2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.connect_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.connect_port" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.connect_port">
+<code class="descname">connect_port</code><span class="sig-paren">(</span><em>pos1</em>, <em>portlist1</em>, <em>port1</em>, <em>pos2</em>, <em>portlist2</em>, <em>port2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.connect_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.connect_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect ports of two instances. The second instance will be transformed to attach to the first instance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -325,8 +325,8 @@ the majority of computation time.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.connect_port_to_port">
-<code class="descname">connect_port_to_port</code><span class="sig-paren">(</span><em>port1</em>, <em>port2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.connect_port_to_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.connect_port_to_port" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.connect_port_to_port">
+<code class="descname">connect_port_to_port</code><span class="sig-paren">(</span><em>port1</em>, <em>port2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.connect_port_to_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.connect_port_to_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect Ports from two InstanceHolder instances.</p>
 <p>Connect two <cite>InstanceHolders</cite> together. Attach &lt;InstanceHolder instance1&gt;.port(&lt;port1&gt;) to &lt;InstanceHolder instance2&gt;.port(&lt;port2&gt;).
 This will apply a transformation to Instance2. There can only be either a transformation through connect_port_to_port or through InstanceHolder.move</p>
@@ -345,8 +345,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.create_param_inst">
-<code class="descname">create_param_inst</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.create_param_inst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.create_param_inst" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.create_param_inst">
+<code class="descname">create_param_inst</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.create_param_inst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.create_param_inst" title="Permalink to this definition">¶</a></dt>
 <dd><p>To be overwritten by the effective PCell</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -359,8 +359,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.create_path">
-<code class="descname">create_path</code><span class="sig-paren">(</span><em>points</em>, <em>width</em>, <em>layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.create_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.create_path" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.create_path">
+<code class="descname">create_path</code><span class="sig-paren">(</span><em>points</em>, <em>width</em>, <em>layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.create_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.create_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a pya.Path object and inserts it into the Library-PCell.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -369,7 +369,7 @@ This will apply a transformation to Instance2. There can only be either a transf
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>points</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – The points describing the path [[x1,y1],[x2,y2],…] in microns</li>
 <li><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Path width</li>
-<li><strong>layer</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6474be0&gt;</em>) – layer on which the path should be made</li>
+<li><strong>layer</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe35b240&gt;</em>) – layer on which the path should be made</li>
 </ul>
 </td>
 </tr>
@@ -378,8 +378,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.create_polygon">
-<code class="descname">create_polygon</code><span class="sig-paren">(</span><em>points</em>, <em>layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.create_polygon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.create_polygon" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.create_polygon">
+<code class="descname">create_polygon</code><span class="sig-paren">(</span><em>points</em>, <em>layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.create_polygon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.create_polygon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a Polygon and adjusts from microns to database units. Format: [[x1,y1],[x2,y2],…] in microns</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -399,8 +399,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.create_port">
-<code class="descname">create_port</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>rot=0</em>, <em>length=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.create_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.create_port" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.create_port">
+<code class="descname">create_port</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>rot=0</em>, <em>length=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.create_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.create_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a Port at the specified coordinates.</p>
 <p>This function will be used when a port is created through the PortCreation tuple.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -420,8 +420,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.decl">
-<code class="descname">decl</code><span class="sig-paren">(</span><em>libname</em>, <em>cellname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.decl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.decl" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.decl">
+<code class="descname">decl</code><span class="sig-paren">(</span><em>libname</em>, <em>cellname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.decl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.decl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get pya.PCellDeclaration of a cell in a library</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -441,36 +441,36 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.flip_shape_xaxis">
-<code class="descname">flip_shape_xaxis</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.flip_shape_xaxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.flip_shape_xaxis" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.flip_shape_xaxis">
+<code class="descname">flip_shape_xaxis</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.flip_shape_xaxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.flip_shape_xaxis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flip a polygon (or any shape) at the x-axis</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shape</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6474ac8&gt;</em>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shape</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe35b908&gt;</em>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.flip_shape_yaxis">
-<code class="descname">flip_shape_yaxis</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.flip_shape_yaxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.flip_shape_yaxis" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.flip_shape_yaxis">
+<code class="descname">flip_shape_yaxis</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.flip_shape_yaxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.flip_shape_yaxis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flip a polygon (or any shape) at the y-axis</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shape</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6474eb8&gt;</em>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shape</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe35b940&gt;</em>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.get_layer">
-<code class="descname">get_layer</code><span class="sig-paren">(</span><em>name</em>, <em>purpose=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.get_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.get_layer" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.get_layer">
+<code class="descname">get_layer</code><span class="sig-paren">(</span><em>name</em>, <em>purpose=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.get_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.get_layer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates LayerInfo object</p>
 <p>Creates a pya.LayerInfo object to find layer indexes in the current layout.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -491,8 +491,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.get_transformations">
-<code class="descname">get_transformations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.get_transformations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.get_transformations" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.get_transformations">
+<code class="descname">get_transformations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.get_transformations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.get_transformations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert transformation strings back to pya.ICplxTrans objects</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -505,16 +505,16 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.insert_shape">
-<code class="descname">insert_shape</code><span class="sig-paren">(</span><em>shape</em>, <em>layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.insert_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.insert_shape" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.insert_shape">
+<code class="descname">insert_shape</code><span class="sig-paren">(</span><em>shape</em>, <em>layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.insert_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.insert_shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Any other Klayout shape can be added to the PCell through this function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>shape</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6415588&gt;</em>) – pya.Shape object</li>
-<li><strong>layer</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6474eb8&gt;</em>) – layer where to write to</li>
+<li><strong>shape</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe3ef828&gt;</em>) – pya.Shape object</li>
+<li><strong>layer</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe35b940&gt;</em>) – layer where to write to</li>
 </ul>
 </td>
 </tr>
@@ -526,8 +526,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.move_instance">
-<code class="descname">move_instance</code><span class="sig-paren">(</span><em>ind</em>, <em>trans</em>, <em>mirror=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.move_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.move_instance" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.move_instance">
+<code class="descname">move_instance</code><span class="sig-paren">(</span><em>ind</em>, <em>trans</em>, <em>mirror=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.move_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.move_instance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves an InstanceHolder object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -535,7 +535,7 @@ This will apply a transformation to Instance2. There can only be either a transf
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – id of the InstanceHolder</li>
-<li><strong>trans</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6474eb8&gt;</em>) – list of transformations</li>
+<li><strong>trans</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe35b940&gt;</em>) – list of transformations</li>
 <li><strong>mirror</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – bool whether to mirror the object</li>
 </ul>
 </td>
@@ -545,8 +545,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.produce_impl">
-<code class="descname">produce_impl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.produce_impl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.produce_impl" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.produce_impl">
+<code class="descname">produce_impl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.produce_impl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.produce_impl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the effective Klayout shapes. For this all the InstanceHolders are cycled through and all the child
 instances are created. Furthermore, if desired, dataprep is performed, which copies and sizes the shapes as
 desired. Dataprep will only create shapes on the topmost cell. Finally, if desired DR-cleaning is performed and
@@ -554,8 +554,8 @@ in the process the shapes will be manhattanized.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.set_transformation">
-<code class="descname">set_transformation</code><span class="sig-paren">(</span><em>ind</em>, <em>trans</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.set_transformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.set_transformation" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.set_transformation">
+<code class="descname">set_transformation</code><span class="sig-paren">(</span><em>ind</em>, <em>trans</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.set_transformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.set_transformation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms child cells to the intended position, defined either by connected ports or by manual
 positioning.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -564,7 +564,7 @@ positioning.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the child cell</li>
-<li><strong>trans</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6474eb8&gt;</em>) – Transformation object with which to transform the child cell</li>
+<li><strong>trans</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe35b940&gt;</em>) – Transformation object with which to transform the child cell</li>
 </ul>
 </td>
 </tr>
@@ -573,8 +573,8 @@ positioning.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.shapes">
-<code class="descname">shapes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.shapes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.shapes" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.shapes">
+<code class="descname">shapes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.shapes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.shapes" title="Permalink to this definition">¶</a></dt>
 <dd><p>To be overwritten by effective PCell if shapes should be desired.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -587,8 +587,8 @@ positioning.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photonics.PhotDevice.update_parameter_list">
-<code class="descname">update_parameter_list</code><span class="sig-paren">(</span><em>params</em>, <em>decl</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#PhotDevice.update_parameter_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.PhotDevice.update_parameter_list" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PhotDevice.update_parameter_list">
+<code class="descname">update_parameter_list</code><span class="sig-paren">(</span><em>params</em>, <em>decl</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#PhotDevice.update_parameter_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.update_parameter_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Coerces parameter list. This is necessary to calculate port locations and update parameters in general.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -596,7 +596,7 @@ positioning.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – dict of parameters</li>
-<li><strong>decl</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efcd6474470&gt;</em>) – pya.PCellDeclaration reference</li>
+<li><strong>decl</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe3bb9b0&gt;</em>) – pya.PCellDeclaration reference</li>
 </ul>
 </td>
 </tr>
@@ -610,8 +610,8 @@ positioning.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="photonics.PortCreation">
-<em class="property">class </em><code class="descclassname">photonics.</code><code class="descname">PortCreation</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>rot</em>, <em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#photonics.PortCreation" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PortCreation">
+<em class="property">class </em><code class="descclassname">kppc.photonics.</code><code class="descname">PortCreation</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>rot</em>, <em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#kppc.photonics.PortCreation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 <p>Custom namedtuple</p>
 <p>This will hold informations for creating ports.</p>
@@ -630,34 +630,34 @@ positioning.</p>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="photonics.PortCreation.length">
-<code class="descname">length</code><a class="headerlink" href="#photonics.PortCreation.length" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PortCreation.length">
+<code class="descname">length</code><a class="headerlink" href="#kppc.photonics.PortCreation.length" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 3</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="photonics.PortCreation.rot">
-<code class="descname">rot</code><a class="headerlink" href="#photonics.PortCreation.rot" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PortCreation.rot">
+<code class="descname">rot</code><a class="headerlink" href="#kppc.photonics.PortCreation.rot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="photonics.PortCreation.x">
-<code class="descname">x</code><a class="headerlink" href="#photonics.PortCreation.x" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PortCreation.x">
+<code class="descname">x</code><a class="headerlink" href="#kppc.photonics.PortCreation.x" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="photonics.PortCreation.y">
-<code class="descname">y</code><a class="headerlink" href="#photonics.PortCreation.y" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.PortCreation.y">
+<code class="descname">y</code><a class="headerlink" href="#kppc.photonics.PortCreation.y" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
-<dt id="photonics.isnamedtupleinstance">
-<code class="descclassname">photonics.</code><code class="descname">isnamedtupleinstance</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics.html#isnamedtupleinstance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.isnamedtupleinstance" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.isnamedtupleinstance">
+<code class="descclassname">kppc.photonics.</code><code class="descname">isnamedtupleinstance</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics.html#isnamedtupleinstance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.isnamedtupleinstance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if something is a named tuple
 This allows to test if <cite>x</cite> is a port (PortCreation object) or just a list of instance descriptions</p>
 </dd></dl>
@@ -665,11 +665,11 @@ This allows to test if <cite>x</cite> is a port (PortCreation object) or just a 
 </div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-photonics.dataprep">
-<span id="photonics-dataprep-module"></span><h3>photonics.dataprep module<a class="headerlink" href="#module-photonics.dataprep" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-kppc.photonics.dataprep">
+<span id="photonics-dataprep-module"></span><h3>photonics.dataprep module<a class="headerlink" href="#module-kppc.photonics.dataprep" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
-<dt id="photonics.dataprep.add">
-<code class="descclassname">photonics.dataprep.</code><code class="descname">add</code><span class="sig-paren">(</span><em>layout</em>, <em>cell</em>, <em>slayers</em>, <em>dlayers</em>, <em>ex_amount</em>, <em>layers</em>, <em>out_cell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics/dataprep.html#add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.dataprep.add" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.dataprep.add">
+<code class="descclassname">kppc.photonics.dataprep.</code><code class="descname">add</code><span class="sig-paren">(</span><em>layout</em>, <em>cell</em>, <em>slayers</em>, <em>dlayers</em>, <em>ex_amount</em>, <em>layers</em>, <em>out_cell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics/dataprep.html#add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.dataprep.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Combines all slayers’ shapes into a region and merges this region with each of dlayers’ regions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -691,8 +691,8 @@ This allows to test if <cite>x</cite> is a port (PortCreation object) or just a 
 </dd></dl>
 
 <dl class="function">
-<dt id="photonics.dataprep.dataprep">
-<code class="descclassname">photonics.dataprep.</code><code class="descname">dataprep</code><span class="sig-paren">(</span><em>in_cell</em>, <em>layout</em>, <em>out_cell=None</em>, <em>config=None</em>, <em>layers_org=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics/dataprep.html#dataprep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.dataprep.dataprep" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.dataprep.dataprep">
+<code class="descclassname">kppc.photonics.dataprep.</code><code class="descname">dataprep</code><span class="sig-paren">(</span><em>in_cell</em>, <em>layout</em>, <em>out_cell=None</em>, <em>config=None</em>, <em>layers_org=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics/dataprep.html#dataprep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.dataprep.dataprep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dataprep that creates excludes layers etc. with boolean operation on input layers that will be added/substracted to outputlayers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -712,24 +712,24 @@ This allows to test if <cite>x</cite> is a port (PortCreation object) or just a 
 </dd></dl>
 
 <dl class="function">
-<dt id="photonics.dataprep.file_len">
-<code class="descclassname">photonics.dataprep.</code><code class="descname">file_len</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics/dataprep.html#file_len"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.dataprep.file_len" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.dataprep.file_len">
+<code class="descclassname">kppc.photonics.dataprep.</code><code class="descname">file_len</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics/dataprep.html#file_len"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.dataprep.file_len" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of lines in the file fname</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="photonics.dataprep.sub">
-<code class="descclassname">photonics.dataprep.</code><code class="descname">sub</code><span class="sig-paren">(</span><em>layout</em>, <em>cell</em>, <em>slayers</em>, <em>dlayers</em>, <em>ex_amount</em>, <em>layers</em>, <em>out_cell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics/dataprep.html#sub"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.dataprep.sub" title="Permalink to this definition">¶</a></dt>
-<dd><p>Analogous to <a class="reference internal" href="#photonics.dataprep.add" title="photonics.dataprep.add"><code class="xref py py-func docutils literal notranslate"><span class="pre">add()</span></code></a></p>
+<dt id="kppc.photonics.dataprep.sub">
+<code class="descclassname">kppc.photonics.dataprep.</code><code class="descname">sub</code><span class="sig-paren">(</span><em>layout</em>, <em>cell</em>, <em>slayers</em>, <em>dlayers</em>, <em>ex_amount</em>, <em>layers</em>, <em>out_cell=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics/dataprep.html#sub"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.dataprep.sub" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analogous to <a class="reference internal" href="#kppc.photonics.dataprep.add" title="kppc.photonics.dataprep.add"><code class="xref py py-func docutils literal notranslate"><span class="pre">add()</span></code></a></p>
 <p>Instead of perfoming a combination with the destination layers, this function will substract the input region.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-photonics.layermaps">
-<span id="photonics-layermaps-module"></span><h3>photonics.layermaps module<a class="headerlink" href="#module-photonics.layermaps" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-kppc.photonics.layermaps">
+<span id="photonics-layermaps-module"></span><h3>photonics.layermaps module<a class="headerlink" href="#module-kppc.photonics.layermaps" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
-<dt id="photonics.layermaps.load">
-<code class="descclassname">photonics.layermaps.</code><code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonics/layermaps.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#photonics.layermaps.load" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.photonics.layermaps.load">
+<code class="descclassname">kppc.photonics.layermaps.</code><code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/photonics/layermaps.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.layermaps.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple routine to read a .layermap file into a dictionary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -745,7 +745,7 @@ purpose2:(layer_number1,purpose_number2)},layer2: {…} }</p>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">PhotPCells.layermaps</span> <span class="k">as</span> <span class="nn">lm</span>
+<tr class="field-even field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">kppc.photonics.layermaps</span> <span class="k">as</span> <span class="nn">lm</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lm</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/.klayout/salt/zccmos/FreePDK45_tech/tech/FreePDK45.layermap&#39;</span><span class="p">))</span>
 <span class="go">{&#39;pwell&#39;: {&#39;blockage&#39;: (&#39;109&#39;, &#39;1&#39;), &#39;drawing&#39;: (&#39;109&#39;, &#39;0&#39;)}, ... }</span>
 </pre></div>
@@ -769,10 +769,10 @@ purpose2:(layer_number1,purpose_number2)},layer2: {…} }</p>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">photonics package</a><ul>
-<li><a class="reference internal" href="#module-photonics">Module contents</a></li>
+<li><a class="reference internal" href="#module-kppc.photonics">Module contents</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a><ul>
-<li><a class="reference internal" href="#module-photonics.dataprep">photonics.dataprep module</a></li>
-<li><a class="reference internal" href="#module-photonics.layermaps">photonics.layermaps module</a></li>
+<li><a class="reference internal" href="#module-kppc.photonics.dataprep">photonics.dataprep module</a></li>
+<li><a class="reference internal" href="#module-kppc.photonics.layermaps">photonics.layermaps module</a></li>
 </ul>
 </li>
 </ul>

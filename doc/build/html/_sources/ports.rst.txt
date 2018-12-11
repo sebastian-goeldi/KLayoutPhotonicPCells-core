@@ -9,7 +9,7 @@ be the same size.
 
 This module implements the concept of ports into KLayout PCells. Currently ports track location, orientation and length.
 If two ports have a mismatch in width, they cannot be connected. New ports can be created in PCells with the
-:class:`photonics.PortCreation` when overriding the :meth:`photonics.PhotDevice.create_param_inst` method
+:class:`kppc.photonics.PortCreation` when overriding the :meth:`kppc.photonics.PhotDevice.create_param_inst` method
 in the PCell Library. If any instantiated child cells in a PCell have any open ports (not connected to another port of another
 child cell), they are passed upwards to the cell itself and are announced as ports of this cell.
 This hierarchical design allows to create arbitrary Devices independent of the order when assembling them.

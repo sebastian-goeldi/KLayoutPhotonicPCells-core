@@ -57,7 +57,7 @@
 
 
 \title{KLayout Photonic PCells Documentation}
-\date{Nov 28, 2018}
+\date{Dec 11, 2018}
 \release{0.1}
 \author{Sebastian Goeldi}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -76,7 +76,7 @@
 
 \chapter{Introduction}
 \label{\detokenize{introduction:introduction}}\label{\detokenize{introduction::doc}}
-The \sphinxtitleref{pcell\_lib\_ext} module is an extension for KLayout PCells to facilitate photonic PCells.
+The KLayoutPhotonicPCells{}`kppc{}` module is an extension for KLayout PCells to facilitate photonic PCells.
 Photonics often works with the concept of ports.
 Ports are defined by a coordinate and a direction. In the case of this module ports will be stored in PCell parameters in the background.
 They are serialized \sphinxhref{https://www.klayout.de/doc/code/class\_ICplxTrans.html}{KLayout Trans}%
@@ -148,14 +148,14 @@ To use the library extension, make sure you have installed Cython. Part of the c
 \label{\detokenize{first_steps:installation}}
 This installation procedure is solely written for Linux. For this installation Cython is required. So get Cython either from the package manager of your distribution or through pip. The package is tested on Python 3.5+. No special python3 modules are used, therefore it should work with python 2.7, too. The Python version used should be the same KLayout uses. By default, this is the system interpreter for Python3.
 If you installed the package manually, move the unpackaged package into \sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/salt}} or into the KLayout folder if you used a custom directory. This tutorial assumes default pathes.
-After unpacking and moving you should have a \sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/salt/zccmos/pcell\_ext\_lib}} folder. If you installed the FreePDK45\_Cells \& FreePDK45\_tech, then you should have the folders \sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/salt/zccmos/FreePDK45\_Cells}} and \sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/salt/zccmos/FreePDK45\_tech}}, too. The library extension package needs manual setup before being usable.
+After unpacking and moving you should have a \sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/salt/KLayouPhotonicPCells/core}} folder. If you installed the FreePDK45\_Cells \& FreePDK45\_tech, then you should have the folders \sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/salt/KLayouPhotonicPCells/FreePDK45\_ExampleCells}} and \sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/salt/KLayouPhotonicPCells/FreePDK45\_tech}}, too. The library extension package needs manual setup before being usable.
 
-Use a console and execute the following commands. If you are familiar with setuptools you can skip these instructions. For further information consult the {\hyperref[\detokenize{drc:module-drc}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{drc}}}}} documentation.
+Use a console and execute the following commands. If you are familiar with setuptools you can skip these instructions. For further information consult the \sphinxcode{\sphinxupquote{drc}} documentation.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{g+go}{cd \PYGZti{}/.klayout/salt/zccmos/pcell\PYGZus{}ext\PYGZus{}lib/python/drc/}
-\PYG{g+go}{./setup}
+\PYG{g+go}{cd \PYGZti{}/.klayout/salt/KLayouPhotonicPCells/cor/python/kppc/drc/}
+\PYG{g+go}{sh compile.sh}
 \end{sphinxVerbatim}
 
 \begin{figure}[htbp]
@@ -176,7 +176,7 @@ be the same size.
 
 This module implements the concept of ports into KLayout PCells. Currently ports track location, orientation and length.
 If two ports have a mismatch in width, they cannot be connected. New ports can be created in PCells with the
-{\hyperref[\detokenize{photonics:photonics.PortCreation}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{photonics.PortCreation}}}}} when overriding the {\hyperref[\detokenize{photonics:photonics.PhotDevice.create_param_inst}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{photonics.PhotDevice.create\_param\_inst()}}}}} method
+{\hyperref[\detokenize{photonics:kppc.photonics.PortCreation}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{kppc.photonics.PortCreation}}}}} when overriding the {\hyperref[\detokenize{photonics:kppc.photonics.PhotDevice.create_param_inst}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{kppc.photonics.PhotDevice.create\_param\_inst()}}}}} method
 in the PCell Library. If any instantiated child cells in a PCell have any open ports (not connected to another port of another
 child cell), they are passed upwards to the cell itself and are announced as ports of this cell.
 This hierarchical design allows to create arbitrary Devices independent of the order when assembling them.
@@ -344,12 +344,12 @@ Recommended place is again in the tech folder.
 \label{\detokenize{drc:drc-package}}\label{\detokenize{drc::doc}}
 
 \subsection{Module contents}
-\label{\detokenize{drc:module-drc}}\label{\detokenize{drc:module-contents}}\index{drc (module)}
+\label{\detokenize{drc:module-kppc.drc}}\label{\detokenize{drc:module-contents}}\index{kppc.drc (module)}
 This module uses the C++ submodule {\hyperref[\detokenize{drc:slcleaner}]{\sphinxcrossref{\DUrole{std,std-ref}{slcleaner}}}}. It has to be compiled after installing the
 extension.
 
 To compile the module execute the setup script \sphinxcode{\sphinxupquote{python/drc/compile.sh}}.
-Or alternatively execute the \sphinxcode{\sphinxupquote{python/drc/slcleaner\_source/setup.py}} with the python3 executable
+Or alternatively execute the \sphinxcode{\sphinxupquote{python/kppc/drc/slcleaner\_source/setup.py}} with the python3 executable
 and copy/move the resulting \sphinxcode{\sphinxupquote{slcleaner.{[}...{]}.so}} library file ino the \sphinxcode{\sphinxupquote{python/drc/}} folder.
 
 For further information consult the \sphinxhref{http://cython.org/}{Cython Documentation}%
@@ -362,8 +362,8 @@ To execute the script open a console and execute the following commands:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{g+go}{cd \PYGZti{}/.klayout/salt/zccmos/pcell\PYGZus{}ext\PYGZus{}lib/python/drc}
-\PYG{g+go}{./compile.sh}
+\PYG{g+go}{cd \PYGZti{}/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc}
+\PYG{g+go}{sh compile.sh}
 \end{sphinxVerbatim}
 
 The bash script executes the following commands:
@@ -380,16 +380,16 @@ python3 setup.py build\PYGZus{}ext \PYGZhy{}b ./
 /usr/bin/python3 setup.py build\PYGZus{}ext \PYGZhy{}b ./
 cp slcleaner.cpython* ../
 \end{sphinxVerbatim}
-\index{clean() (in module drc)}
+\index{clean() (in module kppc.drc)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.clean}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{drc.}}\sphinxbfcode{\sphinxupquote{clean}}}{\emph{cell}, \emph{cleanrules}}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.clean}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{kppc.drc.}}\sphinxbfcode{\sphinxupquote{clean}}}{\emph{cell}, \emph{cleanrules}}{}
 Clean a cell for width and space violations.
 This function will clear the output layers of any shapes and insert a cleaned region.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{cell}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efd290cd550\textgreater{}}}) \textendash{} pointer to the cell that needs to be cleaned
+\sphinxstyleliteralstrong{\sphinxupquote{cell}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe4f3278\textgreater{}}}) \textendash{} pointer to the cell that needs to be cleaned
 
 \item {} 
 \sphinxstyleliteralstrong{\sphinxupquote{cleanrules}} (\sphinxhref{https://docs.python.org/3/library/stdtypes.html\#list}{\sphinxcode{\sphinxupquote{list}}}%
@@ -410,13 +410,13 @@ purpose{]}, violationwidth, violationspace{]}, {[}{[}layer2, purpose2{]}, violat
 \subsection{Submodules}
 \label{\detokenize{drc:submodules}}
 
-\subsubsection{drc.slcleaner module}
-\label{\detokenize{drc:drc-slcleaner-module}}\label{\detokenize{drc:slcleaner}}
+\subsubsection{kppc.drc.slcleaner module}
+\label{\detokenize{drc:kppc-drc-slcleaner-module}}\label{\detokenize{drc:slcleaner}}
 An interface to the DrcSl.cpp Class.
-\index{drc.slcleaner.PyDrcSl (class in drc)}
+\index{kppc.drc.slcleaner.PyDrcSl (class in kppc.drc)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl}}\pysigline{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{drc.slcleaner.}}\sphinxbfcode{\sphinxupquote{PyDrcSl}}}~
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl}}\pysigline{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{kppc.drc.slcleaner.}}\sphinxbfcode{\sphinxupquote{PyDrcSl}}}~
 
 \begin{fulllineitems}
 \pysigline{\sphinxbfcode{\sphinxupquote{def~add\_data(x1,~x2,~y1,~y2)}}}
@@ -463,10 +463,10 @@ Klayout already does this nicely.
 
 \end{fulllineitems}
 
-\index{init\_list() (drc.drc.slcleaner.PyDrcSl method)}
+\index{init\_list() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.init_list}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{init\_list}}}{\emph{x1: int}, \emph{x2: int}, \emph{y1: int}, \emph{y2: int}, \emph{viospace: int}, \emph{viowidth: int}}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.init_list}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{init\_list}}}{\emph{x1: int}, \emph{x2: int}, \emph{y1: int}, \emph{y2: int}, \emph{viospace: int}, \emph{viowidth: int}}{}
 (Re-)Initialize the Cleaner. x1,2 and y1,2 define the bounding box of the cleaner.
 
 \begin{sphinxadmonition}{warning}{Warning:}
@@ -498,18 +498,18 @@ If a corner or a complete edge is outside the bounding box and is added through 
 
 \end{fulllineitems}
 
-\index{sort() (drc.drc.slcleaner.PyDrcSl method)}
+\index{sort() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.sort}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{sort}}}{}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.sort}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{sort}}}{}{}
 Sort the data in ascending order. This will also delete invalid edges, i.e. touching / overlapping polygons will be merged.
 
 \end{fulllineitems}
 
-\index{clean() (drc.drc.slcleaner.PyDrcSl method)}
+\index{clean() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.clean}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clean}}}{\emph{x = 10}}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clean}}}{\emph{x = 10}}{}
 Clean data in the vector for space and width violations.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
@@ -519,10 +519,10 @@ Clean data in the vector for space and width violations.
 
 \end{fulllineitems}
 
-\index{printvector() (drc.drc.slcleaner.PyDrcSl method)}
+\index{printvector() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.printvector}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{printvector}}}{\emph{beg = -1}, \emph{end = -1}}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.printvector}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{printvector}}}{\emph{beg = -1}, \emph{end = -1}}{}
 Print the data of rows/columns depending on current orientation
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -538,10 +538,10 @@ Print the data of rows/columns depending on current orientation
 
 \end{fulllineitems}
 
-\index{get\_row() (drc.drc.slcleaner.PyDrcSl method)}
+\index{get\_row() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.get_row}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_row}}}{\emph{ind: int}}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.get_row}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_row}}}{\emph{ind: int}}{}
 Get the edge data back to python from the C++ object.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
@@ -554,10 +554,10 @@ numpy array of the edges
 
 \end{fulllineitems}
 
-\index{get\_row\_types() (drc.drc.slcleaner.PyDrcSl method)}
+\index{get\_row\_types() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.get_row_types}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_row\_types}}}{\emph{ind: int}}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.get_row_types}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_row\_types}}}{\emph{ind: int}}{}
 Get the type of edges in that row.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
@@ -570,34 +570,34 @@ numpy array of types of edges (0 for upwards facing edge, 1 for downwards)
 
 \end{fulllineitems}
 
-\index{clean\_space() (drc.drc.slcleaner.PyDrcSl method)}
+\index{clean\_space() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.clean_space}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clean\_space}}}{}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean_space}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clean\_space}}}{}{}
 Clean the current data for space violations.
 
 \end{fulllineitems}
 
-\index{clean\_width() (drc.drc.slcleaner.PyDrcSl method)}
+\index{clean\_width() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.clean_width}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clean\_width}}}{}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean_width}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clean\_width}}}{}{}
 Clean the current data for width violations.
 
 \end{fulllineitems}
 
-\index{switch\_dimensions() (drc.drc.slcleaner.PyDrcSl method)}
+\index{switch\_dimensions() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.switch_dimensions}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{switch\_dimensions}}}{}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.switch_dimensions}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{switch\_dimensions}}}{}{}
 Switch the orientation of the data. From row oriented to column oriented and vice-versa.
 
 \end{fulllineitems}
 
-\index{s() (drc.drc.slcleaner.PyDrcSl method)}
+\index{s() (kppc.drc.kppc.drc.slcleaner.PyDrcSl method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{drc:drc.drc.slcleaner.PyDrcSl.s}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{s}}}{}{}
+\phantomsection\label{\detokenize{drc:kppc.drc.kppc.drc.slcleaner.PyDrcSl.s}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{s}}}{}{}
 This property can be used to get the array size of the cleaner.
 \begin{quote}\begin{description}
 \item[{Returns}] \leavevmode
@@ -1332,12 +1332,12 @@ To reload a module during runtime use the following commands in the KLayout pyth
 
 
 \subsection{Module contents}
-\label{\detokenize{photonics:module-photonics}}\label{\detokenize{photonics:module-contents}}\index{photonics (module)}
+\label{\detokenize{photonics:module-kppc.photonics}}\label{\detokenize{photonics:module-contents}}\index{kppc.photonics (module)}
 Photonic PCell-Extension Module
 
 \begin{sphinxadmonition}{warning}{Warning:}
-Before using this module for the first time, make sure the \sphinxtitleref{drc.slcleaner} submodule is compiled and importable, as this  module
-relies on the drc package for DR-Cleaning. See {\hyperref[\detokenize{drc:module-drc}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{drc}}}}} for further details.
+Before using this module for the first time, make sure the \sphinxtitleref{kppc.drc.slcleaner} submodule is compiled and importable, as this  module
+relies on the drc package for DR-Cleaning. See \sphinxcode{\sphinxupquote{drc}} for further details.
 \end{sphinxadmonition}
 
 A Module which provides extensions for standard KLyaout-PCells. This extension mainly provides functionalities for
@@ -1346,17 +1346,17 @@ They indicate where multiple Cells/Devices should interact with each other. For 
 with a linear taper. This module provides the classes and functions for this functionality. Additionally, this module
 provides a lot of convenience functions for interactions with the KLayout-API.
 
-The main functionality for this module is in the class {\hyperref[\detokenize{photonics:photonics.PhotDevice}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PhotDevice}}}}}.
+The main functionality for this module is in the class {\hyperref[\detokenize{photonics:kppc.photonics.PhotDevice}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PhotDevice}}}}}.
 
 \begin{sphinxadmonition}{warning}{Warning:}
 When using this module to extend a PCell-Library any PCell class has to assign valid values to the
-parameters \sphinxcode{\sphinxupquote{layermap}} , \sphinxcode{\sphinxupquote{dataprep\_config}} , \sphinxcode{\sphinxupquote{clean\_rules}} . These are accessed by {\hyperref[\detokenize{photonics:photonics.PhotDevice}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PhotDevice}}}}}. If they
+parameters \sphinxcode{\sphinxupquote{layermap}} , \sphinxcode{\sphinxupquote{dataprep\_config}} , \sphinxcode{\sphinxupquote{clean\_rules}} . These are accessed by {\hyperref[\detokenize{photonics:kppc.photonics.PhotDevice}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PhotDevice}}}}}. If they
 aren’t declared, a runtime error will occur.
 \end{sphinxadmonition}
-\index{InstanceHolder (class in photonics)}
+\index{InstanceHolder (class in kppc.photonics)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.InstanceHolder}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{photonics.}}\sphinxbfcode{\sphinxupquote{InstanceHolder}}}{\emph{cell\_name}, \emph{lib}, \emph{pcell\_decl}, \emph{params=None}, \emph{params\_mod=None}, \emph{id=0}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.InstanceHolder}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{kppc.photonics.}}\sphinxbfcode{\sphinxupquote{InstanceHolder}}}{\emph{cell\_name}, \emph{lib}, \emph{pcell\_decl}, \emph{params=None}, \emph{params\_mod=None}, \emph{id=0}}{}
 Bases: \sphinxhref{https://docs.python.org/3/library/functions.html\#object}{\sphinxcode{\sphinxupquote{object}}}%
 \begin{footnote}[12]\sphinxAtStartFootnote
 \sphinxnolinkurl{https://docs.python.org/3/library/functions.html\#object}
@@ -1364,11 +1364,11 @@ Bases: \sphinxhref{https://docs.python.org/3/library/functions.html\#object}{\sp
 \end{footnote}
 
 Class to keep track and hold the information of a pcell instance. The information will be processed to a PCell in
-{\hyperref[\detokenize{photonics:photonics.PhotDevice.produce_impl}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{produce\_impl()}}}}}
-\index{move() (photonics.InstanceHolder method)}
+{\hyperref[\detokenize{photonics:kppc.photonics.PhotDevice.produce_impl}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{produce\_impl()}}}}}
+\index{move() (kppc.photonics.InstanceHolder method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.InstanceHolder.move}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{move}}}{\emph{x=0}, \emph{y=0}, \emph{rot=0}, \emph{mirrx=False}, \emph{mag=1}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.InstanceHolder.move}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{move}}}{\emph{x=0}, \emph{y=0}, \emph{rot=0}, \emph{mirrx=False}, \emph{mag=1}}{}
 Moves an instance. Units of microns relative to origin.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1413,10 +1413,10 @@ Moves an instance. Units of microns relative to origin.
 
 \end{fulllineitems}
 
-\index{port() (photonics.InstanceHolder method)}
+\index{port() (kppc.photonics.InstanceHolder method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.InstanceHolder.port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{port}}}{\emph{port}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.InstanceHolder.port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{port}}}{\emph{port}}{}
 Returns a reference to itself and the port number. No checks are made whether this port is valid or not!
 Available ports can be seen if such an object is instantiated.
 \begin{quote}\begin{description}
@@ -1434,10 +1434,10 @@ self, port
 
 \end{fulllineitems}
 
-\index{port\_to\_port() (photonics.InstanceHolder method)}
+\index{port\_to\_port() (kppc.photonics.InstanceHolder method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.InstanceHolder.port_to_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{port\_to\_port}}}{\emph{port}, \emph{inst\_holder}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.InstanceHolder.port_to_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{port\_to\_port}}}{\emph{port}, \emph{inst\_holder}}{}
 Attach one of this instance’s ports to another instance’s port.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1465,10 +1465,10 @@ This is a tuple returned from \textless{}InstanceHolder object\textgreater{}.por
 
 \end{fulllineitems}
 
-\index{PhotDevice (class in photonics)}
+\index{PhotDevice (class in kppc.photonics)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice}}\pysigline{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{photonics.}}\sphinxbfcode{\sphinxupquote{PhotDevice}}}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice}}\pysigline{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{kppc.photonics.}}\sphinxbfcode{\sphinxupquote{PhotDevice}}}
 Bases: \sphinxcode{\sphinxupquote{sphinx.ext.autodoc.importer.\_MockObject}}
 
 Wrapper for calls to the Klayout API.
@@ -1508,11 +1508,11 @@ DR-Cleaning will not work without dataprep, or will be without any effect.
 all child-cells will be preserved at the end. If set to False only the Dataprep Sub-Cell will be preserved.
 
 \item {} 
-{\hyperref[\detokenize{photonics:module-photonics.dataprep}]{\sphinxcrossref{\sphinxstyleliteralstrong{\sphinxupquote{dataprep}}}}} (\sphinxhref{https://docs.python.org/3/library/functions.html\#bool}{\sphinxstyleliteralemphasis{\sphinxupquote{bool}}}%
+{\hyperref[\detokenize{photonics:module-kppc.photonics.dataprep}]{\sphinxcrossref{\sphinxstyleliteralstrong{\sphinxupquote{dataprep}}}}} (\sphinxhref{https://docs.python.org/3/library/functions.html\#bool}{\sphinxstyleliteralemphasis{\sphinxupquote{bool}}}%
 \begin{footnote}[25]\sphinxAtStartFootnote
 \sphinxnolinkurl{https://docs.python.org/3/library/functions.html\#bool}
 %
-\end{footnote}) \textendash{} If this flag is set, {\hyperref[\detokenize{photonics:photonics.dataprep.dataprep}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{photonics.dataprep.dataprep()}}}}} will be performed on the cell. The variable
+\end{footnote}) \textendash{} If this flag is set, {\hyperref[\detokenize{photonics:kppc.photonics.dataprep.dataprep}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{kppc.photonics.dataprep.dataprep()}}}}} will be performed on the cell. The variable
 \sphinxcode{\sphinxupquote{dataprep\_config}} holds the path to the instructions for dataprep.
 
 \item {} 
@@ -1520,7 +1520,7 @@ all child-cells will be preserved at the end. If set to False only the Dataprep 
 \begin{footnote}[26]\sphinxAtStartFootnote
 \sphinxnolinkurl{https://docs.python.org/3/library/functions.html\#bool}
 %
-\end{footnote}) \textendash{} If this flag is set, {\hyperref[\detokenize{drc:drc.clean}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{drc.clean()}}}}} will be performed on the cell. Rules for the DR-Cleaning
+\end{footnote}) \textendash{} If this flag is set, {\hyperref[\detokenize{drc:kppc.drc.clean}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{kppc.drc.clean()}}}}} will be performed on the cell. Rules for the DR-Cleaning
 are pulled from \sphinxcode{\sphinxupquote{clean\_rules}}.
 
 \item {} 
@@ -1529,7 +1529,7 @@ are pulled from \sphinxcode{\sphinxupquote{clean\_rules}}.
 \sphinxnolinkurl{https://docs.python.org/3/library/functions.html\#bool}
 %
 \end{footnote}) \textendash{} Hidden parameter that indicates whether this cell is a top\_cell. Default is yes. When an instance is
-added through {\hyperref[\detokenize{photonics:photonics.PhotDevice.add_pcell_variant}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{add\_pcell\_variant()}}}}} these cells will not be set to top\_cells as they are instantiated from
+added through {\hyperref[\detokenize{photonics:kppc.photonics.PhotDevice.add_pcell_variant}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{add\_pcell\_variant()}}}}} these cells will not be set to top\_cells as they are instantiated from
 another cell.
 
 \item {} 
@@ -1539,10 +1539,10 @@ annotated by text.
 \end{itemize}
 
 \end{description}\end{quote}
-\index{add\_layer() (photonics.PhotDevice method)}
+\index{add\_layer() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.add_layer}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_layer}}}{\emph{var\_name}, \emph{name=''}, \emph{layer=0}, \emph{datatype=0}, \emph{ld=()}, \emph{field\_name=''}, \emph{hidden=False}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.add_layer}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_layer}}}{\emph{var\_name}, \emph{name=''}, \emph{layer=0}, \emph{datatype=0}, \emph{ld=()}, \emph{field\_name=''}, \emph{hidden=False}}{}
 Add a layer to the layer list of the pcell by name.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1593,10 +1593,10 @@ self.add\_layer(‘lpp’,’rx1phot.drawing’)
 
 \end{fulllineitems}
 
-\index{add\_params() (photonics.PhotDevice method)}
+\index{add\_params() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.add_params}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_params}}}{\emph{params}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.add_params}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_params}}}{\emph{params}}{}
 Create the PCell conform dictionary from a parameter list
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
@@ -1610,10 +1610,10 @@ Create the PCell conform dictionary from a parameter list
 
 \end{fulllineitems}
 
-\index{add\_pcell\_variant() (photonics.PhotDevice method)}
+\index{add\_pcell\_variant() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.add_pcell_variant}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_pcell\_variant}}}{\emph{params}, \emph{number=1}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.add_pcell_variant}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_pcell\_variant}}}{\emph{params}, \emph{number=1}}{}
 Add variants of PCells. Creates a list of InstanceHolders and modifies their parameters accordingly.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1634,16 +1634,16 @@ Add variants of PCells. Creates a list of InstanceHolders and modifies their par
 \end{itemize}
 
 \item[{Returns}] \leavevmode
-list of {\hyperref[\detokenize{photonics:photonics.InstanceHolder}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{photonics.InstanceHolder}}}}}
+list of {\hyperref[\detokenize{photonics:kppc.photonics.InstanceHolder}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{kppc.photonics.InstanceHolder}}}}}
 
 \end{description}\end{quote}
 
 \end{fulllineitems}
 
-\index{add\_pcells() (photonics.PhotDevice method)}
+\index{add\_pcells() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.add_pcells}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_pcells}}}{\emph{instance\_list}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.add_pcells}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{add\_pcells}}}{\emph{instance\_list}}{}
 Creates list of instances of PCells. These are the effective Klayout cell instances.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
@@ -1651,7 +1651,7 @@ Creates list of instances of PCells. These are the effective Klayout cell instan
 \begin{footnote}[36]\sphinxAtStartFootnote
 \sphinxnolinkurl{https://docs.python.org/3/library/stdtypes.html\#list}
 %
-\end{footnote}) \textendash{} list of {\hyperref[\detokenize{photonics:photonics.InstanceHolder}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{photonics.InstanceHolder}}}}}
+\end{footnote}) \textendash{} list of {\hyperref[\detokenize{photonics:kppc.photonics.InstanceHolder}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{kppc.photonics.InstanceHolder}}}}}
 
 \item[{Returns}] \leavevmode
 list of instantiated pya.CellInstArray
@@ -1660,10 +1660,10 @@ list of instantiated pya.CellInstArray
 
 \end{fulllineitems}
 
-\index{calculate\_ports() (photonics.PhotDevice method)}
+\index{calculate\_ports() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.calculate_ports}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{calculate\_ports}}}{\emph{instances}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.calculate_ports}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{calculate\_ports}}}{\emph{instances}}{}
 Calculates port locations in the cell layout. This is to propagate the port locations upwards
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
@@ -1671,24 +1671,24 @@ Calculates port locations in the cell layout. This is to propagate the port loca
 \begin{footnote}[37]\sphinxAtStartFootnote
 \sphinxnolinkurl{https://docs.python.org/3/library/stdtypes.html\#list}
 %
-\end{footnote}) \textendash{} list containing {\hyperref[\detokenize{photonics:photonics.InstanceHolder}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{photonics.InstanceHolder}}}}}
+\end{footnote}) \textendash{} list containing {\hyperref[\detokenize{photonics:kppc.photonics.InstanceHolder}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{kppc.photonics.InstanceHolder}}}}}
 
 \end{description}\end{quote}
 
 \end{fulllineitems}
 
-\index{clear\_ports() (photonics.PhotDevice method)}
+\index{clear\_ports() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.clear_ports}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clear\_ports}}}{}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.clear_ports}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{clear\_ports}}}{}{}
 Clears self.portlist and by that delete all ports. This is used when updating the Ports
 
 \end{fulllineitems}
 
-\index{coerce\_parameters\_impl() (photonics.PhotDevice method)}
+\index{coerce\_parameters\_impl() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.coerce_parameters_impl}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{coerce\_parameters\_impl}}}{}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.coerce_parameters_impl}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{coerce\_parameters\_impl}}}{}{}
 Method called by Klayout to update a PCell. For photonic PCells the ports are updated/calculated in the
 parameter of the PCell. And desired movement transformations are performed.
 
@@ -1704,10 +1704,10 @@ the majority of computation time.
 
 \end{fulllineitems}
 
-\index{connect\_port() (photonics.PhotDevice method)}
+\index{connect\_port() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.connect_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{connect\_port}}}{\emph{pos1}, \emph{portlist1}, \emph{port1}, \emph{pos2}, \emph{portlist2}, \emph{port2}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.connect_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{connect\_port}}}{\emph{pos1}, \emph{portlist1}, \emph{port1}, \emph{pos2}, \emph{portlist2}, \emph{port2}}{}
 Connect ports of two instances. The second instance will be transformed to attach to the first instance.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1762,10 +1762,10 @@ Connect ports of two instances. The second instance will be transformed to attac
 
 \end{fulllineitems}
 
-\index{connect\_port\_to\_port() (photonics.PhotDevice method)}
+\index{connect\_port\_to\_port() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.connect_port_to_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{connect\_port\_to\_port}}}{\emph{port1}, \emph{port2}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.connect_port_to_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{connect\_port\_to\_port}}}{\emph{port1}, \emph{port2}}{}
 Connect Ports from two InstanceHolder instances.
 
 Connect two \sphinxtitleref{InstanceHolders} together. Attach \textless{}InstanceHolder instance1\textgreater{}.port(\textless{}port1\textgreater{}) to \textless{}InstanceHolder instance2\textgreater{}.port(\textless{}port2\textgreater{}).
@@ -1792,10 +1792,10 @@ This will apply a transformation to Instance2. There can only be either a transf
 
 \end{fulllineitems}
 
-\index{create\_param\_inst() (photonics.PhotDevice method)}
+\index{create\_param\_inst() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.create_param_inst}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_param\_inst}}}{}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.create_param_inst}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_param\_inst}}}{}{}
 To be overwritten by the effective PCell
 \begin{quote}\begin{description}
 \item[{Returns}] \leavevmode
@@ -1805,10 +1805,10 @@ Iterable with the declarations of the child PCells.
 
 \end{fulllineitems}
 
-\index{create\_path() (photonics.PhotDevice method)}
+\index{create\_path() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.create_path}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_path}}}{\emph{points}, \emph{width}, \emph{layer}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.create_path}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_path}}}{\emph{points}, \emph{width}, \emph{layer}}{}
 Creates a pya.Path object and inserts it into the Library-PCell.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1827,7 +1827,7 @@ Creates a pya.Path object and inserts it into the Library-PCell.
 \end{footnote}) \textendash{} Path width
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{layer}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6474be0\textgreater{}}}) \textendash{} layer on which the path should be made
+\sphinxstyleliteralstrong{\sphinxupquote{layer}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe35b240\textgreater{}}}) \textendash{} layer on which the path should be made
 
 \end{itemize}
 
@@ -1835,10 +1835,10 @@ Creates a pya.Path object and inserts it into the Library-PCell.
 
 \end{fulllineitems}
 
-\index{create\_polygon() (photonics.PhotDevice method)}
+\index{create\_polygon() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.create_polygon}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_polygon}}}{\emph{points}, \emph{layer}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.create_polygon}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_polygon}}}{\emph{points}, \emph{layer}}{}
 Creates a Polygon and adjusts from microns to database units. Format: {[}{[}x1,y1{]},{[}x2,y2{]},…{]} in microns
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1865,10 +1865,10 @@ reference to polygon object
 
 \end{fulllineitems}
 
-\index{create\_port() (photonics.PhotDevice method)}
+\index{create\_port() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.create_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_port}}}{\emph{x}, \emph{y}, \emph{rot=0}, \emph{length=0}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.create_port}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{create\_port}}}{\emph{x}, \emph{y}, \emph{rot=0}, \emph{length=0}}{}
 Creates a Port at the specified coordinates.
 
 This function will be used when a port is created through the PortCreation tuple.
@@ -1908,10 +1908,10 @@ This function will be used when a port is created through the PortCreation tuple
 
 \end{fulllineitems}
 
-\index{decl() (photonics.PhotDevice method)}
+\index{decl() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.decl}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{decl}}}{\emph{libname}, \emph{cellname}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.decl}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{decl}}}{\emph{libname}, \emph{cellname}}{}
 Get pya.PCellDeclaration of a cell in a library
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -1938,36 +1938,36 @@ pya.PCellDeclaration reference of PCell
 
 \end{fulllineitems}
 
-\index{flip\_shape\_xaxis() (photonics.PhotDevice method)}
+\index{flip\_shape\_xaxis() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.flip_shape_xaxis}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{flip\_shape\_xaxis}}}{\emph{shape}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.flip_shape_xaxis}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{flip\_shape\_xaxis}}}{\emph{shape}}{}
 Flip a polygon (or any shape) at the x-axis
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
-\sphinxstyleliteralstrong{\sphinxupquote{shape}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6474ac8\textgreater{}}}) \textendash{} pya.Shape object (e.g. through photonicpcell.create\_polygon obtained)
+\sphinxstyleliteralstrong{\sphinxupquote{shape}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe35b908\textgreater{}}}) \textendash{} pya.Shape object (e.g. through photonicpcell.create\_polygon obtained)
 
 \end{description}\end{quote}
 
 \end{fulllineitems}
 
-\index{flip\_shape\_yaxis() (photonics.PhotDevice method)}
+\index{flip\_shape\_yaxis() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.flip_shape_yaxis}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{flip\_shape\_yaxis}}}{\emph{shape}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.flip_shape_yaxis}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{flip\_shape\_yaxis}}}{\emph{shape}}{}
 Flip a polygon (or any shape) at the y-axis
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
-\sphinxstyleliteralstrong{\sphinxupquote{shape}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6474eb8\textgreater{}}}) \textendash{} pya.Shape object (e.g. through photonicpcell.create\_polygon obtained)
+\sphinxstyleliteralstrong{\sphinxupquote{shape}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe35b940\textgreater{}}}) \textendash{} pya.Shape object (e.g. through photonicpcell.create\_polygon obtained)
 
 \end{description}\end{quote}
 
 \end{fulllineitems}
 
-\index{get\_layer() (photonics.PhotDevice method)}
+\index{get\_layer() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.get_layer}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_layer}}}{\emph{name}, \emph{purpose=''}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.get_layer}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_layer}}}{\emph{name}, \emph{purpose=''}}{}
 Creates LayerInfo object
 
 Creates a pya.LayerInfo object to find layer indexes in the current layout.
@@ -1996,10 +1996,10 @@ pya.LayerInfo about the layer
 
 \end{fulllineitems}
 
-\index{get\_transformations() (photonics.PhotDevice method)}
+\index{get\_transformations() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.get_transformations}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_transformations}}}{}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.get_transformations}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{get\_transformations}}}{}{}
 Convert transformation strings back to pya.ICplxTrans objects
 \begin{quote}\begin{description}
 \item[{Returns}] \leavevmode
@@ -2009,18 +2009,18 @@ list of pya.ICplxTrans objects
 
 \end{fulllineitems}
 
-\index{insert\_shape() (photonics.PhotDevice method)}
+\index{insert\_shape() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.insert_shape}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{insert\_shape}}}{\emph{shape}, \emph{layer}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.insert_shape}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{insert\_shape}}}{\emph{shape}, \emph{layer}}{}
 Any other Klayout shape can be added to the PCell through this function.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{shape}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6415588\textgreater{}}}) \textendash{} pya.Shape object
+\sphinxstyleliteralstrong{\sphinxupquote{shape}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe3ef828\textgreater{}}}) \textendash{} pya.Shape object
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{layer}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6474eb8\textgreater{}}}) \textendash{} layer where to write to
+\sphinxstyleliteralstrong{\sphinxupquote{layer}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe35b940\textgreater{}}}) \textendash{} layer where to write to
 
 \end{itemize}
 
@@ -2031,10 +2031,10 @@ reference to shape
 
 \end{fulllineitems}
 
-\index{move\_instance() (photonics.PhotDevice method)}
+\index{move\_instance() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.move_instance}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{move\_instance}}}{\emph{ind}, \emph{trans}, \emph{mirror=False}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.move_instance}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{move\_instance}}}{\emph{ind}, \emph{trans}, \emph{mirror=False}}{}
 Moves an InstanceHolder object
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2046,7 +2046,7 @@ Moves an InstanceHolder object
 \end{footnote}) \textendash{} id of the InstanceHolder
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{trans}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6474eb8\textgreater{}}}) \textendash{} list of transformations
+\sphinxstyleliteralstrong{\sphinxupquote{trans}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe35b940\textgreater{}}}) \textendash{} list of transformations
 
 \item {} 
 \sphinxstyleliteralstrong{\sphinxupquote{mirror}} (\sphinxhref{https://docs.python.org/3/library/functions.html\#bool}{\sphinxcode{\sphinxupquote{bool}}}%
@@ -2061,10 +2061,10 @@ Moves an InstanceHolder object
 
 \end{fulllineitems}
 
-\index{produce\_impl() (photonics.PhotDevice method)}
+\index{produce\_impl() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.produce_impl}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{produce\_impl}}}{}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.produce_impl}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{produce\_impl}}}{}{}
 Create the effective Klayout shapes. For this all the InstanceHolders are cycled through and all the child
 instances are created. Furthermore, if desired, dataprep is performed, which copies and sizes the shapes as
 desired. Dataprep will only create shapes on the topmost cell. Finally, if desired DR-cleaning is performed and
@@ -2072,10 +2072,10 @@ in the process the shapes will be manhattanized.
 
 \end{fulllineitems}
 
-\index{set\_transformation() (photonics.PhotDevice method)}
+\index{set\_transformation() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.set_transformation}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{set\_transformation}}}{\emph{ind}, \emph{trans}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.set_transformation}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{set\_transformation}}}{\emph{ind}, \emph{trans}}{}
 Transforms child cells to the intended position, defined either by connected ports or by manual
 positioning.
 \begin{quote}\begin{description}
@@ -2088,7 +2088,7 @@ positioning.
 \end{footnote}) \textendash{} index of the child cell
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{trans}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6474eb8\textgreater{}}}) \textendash{} Transformation object with which to transform the child cell
+\sphinxstyleliteralstrong{\sphinxupquote{trans}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe35b940\textgreater{}}}) \textendash{} Transformation object with which to transform the child cell
 
 \end{itemize}
 
@@ -2096,10 +2096,10 @@ positioning.
 
 \end{fulllineitems}
 
-\index{shapes() (photonics.PhotDevice method)}
+\index{shapes() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.shapes}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{shapes}}}{}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.shapes}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{shapes}}}{}{}
 To be overwritten by effective PCell if shapes should be desired.
 \begin{quote}\begin{description}
 \item[{Return type}] \leavevmode
@@ -2113,10 +2113,10 @@ To be overwritten by effective PCell if shapes should be desired.
 
 \end{fulllineitems}
 
-\index{update\_parameter\_list() (photonics.PhotDevice method)}
+\index{update\_parameter\_list() (kppc.photonics.PhotDevice method)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PhotDevice.update_parameter_list}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update\_parameter\_list}}}{\emph{params}, \emph{decl}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PhotDevice.update_parameter_list}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update\_parameter\_list}}}{\emph{params}, \emph{decl}}{}
 Coerces parameter list. This is necessary to calculate port locations and update parameters in general.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2128,7 +2128,7 @@ Coerces parameter list. This is necessary to calculate port locations and update
 \end{footnote}) \textendash{} dict of parameters
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{decl}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7efcd6474470\textgreater{}}}) \textendash{} pya.PCellDeclaration reference
+\sphinxstyleliteralstrong{\sphinxupquote{decl}} (\sphinxstyleliteralemphasis{\sphinxupquote{\textless{}sphinx.ext.autodoc.importer.\_MockObject object at 0x7f55fe3bb9b0\textgreater{}}}) \textendash{} pya.PCellDeclaration reference
 
 \end{itemize}
 
@@ -2142,10 +2142,10 @@ list of updated parameters
 
 \end{fulllineitems}
 
-\index{PortCreation (class in photonics)}
+\index{PortCreation (class in kppc.photonics)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PortCreation}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{photonics.}}\sphinxbfcode{\sphinxupquote{PortCreation}}}{\emph{x}, \emph{y}, \emph{rot}, \emph{length}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PortCreation}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{kppc.photonics.}}\sphinxbfcode{\sphinxupquote{PortCreation}}}{\emph{x}, \emph{y}, \emph{rot}, \emph{length}}{}
 Bases: \sphinxhref{https://docs.python.org/3/library/stdtypes.html\#tuple}{\sphinxcode{\sphinxupquote{tuple}}}%
 \begin{footnote}[63]\sphinxAtStartFootnote
 \sphinxnolinkurl{https://docs.python.org/3/library/stdtypes.html\#tuple}
@@ -2184,34 +2184,34 @@ This will hold informations for creating ports.
 \end{itemize}
 
 \end{description}\end{quote}
-\index{length (photonics.PortCreation attribute)}
+\index{length (kppc.photonics.PortCreation attribute)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PortCreation.length}}\pysigline{\sphinxbfcode{\sphinxupquote{length}}}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PortCreation.length}}\pysigline{\sphinxbfcode{\sphinxupquote{length}}}
 Alias for field number 3
 
 \end{fulllineitems}
 
-\index{rot (photonics.PortCreation attribute)}
+\index{rot (kppc.photonics.PortCreation attribute)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PortCreation.rot}}\pysigline{\sphinxbfcode{\sphinxupquote{rot}}}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PortCreation.rot}}\pysigline{\sphinxbfcode{\sphinxupquote{rot}}}
 Alias for field number 2
 
 \end{fulllineitems}
 
-\index{x (photonics.PortCreation attribute)}
+\index{x (kppc.photonics.PortCreation attribute)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PortCreation.x}}\pysigline{\sphinxbfcode{\sphinxupquote{x}}}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PortCreation.x}}\pysigline{\sphinxbfcode{\sphinxupquote{x}}}
 Alias for field number 0
 
 \end{fulllineitems}
 
-\index{y (photonics.PortCreation attribute)}
+\index{y (kppc.photonics.PortCreation attribute)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.PortCreation.y}}\pysigline{\sphinxbfcode{\sphinxupquote{y}}}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.PortCreation.y}}\pysigline{\sphinxbfcode{\sphinxupquote{y}}}
 Alias for field number 1
 
 \end{fulllineitems}
@@ -2219,10 +2219,10 @@ Alias for field number 1
 
 \end{fulllineitems}
 
-\index{isnamedtupleinstance() (in module photonics)}
+\index{isnamedtupleinstance() (in module kppc.photonics)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.isnamedtupleinstance}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{photonics.}}\sphinxbfcode{\sphinxupquote{isnamedtupleinstance}}}{\emph{x}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.isnamedtupleinstance}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{kppc.photonics.}}\sphinxbfcode{\sphinxupquote{isnamedtupleinstance}}}{\emph{x}}{}
 Test if something is a named tuple
 This allows to test if \sphinxtitleref{x} is a port (PortCreation object) or just a list of instance descriptions
 
@@ -2234,10 +2234,10 @@ This allows to test if \sphinxtitleref{x} is a port (PortCreation object) or jus
 \label{\detokenize{photonics:submodules}}
 
 \subsubsection{photonics.dataprep module}
-\label{\detokenize{photonics:module-photonics.dataprep}}\label{\detokenize{photonics:photonics-dataprep-module}}\index{photonics.dataprep (module)}\index{add() (in module photonics.dataprep)}
+\label{\detokenize{photonics:module-kppc.photonics.dataprep}}\label{\detokenize{photonics:photonics-dataprep-module}}\index{kppc.photonics.dataprep (module)}\index{add() (in module kppc.photonics.dataprep)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.dataprep.add}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{add}}}{\emph{layout}, \emph{cell}, \emph{slayers}, \emph{dlayers}, \emph{ex\_amount}, \emph{layers}, \emph{out\_cell=None}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.dataprep.add}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{kppc.photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{add}}}{\emph{layout}, \emph{cell}, \emph{slayers}, \emph{dlayers}, \emph{ex\_amount}, \emph{layers}, \emph{out\_cell=None}}{}
 Combines all slayers’ shapes into a region and merges this region with each of dlayers’ regions.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2268,10 +2268,10 @@ Combines all slayers’ shapes into a region and merges this region with each of
 
 \end{fulllineitems}
 
-\index{dataprep() (in module photonics.dataprep)}
+\index{dataprep() (in module kppc.photonics.dataprep)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.dataprep.dataprep}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{dataprep}}}{\emph{in\_cell}, \emph{layout}, \emph{out\_cell=None}, \emph{config=None}, \emph{layers\_org=None}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.dataprep.dataprep}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{kppc.photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{dataprep}}}{\emph{in\_cell}, \emph{layout}, \emph{out\_cell=None}, \emph{config=None}, \emph{layers\_org=None}}{}
 Dataprep that creates excludes layers etc. with boolean operation on input layers that will be added/substracted to outputlayers.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2296,19 +2296,19 @@ Dataprep that creates excludes layers etc. with boolean operation on input layer
 
 \end{fulllineitems}
 
-\index{file\_len() (in module photonics.dataprep)}
+\index{file\_len() (in module kppc.photonics.dataprep)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.dataprep.file_len}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{file\_len}}}{\emph{fname}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.dataprep.file_len}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{kppc.photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{file\_len}}}{\emph{fname}}{}
 Returns the number of lines in the file fname
 
 \end{fulllineitems}
 
-\index{sub() (in module photonics.dataprep)}
+\index{sub() (in module kppc.photonics.dataprep)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.dataprep.sub}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{sub}}}{\emph{layout}, \emph{cell}, \emph{slayers}, \emph{dlayers}, \emph{ex\_amount}, \emph{layers}, \emph{out\_cell=None}}{}
-Analogous to {\hyperref[\detokenize{photonics:photonics.dataprep.add}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{add()}}}}}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.dataprep.sub}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{kppc.photonics.dataprep.}}\sphinxbfcode{\sphinxupquote{sub}}}{\emph{layout}, \emph{cell}, \emph{slayers}, \emph{dlayers}, \emph{ex\_amount}, \emph{layers}, \emph{out\_cell=None}}{}
+Analogous to {\hyperref[\detokenize{photonics:kppc.photonics.dataprep.add}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{add()}}}}}
 
 Instead of perfoming a combination with the destination layers, this function will substract the input region.
 
@@ -2317,10 +2317,10 @@ Instead of perfoming a combination with the destination layers, this function wi
 
 
 \subsubsection{photonics.layermaps module}
-\label{\detokenize{photonics:module-photonics.layermaps}}\label{\detokenize{photonics:photonics-layermaps-module}}\index{photonics.layermaps (module)}\index{load() (in module photonics.layermaps)}
+\label{\detokenize{photonics:module-kppc.photonics.layermaps}}\label{\detokenize{photonics:photonics-layermaps-module}}\index{kppc.photonics.layermaps (module)}\index{load() (in module kppc.photonics.layermaps)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{photonics:photonics.layermaps.load}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{photonics.layermaps.}}\sphinxbfcode{\sphinxupquote{load}}}{\emph{filename}}{}
+\phantomsection\label{\detokenize{photonics:kppc.photonics.layermaps.load}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{kppc.photonics.layermaps.}}\sphinxbfcode{\sphinxupquote{load}}}{\emph{filename}}{}
 Simple routine to read a .layermap file into a dictionary
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
@@ -2344,7 +2344,7 @@ purpose2:(layer\_number1,purpose\_number2)\},layer2: \{…\} \}
 \item[{Examples}] \leavevmode
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{import} \PYG{n+nn}{PhotPCells}\PYG{n+nn}{.}\PYG{n+nn}{layermaps} \PYG{k}{as} \PYG{n+nn}{lm}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{import} \PYG{n+nn}{kppc}\PYG{n+nn}{.}\PYG{n+nn}{photonics}\PYG{n+nn}{.}\PYG{n+nn}{layermaps} \PYG{k}{as} \PYG{n+nn}{lm}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{lm}\PYG{o}{.}\PYG{n}{load}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{expanduser}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZti{}/.klayout/salt/zccmos/FreePDK45\PYGZus{}tech/tech/FreePDK45.layermap}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{)}
 \PYG{g+go}{\PYGZob{}\PYGZsq{}pwell\PYGZsq{}: \PYGZob{}\PYGZsq{}blockage\PYGZsq{}: (\PYGZsq{}109\PYGZsq{}, \PYGZsq{}1\PYGZsq{}), \PYGZsq{}drawing\PYGZsq{}: (\PYGZsq{}109\PYGZsq{}, \PYGZsq{}0\PYGZsq{})\PYGZcb{}, ... \PYGZcb{}}
 \end{sphinxVerbatim}
@@ -2360,7 +2360,7 @@ purpose2:(layer\_number1,purpose\_number2)\},layer2: \{…\} \}
 In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. The finished file can
 be found in \sphinxcode{\sphinxupquote{MMI\_Example.lym}}. This file can be copied into the KLayout pymacros folder (\sphinxcode{\sphinxupquote{\textasciitilde{}/.klayout/pymacros/}}) and executed. The chapter is an in-depth explanation of the example.
 
-All photonic libraries are derived from {\hyperref[\detokenize{photonics:photonics.PhotDevice}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PhotDevice}}}}}.
+All photonic libraries are derived from {\hyperref[\detokenize{photonics:kppc.photonics.PhotDevice}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PhotDevice}}}}}.
 
 As an example, we will use a modified FreePDK45\_Cell. We will create a 2x2 MMI.
 To create a new PCell Library open the MacroDevelopment of Klayout in the menu Macros-\textgreater{}MacroDevelopment.
@@ -2403,13 +2403,13 @@ First let’s import modules we will need.
 \begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=1,stepnumber=1]
 \PYG{k+kn}{import} \PYG{n+nn}{pya}
 \PYG{k+kn}{import} \PYG{n+nn}{math}
-\PYG{k+kn}{from} \PYG{n+nn}{photonics} \PYG{k+kn}{import} \PYG{n}{PhotDevice}\PYG{p}{,} \PYG{n}{PortCreation}
-\PYG{k+kn}{import} \PYG{n+nn}{photonics.layermaps} \PYG{k+kn}{as} \PYG{n+nn}{lm}
+\PYG{k+kn}{from} \PYG{n+nn}{kppc.photonics} \PYG{k+kn}{import} \PYG{n}{PhotDevice}\PYG{p}{,} \PYG{n}{PortCreation}
+\PYG{k+kn}{import} \PYG{n+nn}{kppc.photonics.layermaps} \PYG{k+kn}{as} \PYG{n+nn}{lm}
 \PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
 \PYG{k+kn}{import} \PYG{n+nn}{os}
 \end{sphinxVerbatim}
 
-After the imports we will create a helper class. The class photonics.PhotDevice is technology-independent and
+After the imports we will create a helper class. The class kppc.photonics.PhotDevice is technology-independent and
 thus needs to be supplied with information about layers, i.e. how to map layers during dataprep and finally about
 the constraints for the DR-Cleaning. So let’s define a helper class that all of our FreePDK45-PCells will use.
 
@@ -2553,7 +2553,7 @@ each side. The box will have four ports and each port of the box is the same siz
 \end{sphinxVerbatim}
 
 \begin{sphinxadmonition}{note}{Note:}
-If we only declare one {\hyperref[\detokenize{photonics:photonics.PortCreation}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PortCreation}}}}} in self.create\_param\_inst(self), we have to return it as: \sphinxcode{\sphinxupquote{return {[}port{]}}}
+If we only declare one {\hyperref[\detokenize{photonics:kppc.photonics.PortCreation}]{\sphinxcrossref{\sphinxcode{\sphinxupquote{PortCreation}}}}} in self.create\_param\_inst(self), we have to return it as: \sphinxcode{\sphinxupquote{return {[}port{]}}}
 \end{sphinxadmonition}
 
 Now let’s declare the MMI. In it we will create 4 instances of tapers and one box and then connect the tapers to
@@ -2680,13 +2680,11 @@ Glossary:
 \renewcommand{\indexname}{Python Module Index}
 \begin{sphinxtheindex}
 \let\bigletter\sphinxstyleindexlettergroup
-\bigletter{d}
-\item\relax\sphinxstyleindexentry{drc}\sphinxstyleindexpageref{drc:\detokenize{module-drc}}
-\indexspace
-\bigletter{p}
-\item\relax\sphinxstyleindexentry{photonics}\sphinxstyleindexpageref{photonics:\detokenize{module-photonics}}
-\item\relax\sphinxstyleindexentry{photonics.dataprep}\sphinxstyleindexpageref{photonics:\detokenize{module-photonics.dataprep}}
-\item\relax\sphinxstyleindexentry{photonics.layermaps}\sphinxstyleindexpageref{photonics:\detokenize{module-photonics.layermaps}}
+\bigletter{k}
+\item\relax\sphinxstyleindexentry{kppc.drc}\sphinxstyleindexpageref{drc:\detokenize{module-kppc.drc}}
+\item\relax\sphinxstyleindexentry{kppc.photonics}\sphinxstyleindexpageref{photonics:\detokenize{module-kppc.photonics}}
+\item\relax\sphinxstyleindexentry{kppc.photonics.dataprep}\sphinxstyleindexpageref{photonics:\detokenize{module-kppc.photonics.dataprep}}
+\item\relax\sphinxstyleindexentry{kppc.photonics.layermaps}\sphinxstyleindexpageref{photonics:\detokenize{module-kppc.photonics.layermaps}}
 \end{sphinxtheindex}
 
 \renewcommand{\indexname}{Index}

@@ -48,17 +48,17 @@
             
   <div class="section" id="drc-package">
 <h1>drc package<a class="headerlink" href="#drc-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-drc">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-drc" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-kppc.drc">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kppc.drc" title="Permalink to this headline">¶</a></h2>
 <p>This module uses the C++ submodule <a class="reference internal" href="#slcleaner"><span class="std std-ref">slcleaner</span></a>. It has to be compiled after installing the
 extension.</p>
 <p>To compile the module execute the setup script <code class="file docutils literal notranslate"><span class="pre">python/drc/compile.sh</span></code>.
-Or alternatively execute the <code class="file docutils literal notranslate"><span class="pre">python/drc/slcleaner_source/setup.py</span></code> with the python3 executable
+Or alternatively execute the <code class="file docutils literal notranslate"><span class="pre">python/kppc/drc/slcleaner_source/setup.py</span></code> with the python3 executable
 and copy/move the resulting <code class="file docutils literal notranslate"><span class="pre">slcleaner.[...].so</span></code> library file ino the <code class="file docutils literal notranslate"><span class="pre">python/drc/</span></code> folder.</p>
 <p>For further information consult the <a class="reference external" href="http://cython.org/">Cython Documentation</a>.</p>
 <p>To execute the script open a console and execute the following commands:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ~/.klayout/salt/zccmos/pcell_ext_lib/python/drc</span>
-<span class="go">./compile.sh</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ~/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc</span>
+<span class="go">sh compile.sh</span>
 </pre></div>
 </div>
 <p>The bash script executes the following commands:</p>
@@ -74,8 +74,8 @@ cp slcleaner.cpython* ../
 </pre></div>
 </div>
 <dl class="function">
-<dt id="drc.clean">
-<code class="descclassname">drc.</code><code class="descname">clean</code><span class="sig-paren">(</span><em>cell</em>, <em>cleanrules</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/drc.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#drc.clean" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.clean">
+<code class="descclassname">kppc.drc.</code><code class="descname">clean</code><span class="sig-paren">(</span><em>cell</em>, <em>cleanrules</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kppc/drc.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.drc.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clean a cell for width and space violations.
 This function will clear the output layers of any shapes and insert a cleaned region.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -83,7 +83,7 @@ This function will clear the output layers of any shapes and insert a cleaned re
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>cell</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7efd290cd550&gt;</em>) – pointer to the cell that needs to be cleaned</li>
+<li><strong>cell</strong> (<em>&lt;sphinx.ext.autodoc.importer._MockObject object at 0x7f55fe4f3278&gt;</em>) – pointer to the cell that needs to be cleaned</li>
 <li><strong>cleanrules</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
 purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], …]</li>
 </ul>
@@ -96,12 +96,12 @@ purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2,
 </div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="drc-slcleaner-module">
-<span id="slcleaner"></span><h3>drc.slcleaner module<a class="headerlink" href="#drc-slcleaner-module" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="kppc-drc-slcleaner-module">
+<span id="slcleaner"></span><h3>kppc.drc.slcleaner module<a class="headerlink" href="#kppc-drc-slcleaner-module" title="Permalink to this headline">¶</a></h3>
 <p>An interface to the DrcSl.cpp Class.</p>
 <dl class="class">
-<dt id="drc.drc.slcleaner.PyDrcSl">
-<em class="property">class </em><code class="descclassname">drc.slcleaner.</code><code class="descname">PyDrcSl</code><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl">
+<em class="property">class </em><code class="descclassname">kppc.drc.slcleaner.</code><code class="descname">PyDrcSl</code><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt>
 <code class="descname">def add_data(x1, x2, y1, y2)</code></dt>
@@ -129,8 +129,8 @@ Klayout already does this nicely.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.init_list">
-<code class="descname">init_list</code><span class="sig-paren">(</span><em>x1: int</em>, <em>x2: int</em>, <em>y1: int</em>, <em>y2: int</em>, <em>viospace: int</em>, <em>viowidth: int</em><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.init_list" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.init_list">
+<code class="descname">init_list</code><span class="sig-paren">(</span><em>x1: int</em>, <em>x2: int</em>, <em>y1: int</em>, <em>y2: int</em>, <em>viospace: int</em>, <em>viowidth: int</em><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.init_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>(Re-)Initialize the Cleaner. x1,2 and y1,2 define the bounding box of the cleaner.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -155,14 +155,14 @@ Klayout already does this nicely.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.sort">
-<code class="descname">sort</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.sort" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.sort">
+<code class="descname">sort</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort the data in ascending order. This will also delete invalid edges, i.e. touching / overlapping polygons will be merged.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.clean">
-<code class="descname">clean</code><span class="sig-paren">(</span><em>x = 10</em><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.clean" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><em>x = 10</em><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clean data in the vector for space and width violations.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -175,8 +175,8 @@ Klayout already does this nicely.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.printvector">
-<code class="descname">printvector</code><span class="sig-paren">(</span><em>beg = -1</em>, <em>end = -1</em><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.printvector" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.printvector">
+<code class="descname">printvector</code><span class="sig-paren">(</span><em>beg = -1</em>, <em>end = -1</em><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.printvector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print the data of rows/columns depending on current orientation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -193,8 +193,8 @@ Klayout already does this nicely.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.get_row">
-<code class="descname">get_row</code><span class="sig-paren">(</span><em>ind: int</em><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.get_row" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.get_row">
+<code class="descname">get_row</code><span class="sig-paren">(</span><em>ind: int</em><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.get_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the edge data back to python from the C++ object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -209,8 +209,8 @@ Klayout already does this nicely.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.get_row_types">
-<code class="descname">get_row_types</code><span class="sig-paren">(</span><em>ind: int</em><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.get_row_types" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.get_row_types">
+<code class="descname">get_row_types</code><span class="sig-paren">(</span><em>ind: int</em><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.get_row_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the type of edges in that row.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -225,26 +225,26 @@ Klayout already does this nicely.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.clean_space">
-<code class="descname">clean_space</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.clean_space" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean_space">
+<code class="descname">clean_space</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean_space" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clean the current data for space violations.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.clean_width">
-<code class="descname">clean_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.clean_width" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean_width">
+<code class="descname">clean_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.clean_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clean the current data for width violations.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.switch_dimensions">
-<code class="descname">switch_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.switch_dimensions" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.switch_dimensions">
+<code class="descname">switch_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.switch_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch the orientation of the data. From row oriented to column oriented and vice-versa.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="drc.drc.slcleaner.PyDrcSl.s">
-<code class="descname">s</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drc.drc.slcleaner.PyDrcSl.s" title="Permalink to this definition">¶</a></dt>
+<dt id="kppc.drc.kppc.drc.slcleaner.PyDrcSl.s">
+<code class="descname">s</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kppc.drc.kppc.drc.slcleaner.PyDrcSl.s" title="Permalink to this definition">¶</a></dt>
 <dd><p>This property can be used to get the array size of the cleaner.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -952,9 +952,9 @@ of the polygon edges.</p>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">drc package</a><ul>
-<li><a class="reference internal" href="#module-drc">Module contents</a></li>
+<li><a class="reference internal" href="#module-kppc.drc">Module contents</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a><ul>
-<li><a class="reference internal" href="#drc-slcleaner-module">drc.slcleaner module</a></li>
+<li><a class="reference internal" href="#kppc-drc-slcleaner-module">kppc.drc.slcleaner module</a></li>
 </ul>
 </li>
 </ul>
