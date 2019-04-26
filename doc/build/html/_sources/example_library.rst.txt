@@ -1,8 +1,11 @@
 Example: Create Sample Library
 ------------------------------
 
-In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. The finished file can
-be found in :download:`MMI_Example.lym`. This file can be copied into the KLayout pymacros folder (:file:`~/.klayout/pymacros/`) and executed. The chapter is an in-depth explanation of the example.
+In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. This example builds on FreePDK45 technology. Therefore, please get the `KLayoutPhotonicPCells/FreePDK45_tech` package from the KLayout package manager. The finished file of this example can
+be found here :download:`MMI_Example.lym`. This file can be copied into the KLayout pymacros folder (:file:`~/.klayout/pymacros/`) and executed.
+
+Code Explanation
+.. ^^^^^^^^^^^^^^^^
 
 All photonic libraries are derived from :class:`~kppc.photonics.PhotDevice`.
 

@@ -9,13 +9,11 @@
     <title>Example: Create Sample Library &#8212; KLayout Photonic PCells 0.1 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tips &amp; Tricks" href="tips.html" />
@@ -47,8 +45,10 @@
             
   <div class="section" id="example-create-sample-library">
 <h1>Example: Create Sample Library<a class="headerlink" href="#example-create-sample-library" title="Permalink to this headline">¶</a></h1>
-<p>In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. The finished file can
-be found in <a class="reference download internal" download="" href="_downloads/0a8a771c7919df6b4618128589eb23a4/MMI_Example.lym"><code class="xref download docutils literal notranslate"><span class="pre">MMI_Example.lym</span></code></a>. This file can be copied into the KLayout pymacros folder (<code class="file docutils literal notranslate"><span class="pre">~/.klayout/pymacros/</span></code>) and executed. The chapter is an in-depth explanation of the example.</p>
+<p>In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. This example builds on FreePDK45 technology. Therefore, please get the <cite>KLayoutPhotonicPCells/FreePDK45_tech</cite> package from the KLayout package manager. The finished file of this example can
+be found here <a class="reference download internal" href="_downloads/MMI_Example.lym" download=""><code class="xref download docutils literal notranslate"><span class="pre">MMI_Example.lym</span></code></a>. This file can be copied into the KLayout pymacros folder (<code class="file docutils literal notranslate"><span class="pre">~/.klayout/pymacros/</span></code>) and executed.</p>
+<p>Code Explanation
+.. ^^^^^^^^^^^^^^^^</p>
 <p>All photonic libraries are derived from <a class="reference internal" href="photonics.html#kppc.photonics.PhotDevice" title="kppc.photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>.</p>
 <p>As an example, we will use a modified FreePDK45_Cell. We will create a 2x2 MMI.
 To create a new PCell Library open the MacroDevelopment of Klayout in the menu Macros-&gt;MacroDevelopment.</p>
@@ -550,7 +550,7 @@ be the ones defined in the <code class="docutils literal notranslate"><span clas
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Sebastian Goeldi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
     </div>
   </body>
 </html>
