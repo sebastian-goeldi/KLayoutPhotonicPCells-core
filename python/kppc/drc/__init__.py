@@ -39,10 +39,10 @@ The bash script executes the following commands:
 .. _Cython Documentation: http://cython.org/
 """
 
-
 import pya
 
 from importlib.util import find_spec
+
 sl_path = find_spec('kppc.drc.slcleaner')
 
 # Check if C++ cleaner is compiled
@@ -50,16 +50,17 @@ sl_path = find_spec('kppc.drc.slcleaner')
 if not sl_path:
     import os
     import sys
+
     msg = pya.QMessageBox(pya.Application.instance().main_window())
-    msg.text = 'To run the cleaner module, it has to be compiled first. Please execute {}/compile.sh before using the module and reopen KLayout'.format(os.path.dirname(__file__))
+    msg.text = 'To run the cleaner module, it has to be compiled first. Please execute {}/compile.sh before using the module and reopen KLayout'.format(
+        os.path.dirname(__file__))
     msg.windowTitle = 'ImportError'
     msg.exec_()
 
-
 import kppc.drc.slcleaner
 
-
 qtprogress = True
+
 
 def clean(cell: 'pya. Cell', cleanrules: list):
     """
@@ -73,7 +74,7 @@ def clean(cell: 'pya. Cell', cleanrules: list):
     sl = kppc.drc.slcleaner.PyDrcSl()
 
     if qtprogress:
-        progress = pya.RelativeProgress('Cleaning Design Rule Violations',len(cleanrules))
+        progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
 
     for cr in cleanrules:
 
@@ -86,9 +87,8 @@ def clean(cell: 'pya. Cell', cleanrules: list):
 
         layer = cell.layout().layer(ln, ld)
 
-        
         if qtprogress:
-            progress.format = 'Layer {}/{}'.format(ln,ld)
+            progress.format = 'Layer {}/{}'.format(ln, ld)
 
         # Get the bounding box of the layer and initialize the cleaner
         bbox = cell.bbox_per_layer(layer)
