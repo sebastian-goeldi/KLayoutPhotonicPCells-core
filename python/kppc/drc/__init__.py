@@ -62,44 +62,42 @@ import kppc.drc.slcleaner
 qtprogress = True
 
 
-def clean(cell: 'pya. Cell', cleanrules: list):
-    """
-    Clean a cell for width and space violations.
-    This function will clear the output layers of any shapes and insert a cleaned region.
+class ThreadedCleaner(pya.QThread):
 
-    :param cell: pointer to the cell that needs to be cleaned
-    :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
-        purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
-    """
-    sl = kppc.drc.slcleaner.PyDrcSl()
+    def __init__(self, cr, cell, progress=None):
+        self.cr = cr
+        self.cell = cell
+        self.progress = progress
+        pya.QThread.__init()
+        # kppc.drc.slcleaner.PyDrcSl.__init__()
 
-    if qtprogress:
-        progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
-
-    for cr in cleanrules:
+    def run(self):
+        sl = kppc.drc.slcleaner.PyDrcSl()
 
         # split the rules into their parts
-        layer_spec, viowidth, viospace = cr
+        layer_spec, viowidth, viospace = self.cr
         ln, ld = layer_spec
 
         if ln is None:
-            continue
+            if qtprogress:
+                self.progress.inc()
+            return
 
-        layer = cell.layout().layer(ln, ld)
+        layer = self.cell.layout().layer(ln, ld)
 
         if qtprogress:
-            progress.format = 'Layer {}/{}'.format(ln, ld)
+            self.progress.format = 'Layer {}/{}'.format(ln, ld)
 
         # Get the bounding box of the layer and initialize the cleaner
-        bbox = cell.bbox_per_layer(layer)
+        bbox = self.cell.bbox_per_layer(layer)
         if bbox.empty():
             if qtprogress:
-                progress.inc()
-            continue
+                self.progress.inc()
+            return
         sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
 
         # Retrieve the recursive
-        shapeit = cell.begin_shapes_rec(layer)
+        shapeit = self.cell.begin_shapes_rec(layer)
         shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
 
         # feed the data into the cleaner
@@ -125,8 +123,109 @@ def clean(cell: 'pya. Cell', cleanrules: list):
         region_cleaned.merge()
 
         # Clean the target layer and fill in the cleaned data
-        cell.clear(layer)
-        cell.shapes(layer).insert(region_cleaned)
+        self.cell.clear(layer)
+        self.cell.shapes(layer).insert(region_cleaned)
         if qtprogress:
-            progress.inc()
+            self.progress.inc()
+
+
+def clean(cell: 'pya. Cell', clean_rules: list):
+    """
+    Clean a cell for width and space violations.
+    This function will clear the output layers of any shapes and insert a cleaned region.
+
+    :param cell: pointer to the cell that needs to be cleaned
+    :param clean_rules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
+        purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
+    """
+
+    print("Cleaning :D")
+
+    if qtprogress:
+        progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(clean_rules))
+    else:
+        progress = None
+
+    app = pya.QApplication()
+
+    threadpool = []
+
+    print("Creating Threads")
+
+    for cr in clean_rules:
+        threadpool.append(ThreadedCleaner(cr, cell, progress))
+        print("Thread created")
+
+    print("All threads created")
+
+    for th in threadpool:
+        th.run()
+        print("Started thread")
+
+    print("Started all threads")
+
+    print("Waiting for threads to finish")
+
+    for th in threadpool:
+        th.wait()
+        print("Thread finished")
+
+    print("All threads finished")
+
+    app.exec()
+
+    #
+    #     sl = kppc.drc.slcleaner.PyDrcSl()
+    #
+    #     # split the rules into their parts
+    #     layer_spec, viowidth, viospace = cr
+    #     ln, ld = layer_spec
+    #
+    #     if ln is None:
+    #         continue
+    #
+    #     layer = cell.layout().layer(ln, ld)
+    #
+    #     if qtprogress:
+    #         progress.format = 'Layer {}/{}'.format(ln, ld)
+    #
+    #     # Get the bounding box of the layer and initialize the cleaner
+    #     bbox = cell.bbox_per_layer(layer)
+    #     if bbox.empty():
+    #         if qtprogress:
+    #             progress.inc()
+    #         continue
+    #     sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
+    #
+    #     # Retrieve the recursive
+    #     shapeit = cell.begin_shapes_rec(layer)
+    #     shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
+    #
+    #     # feed the data into the cleaner
+    #     reg = pya.Region(shapeit)
+    #     reg.merge()
+    #     for poly in reg.each_merged():
+    #         for edge in poly.each_edge():
+    #             sl.add_data(edge.x1, edge.x2, edge.y1, edge.y2)
+    #     # Sort the edges in an ascending order. Also, removes touching edges or edges within other shapes.
+    #     sl.sort()
+    #     if viowidth != 1 and viospace != 1:
+    #         sl.clean()
+    #     # Create a region from the cleaned data. This is a bit slow. There might be a way to do it faster. The
+    #     # Region merge seems to be the most time consuming process.
+    #     region_cleaned = pya.Region()
+    #     for row in range(bbox.p1.y, bbox.p2.y):
+    #         r = sl.get_row(row)
+    #         if r.size:
+    #             y1 = row
+    #             y2 = row + 1
+    #             for x1, x2 in zip(r[::2], r[1::2]):
+    #                 region_cleaned.insert(pya.Box(int(x1), int(y1), int(x2), int(y2)))
+    #     region_cleaned.merge()
+    #
+    #     # Clean the target layer and fill in the cleaned data
+    #     cell.clear(layer)
+    #     cell.shapes(layer).insert(region_cleaned)
+    #     if qtprogress:
+    #         progress.inc()
     progress._destroy()
