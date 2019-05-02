@@ -22,10 +22,6 @@
 #include <stdexcept>
 #include <cmath>
 
-#include <boost/asio/io_service.hpp>
-#include <boost/bind.hpp>
-#include <boost/thread/thread.hpp>
-
 
 namespace drclean{
 
