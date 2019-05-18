@@ -6,17 +6,20 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 from Cython.Distutils import build_ext
 
-ext_module = [Extension('slcleaner',
-                        ['slcleaner.pyx'],
+ext_module = [Extension('cleaner_client',
+                        ['cleaner_client.pyx'],
                         extra_compile_args=["--std=c++14"],
                         extra_link_args=["--std=c++14"],
-                        language='c++')]
+                        language='c++',
+                        libraries=['rt'],
+                        # libraries_dirs=['/lib/x86_64-linux-gnu/']
+                        )]
 
 for e in ext_module:
     e.cython_directives = {'embedsignature': True}
 
 setup(
-    name='Design Rule Cleaner based on Scanline Algorithm',
+    name='Client to submit polygons to Engine',
     cmdclass={'build_ext': build_ext},
     ext_modules=ext_module
 )

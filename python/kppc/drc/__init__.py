@@ -57,9 +57,10 @@ if not sl_path:
 
 
 import kppc.drc.slcleaner
-
+import kppc.drc.cleaner_client
 
 qtprogress = True
+
 
 def clean(cell: 'pya. Cell', cleanrules: list):
     """
@@ -130,3 +131,106 @@ def clean(cell: 'pya. Cell', cleanrules: list):
         if qtprogress:
             progress.inc()
     progress._destroy()
+
+def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
+    """
+    Clean a cell for width and space violations.
+    This function will clear the output layers of any shapes and insert a cleaned region.
+
+    :param cell: pointer to the cell that needs to be cleaned
+    :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
+        purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
+    """
+    print("Multiprocessed Cleaning started")
+    
+    global cc
+    
+    cc = kppc.drc.cleaner_client.PyCleanerClient()
+
+    if qtprogress:
+        progress = pya.RelativeProgress('Cleaning Design Rule Violations',len(cleanrules))
+
+    try:
+
+        for cr in cleanrules:
+    
+            # split the rules into their parts
+            layer_spec, viowidth, viospace = cr
+            ln, ld = layer_spec
+    
+            if ln is None:
+                continue
+    
+            layer = cell.layout().layer(ln, ld)
+    
+            
+            if qtprogress:
+                progress.format = 'Layer {}/{}'.format(ln,ld)
+    
+            # Get the bounding box of the layer and initialize the cleaner
+            bbox = cell.bbox_per_layer(layer)
+            if bbox.empty():
+                if qtprogress:
+                    progress.inc()
+                continue
+                
+            cc.set_box(ln,ld,viowidth,viospace,bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
+            
+            # Retrieve the recursive
+            shapeit = cell.begin_shapes_rec(layer)
+            shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
+    
+            # feed the data into the cleaner
+            reg = pya.Region(shapeit)
+            reg.merge()
+            for poly in reg.each_merged():
+                for edge in poly.each_edge():
+                    cc.add_edge(edge.x1, edge.x2, edge.y1, edge.y2)
+            cc.done()
+            if layer == 401 and datatype == 0:
+                print("rx1phot")
+                break
+                
+    except Exception as e:
+        print(e)
+            
+            
+            
+            
+            
+        '''sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
+
+        # Retrieve the recursive
+        shapeit = cell.begin_shapes_rec(layer)
+        shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
+
+        # feed the data into the cleaner
+        reg = pya.Region(shapeit)
+        reg.merge()
+        for poly in reg.each_merged():
+            for edge in poly.each_edge():
+                sl.add_data(edge.x1, edge.x2, edge.y1, edge.y2)
+        # Sort the edges in an ascending order. Also, removes touching edges or edges within other shapes.
+        sl.sort()
+        if viowidth != 1 and viospace != 1:
+            sl.clean()
+        # Create a region from the cleaned data. This is a bit slow. There might be a way to do it faster. The
+        # Region merge seems to be the most time consuming process.
+        region_cleaned = pya.Region()
+        for row in range(bbox.p1.y, bbox.p2.y):
+            r = sl.get_row(row)
+            if r.size:
+                y1 = row
+                y2 = row + 1
+                for x1, x2 in zip(r[::2], r[1::2]):
+                    region_cleaned.insert(pya.Box(int(x1), int(y1), int(x2), int(y2)))
+        region_cleaned.merge()
+
+        # Clean the target layer and fill in the cleaned data
+        cell.clear(layer)
+        cell.shapes(layer).insert(region_cleaned)
+        if qtprogress:
+            progress.inc()'''
+    progress._destroy()
+    
+    print("Multiprocessed Cleaning done "+str(ln)+"/"+str(ld))

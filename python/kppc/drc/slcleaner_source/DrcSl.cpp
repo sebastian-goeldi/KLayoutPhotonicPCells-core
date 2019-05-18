@@ -22,6 +22,10 @@
 #include <stdexcept>
 #include <cmath>
 
+#include <boost/interprocess/managed_shared_memory.hpp>
+#include <boost/interprocess/containers/vector.hpp>
+#include <boost/interprocess/allocators/allocator.hpp>
+
 namespace drclean{
 
 //    Function to compare two edgecoord structs. This is necessary for std::sort. If they are on the same coordinate sort for type in descending order
@@ -53,6 +57,7 @@ namespace drclean{
     int DrcSl::set_data(std::vector<edgecoord> *horlist)
     {
         this->l = horlist;
+        return 0;
     }
 
 //    Initialize the dimensions of the vector arrays and set pointers accordingly and dimension units.
@@ -126,11 +131,7 @@ namespace drclean{
             {
                 std::sort(this->l[i].begin(),this->l[i].end(),compare_edgecoord);
                 std::vector<edgecoord>::iterator it;
-                int last_type = 1;
-                int next_type;
-                int type;
                 it = this->l[i].begin();
-                type = it->type;
                 int c = 0;
                 for(;it != this->l[i].end();it++)
                 {
@@ -183,7 +184,6 @@ namespace drclean{
     std::vector<int> DrcSl::get_types(int ind)
     {
         int offset = this->orientation ? -this->hor1 : -this-> ver1;
-        int offset_d2 = this->orientation ? -this->ver1 : -this-> hor1;
 
         offset ++;
 
@@ -290,7 +290,6 @@ namespace drclean{
     {
         //Cleans space violations.
         //Returns number of space violations that were cleaned.
-        bool changed = false;
         std::vector<edgecoord> *il = this->l;
 
         //Counters to keep track of how many checks were done and how many space violations have been cleaned.
@@ -315,7 +314,6 @@ namespace drclean{
                     {
                         er = true;
                         spacevios++;
-                        changed = true;
                         it->rem = true;
                         (it+1)->rem = true;
                     }
@@ -336,7 +334,6 @@ namespace drclean{
 //    Clean data for width violation
     int DrcSl::clean_width()
     {
-        bool changed = false;
         std::vector<edgecoord> *il = this->l;
 
         int widthvios = 0;
@@ -356,7 +353,6 @@ namespace drclean{
                     if ((it+1)->pos - it->pos < violation_width +1)
                     {
                         er = true;
-                        changed = true;
                         it->rem = true;
                         (it+1)->rem = true;
                         widthvios++;

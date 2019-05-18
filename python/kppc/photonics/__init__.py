@@ -44,6 +44,9 @@ import kppc.photonics.dataprep
 import numpy as np
 from time import clock
 
+MULTIPROCESS = True
+
+
 # Namedtuple to hold position of a port.
 PortCreation = namedtuple('PortCreation', ['x', 'y', 'rot', 'length'])
 """Custom namedtuple
@@ -681,39 +684,79 @@ class PhotDevice(pya.PCellDeclarationHelper):
             # For the dataprep, do we want to keep the original shapes and child-cells?
         cl1 = clock()
 
-        if self.keep:
-            # Yes, so we create a new child cell called 'DataPrep' to create the dataprep shapes in
-            if self.dataprep:
-                prep_cell = self.layout.create_cell('DataPrep')
-                prep_cell._create()
-                kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config, layers_org=self.layermap)
-                self.cell.insert(pya.CellInstArray(prep_cell.cell_index(), pya.Trans.R0))
-            if self.drc_clean:
-                rules = self.clean_rules
-                # Convert Micrometers to database units
-                for cr in rules:
-                    cr[1] = int(cr[1] / self.layout.dbu)
-                    cr[2] = int(cr[2] / self.layout.dbu)
-                kppc.drc.clean(prep_cell, rules)
-
-        else:
-            # the dataprep will clean all children and shapes and then insert cleaned ones
-            if self.dataprep:
-                temp_cell = self.layout.create_cell('DataPrep_del')
-                temp_cell._create()
-                kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config, layers_org=self.layermap)
-
+        if MULTIPROCESS:
+        
+            print("Doing multiprocess cleaning") 
+        
+            if self.keep:
+                # Yes, so we create a new child cell called 'DataPrep' to create the dataprep shapes in
+                if self.dataprep:
+                    prep_cell = self.layout.create_cell('DataPrep')
+                    prep_cell._create()
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config, layers_org=self.layermap)
+                    self.cell.insert(pya.CellInstArray(prep_cell.cell_index(), pya.Trans.R0))
                 if self.drc_clean:
                     rules = self.clean_rules
                     # Convert Micrometers to database units
                     for cr in rules:
                         cr[1] = int(cr[1] / self.layout.dbu)
                         cr[2] = int(cr[2] / self.layout.dbu)
-                    kppc.drc.clean(temp_cell, rules)
-                # Delete all child cells
-                self.cell.clear()
-                self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))
-                self.cell.flatten(True)
+                    kppc.drc.multiprocessing_clean(prep_cell, rules)
+    
+            else:
+                # the dataprep will clean all children and shapes and then insert cleaned ones
+                if self.dataprep:
+                    temp_cell = self.layout.create_cell('DataPrep_del')
+                    temp_cell._create()
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config, layers_org=self.layermap)
+    
+                    if self.drc_clean:
+                        rules = self.clean_rules
+                        # Convert Micrometers to database units
+                        for cr in rules:
+                            cr[1] = int(cr[1] / self.layout.dbu)
+                            cr[2] = int(cr[2] / self.layout.dbu)
+                        kppc.drc.multiprocessing_clean(temp_cell, rules)
+                    # Delete all child cells
+                    self.cell.clear()
+                    self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))
+                    self.cell.flatten(True)
+        
+        else:
+
+            if self.keep:
+                # Yes, so we create a new child cell called 'DataPrep' to create the dataprep shapes in
+                if self.dataprep:
+                    prep_cell = self.layout.create_cell('DataPrep')
+                    prep_cell._create()
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config, layers_org=self.layermap)
+                    self.cell.insert(pya.CellInstArray(prep_cell.cell_index(), pya.Trans.R0))
+                if self.drc_clean:
+                    rules = self.clean_rules
+                    # Convert Micrometers to database units
+                    for cr in rules:
+                        cr[1] = int(cr[1] / self.layout.dbu)
+                        cr[2] = int(cr[2] / self.layout.dbu)
+                    kppc.drc.clean(prep_cell, rules)
+    
+            else:
+                # the dataprep will clean all children and shapes and then insert cleaned ones
+                if self.dataprep:
+                    temp_cell = self.layout.create_cell('DataPrep_del')
+                    temp_cell._create()
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config, layers_org=self.layermap)
+    
+                    if self.drc_clean:
+                        rules = self.clean_rules
+                        # Convert Micrometers to database units
+                        for cr in rules:
+                            cr[1] = int(cr[1] / self.layout.dbu)
+                            cr[2] = int(cr[2] / self.layout.dbu)
+                        kppc.drc.clean(temp_cell, rules)
+                    # Delete all child cells
+                    self.cell.clear()
+                    self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))
+                    self.cell.flatten(True)
 
         print('Time for dataprep and DR-cleaning:')
         print(clock() - cl1)

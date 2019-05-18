@@ -15,6 +15,7 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # distutils: language=c++
+# cython: language_level=3
 
 """Hello.
 

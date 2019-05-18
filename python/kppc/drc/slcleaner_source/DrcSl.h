@@ -41,7 +41,7 @@ namespace drclean{
         int type;
         bool rem = false;
         edgecoord(int p, int t, bool r = false): pos(p), type(t), rem(r) {};
-        ~edgecoord(){};
+        virtual ~edgecoord(){};
     };
 
 
