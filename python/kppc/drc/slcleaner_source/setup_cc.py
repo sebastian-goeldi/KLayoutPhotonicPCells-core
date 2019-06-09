@@ -11,7 +11,7 @@ ext_module = [Extension('cleaner_client',
                         extra_compile_args=["--std=c++14"],
                         extra_link_args=["--std=c++14"],
                         language='c++',
-                        libraries=['rt'],
+                        libraries=['rt','boost_thread'],
                         # libraries_dirs=['/lib/x86_64-linux-gnu/']
                         )]
 

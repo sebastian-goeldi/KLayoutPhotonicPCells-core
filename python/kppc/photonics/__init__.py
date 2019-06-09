@@ -686,7 +686,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
 
         if MULTIPROCESS:
         
-            print("Doing multiprocess cleaning") 
+            #print("Doing multiprocess cleaning") 
         
             if self.keep:
                 # Yes, so we create a new child cell called 'DataPrep' to create the dataprep shapes in
@@ -758,8 +758,8 @@ class PhotDevice(pya.PCellDeclarationHelper):
                     self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))
                     self.cell.flatten(True)
 
-        print('Time for dataprep and DR-cleaning:')
-        print(clock() - cl1)
+        #print('Time for dataprep and DR-cleaning:')
+        #print(clock() - cl1)
 
     def create_param_inst(self):
         """To be overwritten by the effective PCell

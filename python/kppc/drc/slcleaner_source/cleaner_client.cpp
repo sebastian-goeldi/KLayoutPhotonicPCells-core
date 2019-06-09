@@ -1081,6 +1081,9 @@ static void __Pyx_CppExn2PyErr() {
 }
 #endif
 
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
@@ -1253,7 +1256,7 @@ static PyObject *__pyx_pf_14cleaner_client_15PyCleanerClient___cint__(struct __p
  * 
  *     def set_box(self, layer : int, datatype : int, violation_width : int, violation_space : int, x1 : int, x2 : int,             # <<<<<<<<<<<<<<
  *                 y1 : int, y2 : int):
- *         self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
+ *         return self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
  */
 
 /* Python wrapper */
@@ -1395,15 +1398,17 @@ static PyObject *__pyx_pf_14cleaner_client_15PyCleanerClient_2set_box(struct __p
   int __pyx_t_6;
   int __pyx_t_7;
   int __pyx_t_8;
+  PyObject *__pyx_t_9 = NULL;
   __Pyx_RefNannySetupContext("set_box", 0);
 
   /* "cleaner_client.pyx":21
  *     def set_box(self, layer : int, datatype : int, violation_width : int, violation_space : int, x1 : int, x2 : int,
  *                 y1 : int, y2 : int):
- *         self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)             # <<<<<<<<<<<<<<
+ *         return self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)             # <<<<<<<<<<<<<<
  * 
  *     def add_edge(self, x1 : int, x2 : int, y1 : int, y2 : int):
  */
+  __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_layer); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L1_error)
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_datatype); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L1_error)
   __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_violation_width); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L1_error)
@@ -1412,20 +1417,23 @@ static PyObject *__pyx_pf_14cleaner_client_15PyCleanerClient_2set_box(struct __p
   __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_v_x2); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L1_error)
   __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_v_y1); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L1_error)
   __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_y2); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L1_error)
-  (void)(__pyx_v_self->c_cc.set_box(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8));
+  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_self->c_cc.set_box(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8)); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_r = __pyx_t_9;
+  __pyx_t_9 = 0;
+  goto __pyx_L0;
 
   /* "cleaner_client.pyx":19
  *         self.c_cc = CleanerClient()
  * 
  *     def set_box(self, layer : int, datatype : int, violation_width : int, violation_space : int, x1 : int, x2 : int,             # <<<<<<<<<<<<<<
  *                 y1 : int, y2 : int):
- *         self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
+ *         return self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
  */
 
   /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
   __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_AddTraceback("cleaner_client.PyCleanerClient.set_box", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -1435,7 +1443,7 @@ static PyObject *__pyx_pf_14cleaner_client_15PyCleanerClient_2set_box(struct __p
 }
 
 /* "cleaner_client.pyx":23
- *         self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
+ *         return self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
  * 
  *     def add_edge(self, x1 : int, x2 : int, y1 : int, y2 : int):             # <<<<<<<<<<<<<<
  *         self.c_cc.add_edge(x1, x2, y1, y2)
@@ -1549,7 +1557,7 @@ static PyObject *__pyx_pf_14cleaner_client_15PyCleanerClient_4add_edge(struct __
   __pyx_v_self->c_cc.add_edge(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4);
 
   /* "cleaner_client.pyx":23
- *         self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
+ *         return self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
  * 
  *     def add_edge(self, x1 : int, x2 : int, y1 : int, y2 : int):             # <<<<<<<<<<<<<<
  *         self.c_cc.add_edge(x1, x2, y1, y2)
@@ -1572,7 +1580,7 @@ static PyObject *__pyx_pf_14cleaner_client_15PyCleanerClient_4add_edge(struct __
  *         self.c_cc.add_edge(x1, x2, y1, y2)
  * 
  *     def done(self):             # <<<<<<<<<<<<<<
- *         self.c_cc.done()
+ *         return self.c_cc.done()
  */
 
 /* Python wrapper */
@@ -1592,24 +1600,34 @@ static PyObject *__pyx_pw_14cleaner_client_15PyCleanerClient_7done(PyObject *__p
 static PyObject *__pyx_pf_14cleaner_client_15PyCleanerClient_6done(struct __pyx_obj_14cleaner_client_PyCleanerClient *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("done", 0);
 
   /* "cleaner_client.pyx":27
  * 
  *     def done(self):
- *         self.c_cc.done()             # <<<<<<<<<<<<<<
+ *         return self.c_cc.done()             # <<<<<<<<<<<<<<
  */
-  __pyx_v_self->c_cc.done();
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->c_cc.done()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 27, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
 
   /* "cleaner_client.pyx":26
  *         self.c_cc.add_edge(x1, x2, y1, y2)
  * 
  *     def done(self):             # <<<<<<<<<<<<<<
- *         self.c_cc.done()
+ *         return self.c_cc.done()
  */
 
   /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("cleaner_client.PyCleanerClient.done", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -3061,6 +3079,37 @@ bad:
         }\
         return (target_type) value;\
     }
+
+/* CIntToPy */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+    const int neg_one = (int) ((int) 0 - (int) 1), const_zero = (int) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
 
 /* CIntFromPy */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {

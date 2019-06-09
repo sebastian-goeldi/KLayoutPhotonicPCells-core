@@ -1,6 +1,8 @@
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include <boost/interprocess/containers/vector.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>
+#include <boost/interprocess/sync/named_mutex.hpp>
+#include <boost/interprocess/sync/named_semaphore.hpp>
 #include <string>
 #include <cstdlib> //std::system
 
@@ -19,13 +21,21 @@ namespace drclean{
     {
         bi::shared_memory_object::remove("DRCleanEngine");
 
-        segment = new bi::managed_shared_memory(bi::open_or_create, "DRCleanEngine", 524288);
+
+        bi::named_mutex::remove("mux_inp");
+        bi::named_mutex::remove("mux_out");
+
+        segment = new bi::managed_shared_memory(bi::create_only, "DRCleanEngine", 1073741824);
 
         alloc_inst = new ShmemAllocatorInt(segment->get_segment_manager());
 
         input = segment->construct<ShIVector>("input") (*alloc_inst);
 
-        input_done = segment->construct<bool>("input_done")(0);
+//        input_done = segment->construct<bool>("input_done")(0);
+
+        mux_inp = new bi::named_mutex(bi::open_or_create, "mux_inp");
+        mux_inp = new bi::named_mutex(bi::open_or_create, "mux_out");
+
     }
 
     CleanerClient::~CleanerClient()
@@ -33,25 +43,32 @@ namespace drclean{
         bi::shared_memory_object::remove("DRCleanEngine");
         delete segment;
         delete alloc_inst;
+        delete mux_out;
+        delete mux_inp;
     }
 
     int CleanerClient::set_box(int layer, int datatype, int violation_width, int violation_space, int x1, int x2, int y1, int y2)
     {
-        if(*input_done)
-        {
-            return 1;
-        }
+        local_input.clear();
 
-        *input_done = 0;
-        input->clear();
-        input->push_back(layer);
-        input->push_back(datatype);
-        input->push_back(violation_width);
-        input->push_back(violation_space);
-        input->push_back(x1);
-        input->push_back(x2);
-        input->push_back(y1);
-        input->push_back(y2);
+        local_input.push_back(layer);
+        local_input.push_back(datatype);
+        local_input.push_back(x1);
+        local_input.push_back(x2);
+        local_input.push_back(y1);
+        local_input.push_back(y2);
+        local_input.push_back(violation_space);
+        local_input.push_back(violation_width);
+
+//        std::cout << "Initializing: " << layer << " " << datatype << " " << x1 << " " << x2 << " " << y1  << " " << y2 << " " << violation_space  << " " << violation_width << std::endl;
+//
+//        auto iter = input->begin();
+//        for (int i = 0; i < 8; i ++)
+//        {
+//            std::cout << *iter << " ";
+//            iter++;
+//        }
+//        std::cout << std::endl;
 
         return 0;
 
@@ -59,13 +76,13 @@ namespace drclean{
 
     void CleanerClient::add_edge(int x1, int x2, int y1, int y2)
     {
-        input->push_back(x1);
-        input->push_back(x2);
-        input->push_back(y1);
-        input->push_back(y2);
+        local_input.push_back(x1);
+        local_input.push_back(x2);
+        local_input.push_back(y1);
+        local_input.push_back(y2);
     }
 
-    void CleanerClient::done()
+    int CleanerClient::done()
     {
 //        *input_done = 1;
 
@@ -78,10 +95,26 @@ namespace drclean{
 //                std::cout << "it: " << *it << std::endl;
 //            }
 //        }
+//        std::cout << "unlocking :D" << std::endl;
 
-        *input_done = 1;
+        mux_inp->lock();
+        if(!input->empty())
+        {
+            mux_inp->unlock();
+            return 1;
+        }
 
-        std::cout << "Done" << std::endl;
+        for(auto iter = local_input.begin();iter!=local_input.end();iter++)
+        {
+            input->push_back(*iter);
+        }
+
+        mux_inp->unlock();
+
+        return 0;
+//        std::cout << "unlocked" << std::endl;
+
+//        std::cout << "Done" << std::endl;
     }
 
 }

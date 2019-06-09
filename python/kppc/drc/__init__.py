@@ -39,10 +39,10 @@ The bash script executes the following commands:
 .. _Cython Documentation: http://cython.org/
 """
 
-
 import pya
 
 from importlib.util import find_spec
+
 sl_path = find_spec('kppc.drc.slcleaner')
 
 # Check if C++ cleaner is compiled
@@ -50,14 +50,17 @@ sl_path = find_spec('kppc.drc.slcleaner')
 if not sl_path:
     import os
     import sys
+
     msg = pya.QMessageBox(pya.Application.instance().main_window())
-    msg.text = 'To run the cleaner module, it has to be compiled first. Please execute {}/compile.sh before using the module and reopen KLayout'.format(os.path.dirname(__file__))
+    msg.text = 'To run the cleaner module, it has to be compiled first. Please execute {}/compile.sh before using the ' \
+               'module and reopen KLayout'.format(os.path.dirname(__file__))
     msg.windowTitle = 'ImportError'
     msg.exec_()
 
-
 import kppc.drc.slcleaner
 import kppc.drc.cleaner_client
+import numpy as np
+import time
 
 qtprogress = True
 
@@ -74,7 +77,7 @@ def clean(cell: 'pya. Cell', cleanrules: list):
     sl = kppc.drc.slcleaner.PyDrcSl()
 
     if qtprogress:
-        progress = pya.RelativeProgress('Cleaning Design Rule Violations',len(cleanrules))
+        progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
 
     for cr in cleanrules:
 
@@ -87,9 +90,8 @@ def clean(cell: 'pya. Cell', cleanrules: list):
 
         layer = cell.layout().layer(ln, ld)
 
-        
         if qtprogress:
-            progress.format = 'Layer {}/{}'.format(ln,ld)
+            progress.format = 'Layer {}/{}'.format(ln, ld)
 
         # Get the bounding box of the layer and initialize the cleaner
         bbox = cell.bbox_per_layer(layer)
@@ -132,6 +134,7 @@ def clean(cell: 'pya. Cell', cleanrules: list):
             progress.inc()
     progress._destroy()
 
+
 def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     """
     Clean a cell for width and space violations.
@@ -142,62 +145,60 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
         purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
     """
     print("Multiprocessed Cleaning started")
-    
-    global cc
-    
+
     cc = kppc.drc.cleaner_client.PyCleanerClient()
+    app = pya.Application.instance()
 
     if qtprogress:
-        progress = pya.RelativeProgress('Cleaning Design Rule Violations',len(cleanrules))
+        progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
 
     try:
 
         for cr in cleanrules:
-    
+
             # split the rules into their parts
             layer_spec, viowidth, viospace = cr
             ln, ld = layer_spec
-    
+
             if ln is None:
                 continue
-    
+
             layer = cell.layout().layer(ln, ld)
-    
-            
+
             if qtprogress:
-                progress.format = 'Layer {}/{}'.format(ln,ld)
-    
+                progress.format = 'Layer {}/{}'.format(ln, ld)
+
             # Get the bounding box of the layer and initialize the cleaner
             bbox = cell.bbox_per_layer(layer)
-            if bbox.empty():
+            if bbox.empty() or np.abs(bbox.p1.x-bbox.p2.x) < viowidth or np.abs(bbox.p1.y-bbox.p2.y) < viowidth:
                 if qtprogress:
                     progress.inc()
                 continue
-                
-            cc.set_box(ln,ld,viowidth,viospace,bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
-            
-            # Retrieve the recursive
-            shapeit = cell.begin_shapes_rec(layer)
-            shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
-    
-            # feed the data into the cleaner
-            reg = pya.Region(shapeit)
-            reg.merge()
-            for poly in reg.each_merged():
-                for edge in poly.each_edge():
-                    cc.add_edge(edge.x1, edge.x2, edge.y1, edge.y2)
-            cc.done()
-            if layer == 401 and datatype == 0:
-                print("rx1phot")
-                break
-                
+            else:
+                print("box not empty")
+
+                processing = cc.set_box(ln, ld, viowidth, viospace, bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
+                # Retrieve the recursive
+                shapeit = cell.begin_shapes_rec(layer)
+                shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
+
+                # feed the data into the cleaner
+                reg = pya.Region(shapeit)
+                reg.merge()
+                for poly in reg.each_merged():
+                    for edge in poly.each_edge():
+                        cc.add_edge(edge.x1, edge.x2, edge.y1, edge.y2)
+                while(cc.done()):
+                    time.sleep(.1)
+
+                print("Added Layer for processsing")
+
+                print("Processed Layer ({}/{})".format(ln, ld))
+
     except Exception as e:
+        print("whoops")
         print(e)
-            
-            
-            
-            
-            
+
         '''sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
 
         # Retrieve the recursive
@@ -231,6 +232,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
         cell.shapes(layer).insert(region_cleaned)
         if qtprogress:
             progress.inc()'''
-    progress._destroy()
-    
-    print("Multiprocessed Cleaning done "+str(ln)+"/"+str(ld))
+    finally:
+        progress._destroy()
+
+    print("Multiprocessed Cleaning done " + str(ln) + "/" + str(ld))

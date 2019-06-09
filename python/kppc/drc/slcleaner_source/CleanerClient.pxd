@@ -12,4 +12,4 @@ cdef extern from "CleanerClient.h" namespace "drclean":
 
         int set_box(int layer, int datatype, int violation_width, int violation_space, int x1, int x2, int y1, int y2)
         void add_edge(int x1, int x2, int y1, int y2)
-        void done()
+        int done()

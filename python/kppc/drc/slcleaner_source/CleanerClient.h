@@ -16,11 +16,17 @@ typedef bi::allocator<int, bi::managed_shared_memory::segment_manager>  ShmemAll
 
 typedef bi::allocator<drclean::edgecoord, bi::managed_shared_memory::segment_manager>  ShmemAllocatorE;
 
+
+
 //Alias a vector that uses the previous STL-like allocator so that allocates
 //its values from the segment
 typedef bi::vector<int, ShmemAllocatorInt> ShIVector;
 
 typedef bi::vector<drclean::edgecoord, ShmemAllocatorE> ShEVector;
+
+typedef bi::allocator<ShIVector, bi::managed_shared_memory::segment_manager> ShmemAllocatorIVec;
+
+typedef bi::vector<ShIVector, ShmemAllocatorIVec> ShIVVector;
 
 namespace drclean{
 
@@ -33,14 +39,17 @@ namespace drclean{
 
             int set_box(int layer, int datatype, int violation_width, int violation_space, int x1, int x2, int y1, int y2);
             void add_edge(int x1, int x2, int y1, int y2);
-            void done();
+            int done();
             bi::managed_shared_memory* segment;
 
         private:
 
+            std::vector<int> local_input;
+
             ShmemAllocatorInt* alloc_inst;
             ShIVector *input;
-            bool * input_done;
+            bi::named_mutex* mux_inp;
+            bi::named_mutex* mux_out;
 
     };
 

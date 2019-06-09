@@ -29,6 +29,21 @@ namespace drclean{
         ver = 1,
     };
 
+    struct PartialPolygon
+    {
+        int minx;
+        int maxx;
+        int miny;
+        int maxy;
+        std::vector<int> left;
+        std::vector<int> right;
+    };
+
+    struct coordinate {
+        int x;
+        int y;
+    };
+
     struct edgecoord {
         /*
         **  Struct to store information about an edge and it's dimensions.
@@ -76,6 +91,7 @@ namespace drclean{
             int ver2;
             int s();
             std::vector<edgecoord> *l;
+            std::vector<std::vector<int>> polygons();
 
 
         protected:
@@ -88,6 +104,7 @@ namespace drclean{
             std::vector<edgecoord> *lver;
             int shor;
             int sver;
+            PartialPolygon get_polygon(int i);
 
     };
 

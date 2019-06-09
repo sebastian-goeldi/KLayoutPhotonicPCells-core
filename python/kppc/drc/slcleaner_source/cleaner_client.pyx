@@ -18,10 +18,10 @@ cdef class PyCleanerClient:
 
     def set_box(self, layer : int, datatype : int, violation_width : int, violation_space : int, x1 : int, x2 : int,
                 y1 : int, y2 : int):
-        self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
+        return self.c_cc.set_box(layer, datatype, violation_width, violation_space, x1, x2, y1, y2)
 
     def add_edge(self, x1 : int, x2 : int, y1 : int, y2 : int):
         self.c_cc.add_edge(x1, x2, y1, y2)
 
     def done(self):
-        self.c_cc.done()
+        return self.c_cc.done()

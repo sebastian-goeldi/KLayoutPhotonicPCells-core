@@ -1,6 +1,17 @@
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include <boost/interprocess/containers/vector.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>
+#include <boost/interprocess/sync/named_mutex.hpp>
+
+#include <boost/asio/thread_pool.hpp>
+
+#include <boost/asio.hpp>
+
+
+#include <boost/thread.hpp>
+
+#include <signal.h>
+
 #include <string>
 #include <cstdlib> //std::system
 
@@ -8,54 +19,164 @@
 
 #include "DrcSl.h"
 #include "CleanerEngine.h"
+#include "SignalHandler.h"
 
+#include <vector>
 
 #include <thread>
 #include <chrono>
 
+//testing
+#include <fstream>
+
+
 namespace drclean{
     CleanerEngine::CleanerEngine()
     {
-        segment = new bi::managed_shared_memory(bi::open_or_create, "DRCleanEngine", 524288);
+        segment = new bi::managed_shared_memory(bi::open_only, "DRCleanEngine");
 
         alloc_inst = new ShmemAllocatorInt(segment->get_segment_manager());
 
-        input_done = segment->find<bool>("input_done").first;
+//        input_done = segment->find<bool>("input_done").first;
 
         input = segment->find<ShIVector>("input").first;
+
+        mux_inp = new bi::named_mutex(bi::open_only, "mux_inp");
+        mux_out = new bi::named_mutex(bi::open_only, "mux_out");
+
+        pool = new boost::asio::thread_pool(boost::thread::hardware_concurrency());
+
+//        tg = new boost::thread_group();
+        if (input)
+        {
+            initialized = true;
+        }
     }
     CleanerEngine::~CleanerEngine()
     {
-        delete segment;
+//        delete segment;
+        join_threads();
         delete alloc_inst;
+//        delete tg;
     }
 
     void CleanerEngine::clean()
     {
 
-        std::cout << "cleaning" << std::endl;
-
-
-        bi::vector<int, ShmemAllocatorInt>::iterator it;
-
-        std::cout << "Iterator constructed" << std::endl;
-
-        std::cout << input_done << std::endl;
-
-        std::cout << *input_done << std::endl;
-
-        if(*input_done)
+        std::vector<int> *inp = new std::vector<int>();
+//        std::cout << "Locking input" << std::endl;
+        mux_inp->lock();
+//        std::cout << "Locked" << std::endl;
+        if(!input->empty())
         {
-            std::cout << "looping" << std::endl;
 
+            std::cout << input->size() << std::endl;
+            bi::vector<int, ShmemAllocatorInt>::iterator it;
             for(it = input->begin();it != input->end(); it++)
             {
-                std::cout << "it: " << *it << std::endl;
+                inp->push_back(*it);
             }
+            input->clear();
+//            std::cout << "cleared input :P" << std::endl;
+            mux_inp->unlock();
+        }
+        else
+        {
+            mux_inp->unlock();
+            delete inp;
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(30));
+            return;
         }
 
-        *input_done = 0;
+        boost::asio::post(*pool,boost::bind(&CleanerEngine::threaded_DrcSl,this,inp));
 
+
+
+
+
+
+//        boost::thread * th = new boost::thread(&CleanerEngine::threaded_DrcSl,this,inp);
+//        tg->add_thread(th);
+
+//        th->join();
+
+//        threaded_DrcSl();
+
+
+    }
+
+    void CleanerEngine::threaded_DrcSl(std::vector<int> *inp)
+    {
+//        std::cout << "Unlocked" << std::endl;
+
+        /*std::ofstream myFile;
+        myFile.open("test.txt", std::ios::app);
+        myFile << "New Layer" << std::endl;
+        std::vector<int>::iterator iter;
+        for(iter=inp->begin();iter!=inp->end();iter++)
+        {
+            myFile << *iter;
+        }
+        myFile << std::endl;
+        myFile.close();
+        return;*/
+        int layer;
+        int datatype;
+
+        DrcSl sl;
+        std::vector<int>::iterator iter = inp->begin();
+
+//        std::cout << "Initialized Cleaner, size: " << inp->size() << ", size/4: " << (double)inp->size() / 4 << std::endl;
+
+        if(iter!=inp->end())
+        {
+            int count = 6;
+//            std::cout << (*inp)[0] << " " << (*inp)[1] << " " << (*inp)[2] << " " << (*inp)[3] << " " << (*inp)[4] << " " << (*inp)[5] << " " << std::endl;
+            layer = *(iter++);
+            datatype = *(iter++);
+
+//            std::cout << "layer: " << layer << " datatype: " << datatype << std::endl;
+
+//            std::cout << "iters: " << *iter << " " << *(iter+1) << " " << *(iter+2) << " " << *(iter+3) << " " << *(iter+4) << " " << *(iter+5) << std::endl;
+
+            sl.initialize_list(*(iter),*(iter+1),*(iter+2),*(iter+3),*(iter+4),*(iter+5));
+//            std::cout << "Initialized list" << std::endl;
+            iter+=6;
+            while(iter!=inp->end())
+            {
+                count +=4;
+                sl.add_data(*(iter),*(iter+1),*(iter+2),*(iter+3));
+                iter+=4;
+//                std::cout << count << '/' << inp->size() << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "*hurgh*" << std::endl;
+            delete inp;
+            return;
+        }
+
+        delete inp;
+
+//        std::cout << "Filled data" << std::endl;
+
+        sl.sortlist();
+        sl.clean();
+        std::vector<std::vector<int>> polygons = sl.polygons();
+        std::cout << "We have " << polygons.size() << " number of polygons on layer " << layer << "/" << datatype << std::endl;
+//        mux_out->lock();
+//        std::cout << "Theoretically cleaned vector" << std::endl;
+//        mux_out->unlock();
+//        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+    }
+
+    void CleanerEngine::join_threads()
+    {
+//        tg->join_all();
+        pool->join();
     }
 
 };
@@ -63,8 +184,23 @@ namespace drclean{
 int main(int argc, char* argv[])
 {
     drclean::CleanerEngine ce = drclean::CleanerEngine();
-    ce.clean();
+
+    if (!ce.initialized)
+    {
+        std::cout << "Initialization failed, aborting!" << std::endl;
+        return -1;
+    }
+
+    SignalHandler signalHandler;
+    signalHandler.setSignalToHandle(SIGUSR1);
+
+    while(!signalHandler.isSignalSet())
+    {
+        ce.clean();
+    }
 }
+
+
 
 
 /*using namespace boost::interprocess;
