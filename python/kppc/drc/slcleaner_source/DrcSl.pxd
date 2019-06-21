@@ -39,6 +39,7 @@ cdef extern from "DrcSl.h" namespace "drclean":
 
         vector[int] get_vect(int ind)
         vector[int] get_types(int ind)
+        vector[vector[int]] get_lines()
         int violation_width
         int violation_space
         int hor1

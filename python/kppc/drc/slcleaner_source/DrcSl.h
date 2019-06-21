@@ -29,21 +29,6 @@ namespace drclean{
         ver = 1,
     };
 
-    struct PartialPolygon
-    {
-        int minx;
-        int maxx;
-        int miny;
-        int maxy;
-        std::vector<int> left;
-        std::vector<int> right;
-    };
-
-    struct coordinate {
-        int x;
-        int y;
-    };
-
     struct edgecoord {
         /*
         **  Struct to store information about an edge and it's dimensions.
@@ -64,8 +49,6 @@ namespace drclean{
     {
         public:
             DrcSl();
-            //DrcSl(std::vector<std::vector<edgecoord>> horlist, int s);
-
             ~DrcSl();
 
             int set_data(std::vector<edgecoord> *horlist);
@@ -76,12 +59,9 @@ namespace drclean{
             int clean_space();
             int clean_width();
             void switch_dimensions();
-            void read_from_file(char* filename);
-            void write_to_file(char* filename);
             std::vector<int> get_vect(int ind);
             std::vector<int> get_types(int ind);
             void clean(int max_tries = 10);
-            void define_edges(std::vector<edgecoord> *l);
             int violation_width;
             int violation_space;
             void printvector(int beg = -1, int ende = -1);
@@ -91,7 +71,7 @@ namespace drclean{
             int ver2;
             int s();
             std::vector<edgecoord> *l;
-            std::vector<std::vector<int>> polygons();
+            std::vector<std::vector<int>> get_lines();
 
 
         protected:
@@ -104,7 +84,6 @@ namespace drclean{
             std::vector<edgecoord> *lver;
             int shor;
             int sver;
-            PartialPolygon get_polygon(int i);
 
     };
 

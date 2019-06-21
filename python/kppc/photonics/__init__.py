@@ -43,8 +43,7 @@ from collections import namedtuple
 import kppc.photonics.dataprep
 import numpy as np
 from time import clock
-
-MULTIPROCESS = True
+import kppc
 
 
 # Namedtuple to hold position of a port.
@@ -684,7 +683,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
             # For the dataprep, do we want to keep the original shapes and child-cells?
         cl1 = clock()
 
-        if MULTIPROCESS:
+        if kppc.settings.multiprocessing:
         
             #print("Doing multiprocess cleaning") 
         

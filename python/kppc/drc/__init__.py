@@ -57,10 +57,17 @@ if not sl_path:
     msg.windowTitle = 'ImportError'
     msg.exec_()
 
-import kppc.drc.slcleaner
-import kppc.drc.cleaner_client
+#import kppc.drc.slcleaner
+#import kppc.drc.cleaner_client
+#import kppc.Settings
+import kppc
 import numpy as np
 import time
+import sys
+import traceback
+import os
+import subprocess
+import signal
 
 qtprogress = True
 
@@ -144,15 +151,21 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
         purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
     """
-    print("Multiprocessed Cleaning started")
+   # print("Multiprocessed Cleaning started")
+   
+    t = time.time()
 
     cc = kppc.drc.cleaner_client.PyCleanerClient()
-    app = pya.Application.instance()
-
+    ce = subprocess.Popen([os.path.dirname(os.path.abspath(__file__))+'/cleaner_engine'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    
     if qtprogress:
         progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
 
     try:
+
+        count = 0
+
+        #print(cleanrules)
 
         for cr in cleanrules:
 
@@ -170,12 +183,11 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
 
             # Get the bounding box of the layer and initialize the cleaner
             bbox = cell.bbox_per_layer(layer)
-            if bbox.empty() or np.abs(bbox.p1.x-bbox.p2.x) < viowidth or np.abs(bbox.p1.y-bbox.p2.y) < viowidth:
+            if bbox.empty() or np.abs(bbox.p1.x - bbox.p2.x) < viowidth or np.abs(bbox.p1.y - bbox.p2.y) < viowidth:
                 if qtprogress:
                     progress.inc()
                 continue
             else:
-                print("box not empty")
 
                 processing = cc.set_box(ln, ld, viowidth, viospace, bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
                 # Retrieve the recursive
@@ -188,16 +200,56 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                 for poly in reg.each_merged():
                     for edge in poly.each_edge():
                         cc.add_edge(edge.x1, edge.x2, edge.y1, edge.y2)
-                while(cc.done()):
+                while (cc.done()):
                     time.sleep(.1)
 
-                print("Added Layer for processsing")
+                count += 1
 
-                print("Processed Layer ({}/{})".format(ln, ld))
+        for i in range(count):
+            while (True):
+                #print("Poly")
+                lines = cc.get_layer()
+                #print(type(lines))
+                waiting = np.all(lines[0] == [-1, -1])
+                if waiting:
+                    time.sleep(.1)
+                    continue
+                else:
+                    layer = cell.layout().layer(lines[0][0],lines[0][1])
+                    
+                    #region_cleaned = pya.Region()
+                    bbox = cell.bbox_per_layer(layer)
+                    
+                    region_cleaned = pya.Region()
+                    for row in range(bbox.p1.y, bbox.p2.y):
+                        r = lines[row - bbox.p1.y + 1]
+                        if len(r):
+                            y1 = row
+                            y2 = row + 1
+                            for x1, x2 in zip(r[::2], r[1::2]):
+                                region_cleaned.insert(pya.Box(int(x1), int(y1), int(x2), int(y2)))
+                    #region_cleaned.merge()
+                    
+                    #print(len(polygons))
+                    #for poly in polygons[1:]:
+                    #    points = []
+                    #    for i in range(len(poly)//2):
+                    #        points.append(pya.Point(poly[i*2],poly[i*2+1]))
+                    #    region_cleaned.insert(pya.Polygon(points))
+                            
+                    region_cleaned.merge()
+            
+                    # Clean the target layer and fill in the cleaned data
+                    cell.clear(layer)
+                    cell.shapes(layer).insert(region_cleaned)
+                    if qtprogress:
+                        progress.inc()
+                    break
 
     except Exception as e:
         print("whoops")
         print(e)
+        traceback.print_exc(file=sys.stdout)
 
         '''sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
 
@@ -233,6 +285,11 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
         if qtprogress:
             progress.inc()'''
     finally:
+        print("Done. Time passed")
+        print(time.time()-t)
         progress._destroy()
+        ce.send_signal(signal.SIGUSR1)
+        ce.wait()
+        
 
     print("Multiprocessed Cleaning done " + str(ln) + "/" + str(ld))

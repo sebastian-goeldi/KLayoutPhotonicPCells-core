@@ -2,19 +2,16 @@
 # cython: language_level=3
 
 from CleanerClient cimport CleanerClient
-from DrcSl cimport DrcSl
-import numpy as np
-
-# from DrcSl cimport edgecoord
-
-from libcpp cimport bool
 from libcpp.vector cimport vector
+
+cdef extern from "<utility>" namespace "std" nogil:
+    T move[T](T)
 
 cdef class PyCleanerClient:
     cdef CleanerClient c_cc
 
-    def __cint__(self):
-        self.c_cc = CleanerClient()
+    def __cint__(self, nlayers : int):
+        self.c_cc = CleanerClient(nlayers)
 
     def set_box(self, layer : int, datatype : int, violation_width : int, violation_space : int, x1 : int, x2 : int,
                 y1 : int, y2 : int):
@@ -25,3 +22,9 @@ cdef class PyCleanerClient:
 
     def done(self):
         return self.c_cc.done()
+
+    def get_layer(self):
+        # arr = np.array([[]], dtype=np.int)
+        cdef vector[vector[int]] res
+        res = move(self.c_cc.get_layer())
+        return res

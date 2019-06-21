@@ -124,7 +124,7 @@ namespace drclean{
 //  Sort all data with compare_edge_coord and remove overlapping edges, i.e. merge overlapping polygons in the data
     void DrcSl::sortlist()
     {
-        std::cout << this->s() << std::endl;
+//        std::cout << this->s() << std::endl;
         for (int i = 0; i < this->s(); i++)
         {
             if (!this->l[i].empty())
@@ -666,163 +666,20 @@ namespace drclean{
 //        std::cout<< "Done cleaning" << std::endl;
     }
 
-    std::vector<std::vector<int>> DrcSl::polygons()
+    std::vector<std::vector<int>> DrcSl::get_lines()
     {
-        std::vector<PartialPolygon> partialPolygons;
-        std::vector<std::vector<int>> polys;
-        for(int i = 0; i < this->s();i++)
+        std::vector<std::vector<int>>lines (this->s());
+
+        int offset_d2 = this->orientation ? -this->ver1 : -this-> hor1;
+
+        for(int i = 0; i< this->s(); i++)
         {
-            while(!this->l[i].empty())
+            for(auto iter: this->l[i])
             {
-                PartialPolygon poly = get_polygon(i);
-                poly.left.insert(poly.left.end(),poly.right.rbegin(),poly.right.rend());
-                poly.right.clear();
-                polys.push_back(poly.left);
-//                partialPolygons.push_back(poly);
+                lines[i].push_back(iter.type ? iter.pos-1-offset_d2 : iter.pos+1-offset_d2);
             }
         }
-
-        /*for(std::vector<PartialPolygon>::iterator iter1 = polys.begin();iter!=polys.end();iter++)
-        {
-            for(std::vector<PartialPolygon>::iterator iter2 = iter1; iter2!=polys.end();iter2++)
-            {
-                if(iter2->miny > iter1->maxy)
-                {
-                    break;
-                }
-                if(iter2->minx > iter1->maxx || iter2->maxx < iter1->minx)
-                {
-                    continue;
-                }
-
-                if(iter1->maxy == iter2->miny)
-                {
-                    if(*(iter2->left.begin())>*(iter1->right.end()-2) || *(iter2->right.begin()) < *(iter1->end()-2))
-                    {
-                        continue;
-                    }
-                }
-                if(iter2->maxy == iter1->miny)
-                {
-                    if(*(iter1->left.begin())>*(iter2->right.end()-2) || *(iter1->right.begin()) < *(iter2->end()-2))
-                    {
-                        continue;
-                    }
-                }
-
-                std::vector<int>::iterator intit1 = iter1->left.begin()
-                std::vector<int>::iterator intit2 = iter2->left.begin()
-                if(*iter1 < *iter2)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-        }*/
-        return polys;
-    }
-
-    PartialPolygon DrcSl::get_polygon(int i)
-    {
-        PartialPolygon poly;
-        poly.miny = i;
-        poly.maxy = i;
-        int right = (this->l[i].end()-1)->pos;
-        int left = (this->l[i].end()-2)->pos;
-        poly.minx = left;
-        poly.maxx = right;
-        int left_old;
-        int right_old;
-        this->l[i].pop_back();
-        this->l[i].pop_back();
-
-        poly.right.push_back(right_old);
-        poly.right.push_back(i);
-        poly.left.push_back(left_old);
-        poly.left.push_back(i);
-
-        for(++i;i<this->s();i++)
-        {
-
-            right_old = right;
-            left_old = left;
-            if(this->l[i].empty())
-            {
-
-                poly.right.push_back(right_old);
-                poly.right.push_back(i);
-                poly.left.push_back(left_old);
-                poly.left.push_back(i);
-                poly.maxy = i;
-                if(right_old > poly.maxx)
-                {
-                    poly.maxx = right_old;
-                }
-                if(left_old < poly.minx)
-                {
-                    poly.minx = left_old;
-                }
-
-                poly.maxy = i;
-                return poly;
-
-            }
-            else
-            {
-                right = (this->l[i].end()-1)->pos;
-                left = (this->l[i].end()-2)->pos;
-                this->l[i].pop_back();
-                this->l[i].pop_back();
-                if(left_old <= right && right_old >= left)
-                {
-                    if (right != right_old)
-                    {
-                        poly.right.push_back(right_old);
-                        poly.right.push_back(i);
-                        poly.right.push_back(right);
-                        poly.right.push_back(i);
-                    }
-                    if(left != left_old)
-                    {
-                        poly.left.push_back(left_old);
-                        poly.left.push_back(i);
-                        poly.left.push_back(left);
-                        poly.left.push_back(i);
-                    }
-                    if(right_old > poly.maxx)
-                    {
-                        poly.maxx = right;
-                    }
-                    if(left_old < poly.minx)
-                    {
-                        poly.minx = left;
-                    }
-                }
-                else
-                {
-                    poly.right.push_back(right_old);
-                    poly.right.push_back(i);
-                    poly.left.push_back(left_old);
-                    poly.left.push_back(i);
-
-                    if(right_old > poly.maxx)
-                    {
-                        poly.maxx = right_old;
-                    }
-                    if(left_old < poly.minx)
-                    {
-                        poly.minx = left_old;
-                    }
-                    poly.maxy = i;
-                    return poly;
-                }
-            }
-        }
-        return poly;
-
+        return lines;
     }
 
 }//end namespace drclean
