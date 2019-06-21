@@ -40,26 +40,7 @@ The bash script executes the following commands:
 """
 
 import pya
-
-from importlib.util import find_spec
-
-sl_path = find_spec('kppc.drc.slcleaner')
-
-# Check if C++ cleaner is compiled
-
-if not sl_path:
-    import os
-    import sys
-
-    msg = pya.QMessageBox(pya.Application.instance().main_window())
-    msg.text = 'To run the cleaner module, it has to be compiled first. Please execute {}/compile.sh before using the ' \
-               'module and reopen KLayout'.format(os.path.dirname(__file__))
-    msg.windowTitle = 'ImportError'
-    msg.exec_()
-
-#import kppc.drc.slcleaner
-#import kppc.drc.cleaner_client
-#import kppc.Settings
+from pathlib import Path
 import kppc
 import numpy as np
 import time
@@ -69,7 +50,63 @@ import os
 import subprocess
 import signal
 
-qtprogress = True
+from importlib.util import find_spec
+
+dir_path = Path(__file__).parent
+sl_path = find_spec('kppc.drc.slcleaner')
+can_multi = find_spec('kppc.drc.cleaner_client') and Path(dir_path / 'cleaner_engine').exists()
+
+# Check if C++ cleaner is compiled
+
+if not sl_path:
+    msg = pya.QMessageBox(pya.Application.instance().main_window())
+    msg.text = 'To run the cleaner module, it has to be compiled first. Please execute {}/compile_cc.sh before using' \
+               'the module and reopen KLayout'.format(dir_path)
+    msg.windowTitle = 'ImportError'
+
+    compile_button = msg.addButton("Automatic Compilation", pya.QMessageBox.ButtonRole.NoRole)
+    msg.addButton(pya.QMessageBox.StandardButton.Abort)
+
+    msg.exec_()
+    print(msg.clickedButton())
+
+    if msg.clickedButton() == compile_button:
+        src_dir = dir_path / "slcleaner_source"
+        print('Trying to Compile')
+        p1 = subprocess.Popen(['python3', 'setup.py', 'build_ext', '-b', '../'], stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT, cwd=src_dir)
+        p2 = subprocess.Popen(['python3', 'setup_cc.py', 'build_ext', '-b', '../'], stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT, cwd=src_dir)
+        p3 = subprocess.Popen(
+            ['g++', 'CleanerEngine.cpp', 'DrcSl.cpp', 'SignalHandler.cpp', '-o', '../cleaner_engine', '-isystem',
+             '/usr/include/boost/', '-lboost_system', '-pthread', '-lboost_thread', '-lrt'], stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT, cwd=src_dir)
+        p1.wait()
+        p2.wait()
+        p3.wait()
+        if p1.returncode == 0 and p2.returncode == 0 and p3.returncode == 0:
+            msg = pya.QMessageBox(pya.Application.instance().main_window())
+            msg.text = 'The compilation was successfull'
+            msg.Title = 'Compilation'
+            can_multi = find_spec('kppc.drc.cleaner_client') and Path(dir_path / 'cleaner_engine').exists()
+            msg.exec_()
+        else:
+            msg = pya.QMessageBox(pya.Application.instance().main_window())
+            msg.text = 'The compilation failed. Please compile manually'
+            msg.Title = 'Compilation'
+            msg.exec_()
+            exit(-1)
+    else:
+        exit(-1)
+
+else:
+    import kppc.drc.slcleaner
+
+if not can_multi:
+    print("Cannot use mutliprocessing, falling back to single thread cleaning")
+    kppc.settings.multiprocessing = False
+else:
+    import kppc.drc.cleaner_client
 
 
 def clean(cell: 'pya. Cell', cleanrules: list):
@@ -83,7 +120,7 @@ def clean(cell: 'pya. Cell', cleanrules: list):
     """
     sl = kppc.drc.slcleaner.PyDrcSl()
 
-    if qtprogress:
+    if kppc.settings.qtprogress:
         progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
 
     for cr in cleanrules:
@@ -97,13 +134,13 @@ def clean(cell: 'pya. Cell', cleanrules: list):
 
         layer = cell.layout().layer(ln, ld)
 
-        if qtprogress:
+        if kppc.settings.qtprogress:
             progress.format = 'Layer {}/{}'.format(ln, ld)
 
         # Get the bounding box of the layer and initialize the cleaner
         bbox = cell.bbox_per_layer(layer)
         if bbox.empty():
-            if qtprogress:
+            if kppc.settings.qtprogress:
                 progress.inc()
             continue
         sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
@@ -137,7 +174,7 @@ def clean(cell: 'pya. Cell', cleanrules: list):
         # Clean the target layer and fill in the cleaned data
         cell.clear(layer)
         cell.shapes(layer).insert(region_cleaned)
-        if qtprogress:
+        if kppc.settings.qtprogress:
             progress.inc()
     progress._destroy()
 
@@ -151,21 +188,20 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
         purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
     """
-   # print("Multiprocessed Cleaning started")
-   
+    # print("Multiprocessed Cleaning started")
+
     t = time.time()
 
     cc = kppc.drc.cleaner_client.PyCleanerClient()
-    ce = subprocess.Popen([os.path.dirname(os.path.abspath(__file__))+'/cleaner_engine'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    
-    if qtprogress:
+    ce = subprocess.Popen([os.path.dirname(os.path.abspath(__file__)) + '/cleaner_engine'], stdout=subprocess.PIPE,
+                          stderr=subprocess.STDOUT)
+
+    if kppc.settings.qtprogress:
         progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
 
     try:
 
         count = 0
-
-        #print(cleanrules)
 
         for cr in cleanrules:
 
@@ -178,18 +214,18 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
 
             layer = cell.layout().layer(ln, ld)
 
-            if qtprogress:
+            if kppc.settings.qtprogress:
                 progress.format = 'Layer {}/{}'.format(ln, ld)
 
             # Get the bounding box of the layer and initialize the cleaner
             bbox = cell.bbox_per_layer(layer)
             if bbox.empty() or np.abs(bbox.p1.x - bbox.p2.x) < viowidth or np.abs(bbox.p1.y - bbox.p2.y) < viowidth:
-                if qtprogress:
+                if kppc.settings.qtprogress:
                     progress.inc()
                 continue
             else:
 
-                processing = cc.set_box(ln, ld, viowidth, viospace, bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
+                cc.set_box(ln, ld, viowidth, viospace, bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
                 # Retrieve the recursive
                 shapeit = cell.begin_shapes_rec(layer)
                 shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
@@ -200,26 +236,23 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                 for poly in reg.each_merged():
                     for edge in poly.each_edge():
                         cc.add_edge(edge.x1, edge.x2, edge.y1, edge.y2)
-                while (cc.done()):
+                while cc.done():
                     time.sleep(.1)
 
                 count += 1
 
         for i in range(count):
-            while (True):
-                #print("Poly")
+            while True:
                 lines = cc.get_layer()
-                #print(type(lines))
                 waiting = np.all(lines[0] == [-1, -1])
                 if waiting:
                     time.sleep(.1)
                     continue
                 else:
-                    layer = cell.layout().layer(lines[0][0],lines[0][1])
-                    
-                    #region_cleaned = pya.Region()
+                    layer = cell.layout().layer(lines[0][0], lines[0][1])
+
                     bbox = cell.bbox_per_layer(layer)
-                    
+
                     region_cleaned = pya.Region()
                     for row in range(bbox.p1.y, bbox.p2.y):
                         r = lines[row - bbox.p1.y + 1]
@@ -228,21 +261,13 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                             y2 = row + 1
                             for x1, x2 in zip(r[::2], r[1::2]):
                                 region_cleaned.insert(pya.Box(int(x1), int(y1), int(x2), int(y2)))
-                    #region_cleaned.merge()
-                    
-                    #print(len(polygons))
-                    #for poly in polygons[1:]:
-                    #    points = []
-                    #    for i in range(len(poly)//2):
-                    #        points.append(pya.Point(poly[i*2],poly[i*2+1]))
-                    #    region_cleaned.insert(pya.Polygon(points))
-                            
+
                     region_cleaned.merge()
-            
+
                     # Clean the target layer and fill in the cleaned data
                     cell.clear(layer)
                     cell.shapes(layer).insert(region_cleaned)
-                    if qtprogress:
+                    if kppc.settings.qtprogress:
                         progress.inc()
                     break
 
@@ -250,46 +275,9 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
         print("whoops")
         print(e)
         traceback.print_exc(file=sys.stdout)
-
-        '''sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
-
-        # Retrieve the recursive
-        shapeit = cell.begin_shapes_rec(layer)
-        shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
-
-        # feed the data into the cleaner
-        reg = pya.Region(shapeit)
-        reg.merge()
-        for poly in reg.each_merged():
-            for edge in poly.each_edge():
-                sl.add_data(edge.x1, edge.x2, edge.y1, edge.y2)
-        # Sort the edges in an ascending order. Also, removes touching edges or edges within other shapes.
-        sl.sort()
-        if viowidth != 1 and viospace != 1:
-            sl.clean()
-        # Create a region from the cleaned data. This is a bit slow. There might be a way to do it faster. The
-        # Region merge seems to be the most time consuming process.
-        region_cleaned = pya.Region()
-        for row in range(bbox.p1.y, bbox.p2.y):
-            r = sl.get_row(row)
-            if r.size:
-                y1 = row
-                y2 = row + 1
-                for x1, x2 in zip(r[::2], r[1::2]):
-                    region_cleaned.insert(pya.Box(int(x1), int(y1), int(x2), int(y2)))
-        region_cleaned.merge()
-
-        # Clean the target layer and fill in the cleaned data
-        cell.clear(layer)
-        cell.shapes(layer).insert(region_cleaned)
-        if qtprogress:
-            progress.inc()'''
     finally:
         print("Done. Time passed")
-        print(time.time()-t)
+        print(time.time() - t)
         progress._destroy()
         ce.send_signal(signal.SIGUSR1)
         ce.wait()
-        
-
-    print("Multiprocessed Cleaning done " + str(ln) + "/" + str(ld))

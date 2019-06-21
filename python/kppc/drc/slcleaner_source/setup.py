@@ -6,11 +6,11 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 from Cython.Distutils import build_ext
 
-ext_module = [Extension('slcleaner',
+ext_module = cythonize([Extension('slcleaner',
                         ['slcleaner.pyx'],
                         extra_compile_args=["--std=c++14"],
                         extra_link_args=["--std=c++14"],
-                        language='c++')]
+                        language='c++')],force=True)
 
 for e in ext_module:
     e.cython_directives = {'embedsignature': True}
