@@ -21,7 +21,78 @@
 #include <vector>
 #include <algorithm>
 
+typedef std::pair<int,int> pi;
+
 namespace drclean{
+
+    struct SplitPolygon {
+
+        public:
+            std::vector<pi>* left;
+            std::vector<pi>* right;
+            std::vector<std::vector<SplitPolygon>::iterator> *merge_to;
+            SplitPolygon():merged(false),passed(false){
+                right = new std::vector<pi>();
+                left = new std::vector<pi>();
+                merge_to = new std::vector<std::vector<SplitPolygon>::iterator>();
+            };
+            ~SplitPolygon(){
+                delete right;
+                delete left;
+                delete merge_to;
+            }
+            int can_append(int x1, int x2, int l)
+            {
+                if (l != line +1 )
+                    return 0;
+                if(x2 < left->back().first)
+                    return 1;
+                if(x1 > right->back().second)
+                    return -1;
+                return 2;
+            }
+            void init(int x1, int x2, int l)
+            {
+                left->push_back(std::make_pair(x1,l));
+                left->push_back(std::make_pair(x1,l+1));
+                right->push_back(std::make_pair(x2,l));
+                right->push_back(std::make_pair(x2,l+1));
+            }
+
+            int append(int x1, int x2, int l)
+            {
+                if(x1 == left->back().first){
+                    left->back().second++;
+                } else {
+                    left->push_back(std::make_pair(x1,l-1));
+                    left->push_back(std::make_pair(x1,l));
+                }
+
+                if(x2 == right->back().first){
+                    right->back().second++;
+                } else {
+                    right->push_back(std::make_pair(x2,l-1));
+                    right->push_back(std::make_pair(x2,l));
+                }
+                line = l;
+                return true;
+            }
+            void right_insert(std::vector<pi> polygon)
+            {
+                right->insert(right->end(),polygon.begin(),polygon.end());
+            }
+            void right_merge()
+            {
+                right->insert(right->end(),left->rbegin(),left->rend());
+                left->clear();
+                merged = true;
+            }
+
+            int line;
+
+            bool merged;
+            bool passed;
+    };
 
     enum orientation
     {
@@ -72,7 +143,7 @@ namespace drclean{
             int s();
             std::vector<edgecoord> *l;
             std::vector<std::vector<int>> get_lines();
-
+            std::vector<std::vector<pi>> get_polygons();
 
         protected:
             std::vector<int> listdif(std::vector<edgecoord> &l1,std::vector<edgecoord> &l2);
@@ -84,6 +155,8 @@ namespace drclean{
             std::vector<edgecoord> *lver;
             int shor;
             int sver;
+            std::vector<std::vector<pi>> polygons;
+            std::vector<SplitPolygon> splits;
 
     };
 

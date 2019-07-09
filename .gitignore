@@ -10,6 +10,9 @@ slcleaner.o
 cleaner_engine
 cleaner_client.o
 cleaner_client.cpp
+cleanermaster.cpp
+cleanerslave.cpp
+cleanermain
 
 # From template https://github.com/github/gitignore/blob/master/Python.gitignore
 

@@ -1,16 +1,21 @@
-#include "CleanerEngine.h"
+#include "CleanerSlave.h"
 
 
 namespace drclean{
-    CleanerEngine::CleanerEngine()
+    CleanerSlave::CleanerSlave()
     {
         segment = new bi::managed_shared_memory(bi::open_only, "DRCleanEngine");
 
+        std::cout<< "Initializing" << std::endl;
+
         alloc_inst = new ShmemAllocatorInt(segment->get_segment_manager());
         alloc_vec = new ShmemAllocatorIVec(segment->get_segment_manager());
+        alloc_pvec = new ShmemAllocatorPVec(segment->get_segment_manager());
+        alloc_poly = new ShmemAllocatorPair(segment->get_segment_manager());
 
         input = segment->find<ShIVector>("input").first;
         outList = segment->find<ShIVector>("outList").first;
+//        imList = segment->find<ShIVector>("imList").first;
 
         mux_inp = new bi::named_mutex(bi::open_only, "mux_inp");
         mux_out = new bi::named_mutex(bi::open_only, "mux_out");
@@ -23,21 +28,19 @@ namespace drclean{
         }
     }
 
-    CleanerEngine::~CleanerEngine()
+    CleanerSlave::~CleanerSlave()
     {
         join_threads();
         delete alloc_inst;
         delete pool;
     }
 
-    void CleanerEngine::clean()
+    void CleanerSlave::clean()
     {
-
         std::vector<int> *inp = new std::vector<int>();
         mux_inp->lock();
         if(!input->empty())
         {
-
             bi::vector<int, ShmemAllocatorInt>::iterator it;
             for(it = input->begin();it != input->end(); it++)
             {
@@ -55,10 +58,11 @@ namespace drclean{
             return;
         }
 
-        boost::asio::post(*pool,boost::bind(&CleanerEngine::threaded_DrcSl,this,inp));
+        boost::asio::post(*pool,boost::bind(&CleanerSlave::threaded_DrcSl,this,inp));
+//        threaded_DrcSl(inp);
     }
 
-    void CleanerEngine::threaded_DrcSl(std::vector<int> *inp)
+    void CleanerSlave::threaded_DrcSl(std::vector<int> *inp)
     {
         int layer;
         int datatype;
@@ -93,16 +97,31 @@ namespace drclean{
         std::vector<std::vector<int>> lines = sl.get_lines();
         std::string layername = std::to_string(layer) + "/" + std::to_string(datatype);
 
-        ShIVVector* linevec = segment->construct<ShIVVector>(layername.data())(*alloc_vec);
-        for(std::vector<std::vector<int>>::iterator iter =  lines.begin(); iter!=lines.end();iter++)
+        std::vector<std::vector<pi>> polys = sl.get_polygons();
+
+        ShPVVector* polygons = segment->construct<ShPVVector>(layername.data())(*alloc_pvec);
+
+        for(auto p: polys)
         {
-            ShIVector* line = segment->construct<ShIVector>(bi::anonymous_instance) (*alloc_inst);
-            for(std::vector<int>::iterator iterint=iter->begin(); iterint!=iter->end(); iterint++)
+            ShPVector* poly = segment->construct<ShPVector>(bi::anonymous_instance) (*alloc_poly);
+            for(auto pit: p)
             {
-                line->push_back(*iterint);
+                poly->push_back(pit);
             }
-            linevec->push_back(boost::move(*line));
+            polygons->push_back(boost::move(*poly));
         }
+        std::cout << "Size " << polygons->size() << " other size" << polys.size() << std::endl;
+
+//        ShIVVector* linevec = segment->construct<ShIVVector>(layername.data())(*alloc_vec);
+//        for(std::vector<std::vector<int>>::iterator iter =  lines.begin(); iter!=lines.end();iter++)
+//        {
+//            ShIVector* line = segment->construct<ShIVector>(bi::anonymous_instance) (*alloc_inst);
+//            for(std::vector<int>::iterator iterint=iter->begin(); iterint!=iter->end(); iterint++)
+//            {
+//                line->push_back(*iterint);
+//            }
+//            linevec->push_back(boost::move(*line));
+//        }
 
         mux_out->lock();
         outList->push_back(layer);
@@ -111,27 +130,11 @@ namespace drclean{
 
     }
 
-    void CleanerEngine::join_threads()
+
+
+    void CleanerSlave::join_threads()
     {
         pool->join();
     }
 
 };
-
-int main(int argc, char* argv[])
-{
-    drclean::CleanerEngine ce = drclean::CleanerEngine();
-
-    if (!ce.initialized)
-    {
-        return -1;
-    }
-
-    SignalHandler signalHandler;
-    signalHandler.setSignalToHandle(SIGUSR1);
-
-    while(!signalHandler.isSignalSet())
-    {
-        ce.clean();
-    }
-}

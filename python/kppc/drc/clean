@@ -4,8 +4,10 @@ rm -r drc/__pycache__
 rm -r photonics/__pycache__
 cd drc
 rm *.cpy*
-rm cleaner_engine
-rm slcleaner_source/slcleaner.cp*
-rm slcleaner_source/cleaner_engine
-rm slcleaner_source/cleaner_client.cp*
+rm cleanermain
+rm slcleaner.cp*
+rm cleanermain
+rm cleanermaster.cp*
 rm -r slcleaner_source/build
+rm slcleaner_source/cleanermaster.cpp
+rm slcleaner_source/slcleaner.cpp

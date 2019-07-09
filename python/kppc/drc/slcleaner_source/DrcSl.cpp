@@ -26,6 +26,9 @@
 #include <boost/interprocess/containers/vector.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>
 
+
+
+
 namespace drclean{
 
 //    Function to compare two edgecoord structs. This is necessary for std::sort. If they are on the same coordinate sort for type in descending order
@@ -670,6 +673,7 @@ namespace drclean{
     {
         std::vector<std::vector<int>>lines (this->s());
 
+        int offset = this->orientation ? -this-> hor1 : -this-> ver1;
         int offset_d2 = this->orientation ? -this->ver1 : -this-> hor1;
 
         for(int i = 0; i< this->s(); i++)
@@ -682,4 +686,152 @@ namespace drclean{
         return lines;
     }
 
+    std::vector<std::vector<pi>> DrcSl::get_polygons()
+    {
+        splits.clear();
+        polygons.clear();
+
+//        std::vector<SplitPolygon>::iterator spit_first_good = splits.begin();
+
+        std::cout << "Processing Lines" << std::endl;
+        int begin = 0;
+        for(int i = 1; i< this->s(); i++)
+        {
+            std::vector<SplitPolygon>::iterator spit = splits.begin() + begin;
+            std::cout << "Beg " << std::distance(splits.end(),spit) << " " << std::distance(splits.begin(),spit) << std::endl;
+            while(spit != splits.end())
+            {
+                std::cout << "Here?125" << spit - splits.begin() << std:: endl;
+                if(spit->passed){
+                    std::cout << "inc" << std::endl;
+                    spit++;
+                } else {
+                    break;
+                }
+                std::cout << "Here????" << std::endl;
+            }
+            std::cout << "Beg" << std::endl;
+            if(spit != splits.end())
+            {
+                begin = spit - splits.begin();
+            }
+            // If the last wor was empty, only new polygons can be encoundered here
+            if(this->l[i-1].empty() || splits.empty())
+            {
+                for(std::vector<SplitPolygon>::iterator sp = splits.begin() + begin; sp != splits.end(); sp++)
+                {
+                    sp->passed = true;
+                }
+                begin = splits.size();
+                bool first = true;
+                for(std::vector<edgecoord>::iterator iter=this->l[i].begin();iter!=this->l[i].end();iter+=2)
+                {
+                    std::cout << "sp generation?1" << std::endl;
+                    SplitPolygon sp = SplitPolygon();
+                    sp.init(iter->pos,(iter+1)->pos,i);
+                    splits.push_back(sp);
+                    std::cout << sp.passed << sp.merged << std::endl;
+//                    if(first)
+//                    {
+//                        spit_first_good = splits.end()-1;
+//                        first = false;
+//                    }
+//                    std::cout << splits.back().right->size() << std::endl;
+                }
+                std::cout << "Not Here" << std::endl;
+                continue;
+            }
+            else{
+                std::cout << "here?1" << std::endl;
+                std::vector<edgecoord>::iterator iter_first = this->l[i].begin();
+                std::vector<edgecoord>::iterator iter_last = this->l[i].begin();
+                std::vector<SplitPolygon>::iterator spit_last = splits.begin();
+
+                for(auto iter=this->l[i].begin();iter!=this->l[i].end();iter+=2)
+                {
+                    std::cout << "here1?" << std::endl;
+                    int x1 = iter->pos;
+                    int x2 = (iter+1)->pos;
+                    bool increased = false;
+                    // Cycle through the split polygons
+                    while(spit != splits.end() && (spit->passed || spit->left->back().first < x1))
+                    {
+                        spit->passed = true;
+                        spit++;
+                        increased = true;
+                    }
+                    std::cout << "here11?" << std::endl;
+                    if(increased ==true || spit == splits.end() || x2 < spit->left->back().first)
+                    {
+                        for(std::vector<edgecoord>::iterator it=iter_first;it < iter_last;it+=2)
+                        {
+                            SplitPolygon sp = SplitPolygon();
+                            sp.init(it->pos,(it+1)->pos,i);
+                            std::cout << sp.passed << sp.merged << std::endl;
+                            if(iter_last - iter_first > 2)
+                            {
+                                std::cout << "Here?" << std::endl << splits.size() << std::endl;
+                                std::cout << "done" << std::endl;
+                                sp.merged = true;
+                                spit_last->merge_to->push_back(splits.end()-1);
+                            }
+
+                            std::cout << "done" << std::endl;
+                            splits.push_back(sp);
+                            iter_first = iter;
+                            iter_last = iter+1;
+                            std::cout << "done" << std::endl;
+                        }
+                        iter_first = iter;
+                        iter_last = iter+1;
+                        if(spit == splits.end())
+                        {
+                            continue;
+                        }
+                    } else {
+                        iter_last += 2;
+                    }
+                    spit_last = spit;
+                }
+                std::cout << "here????????" << std::endl;
+                if(iter_first != this->l[i].end())
+                {
+                    for(auto it=iter_first;it<iter_last;it+=2)
+                    {
+                        SplitPolygon sp;
+                        sp.init(it->pos,(it+1)->pos,i);
+
+                        std::cout << sp.passed << sp.merged <<  " blublub" << std::endl;
+//                        if(iter_last - iter_first > 2)
+//                        {
+//                            sp.merged = true;
+//                            spit_last->merge_to->push_back(splits.end()-1);
+//                        }
+                        splits.push_back(sp);
+                        std::cout << "done" << std::endl;
+                    }
+                }
+                std::cout << "here3?" << std::endl;
+            }
+
+
+        }
+
+        std::cout << "Merging Polygons" << std::endl;
+
+        for(auto sp = splits.rbegin(); sp!=splits.rend(); sp++)
+        {
+            std::cout<< "Merging..." << std::endl;
+            for(auto mp = sp->merge_to->rbegin(); mp != sp->merge_to->rend(); mp++)
+            {
+                sp->right_insert(*((*mp)->right));
+            }
+            sp->right_merge();
+            if(!sp->merged)
+            {
+                polygons.push_back(*(sp->right));
+            }
+        }
+        return polygons;
+    }
 }//end namespace drclean

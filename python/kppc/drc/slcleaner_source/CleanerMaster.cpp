@@ -1,9 +1,9 @@
-#include "CleanerClient.h"
+#include "CleanerMaster.h"
 
 
 namespace drclean{
 
-    CleanerClient::CleanerClient()
+    CleanerMaster::CleanerMaster()
     {
         bi::shared_memory_object::remove("DRCleanEngine");
 
@@ -22,13 +22,13 @@ namespace drclean{
 
     }
 
-    CleanerClient::CleanerClient(int nlayers)
+    CleanerMaster::CleanerMaster(int nlayers)
     {
-        CleanerClient();
+        CleanerMaster();
         outList->resize(nlayers);
     }
 
-    CleanerClient::~CleanerClient()
+    CleanerMaster::~CleanerMaster()
     {
         bi::shared_memory_object::remove("DRCleanEngine");
         delete segment;
@@ -37,7 +37,7 @@ namespace drclean{
         delete mux_inp;
     }
 
-    int CleanerClient::set_box(int layer, int datatype, int violation_width, int violation_space, int x1, int x2, int y1, int y2)
+    int CleanerMaster::set_box(int layer, int datatype, int violation_width, int violation_space, int x1, int x2, int y1, int y2)
     {
         local_input.clear();
         local_input.push_back(layer);
@@ -52,7 +52,7 @@ namespace drclean{
 
     }
 
-    void CleanerClient::add_edge(int x1, int x2, int y1, int y2)
+    void CleanerMaster::add_edge(int x1, int x2, int y1, int y2)
     {
         local_input.push_back(x1);
         local_input.push_back(x2);
@@ -60,7 +60,7 @@ namespace drclean{
         local_input.push_back(y2);
     }
 
-    int CleanerClient::done()
+    int CleanerMaster::done()
     {
         mux_inp->lock();
         if(!input->empty())
@@ -79,9 +79,9 @@ namespace drclean{
         return 0;
     }
 
-    std::vector<std::vector<int>> CleanerClient::get_layer()
+    std::vector<std::vector<int>> CleanerMaster::get_layer()
     {
-        std::vector<std::vector<int>> polygons;
+        std::vector<std::vector<int>> lines;
         mux_out->lock();
         int layer;
         int datatype;
@@ -97,25 +97,68 @@ namespace drclean{
         {
             mux_out->unlock();
             std::vector<int> ld(2,-1);
-            polygons.push_back(ld);
-            return polygons;
+            lines.push_back(ld);
+            return lines;
         }
         std::vector<int> ld{layer,datatype};
-        polygons.push_back(ld);
+        lines.push_back(ld);
         std::string layername = std::to_string(layer) + "/" + std::to_string(datatype);
-        ShIVVector* polygonVec = segment->find<ShIVVector>(layername.data()).first;
+        ShIVVector* linesVect = segment->find<ShIVVector>(layername.data()).first;
 
-        for(ShIVVector::iterator iter = polygonVec->begin(); iter != polygonVec->end(); iter++)
+        for(ShIVVector::iterator iter = linesVect->begin(); iter != linesVect->end(); iter++)
         {
             std::vector<int> poly;
             for(ShIVector::iterator iterint = iter->begin(); iterint != iter->end(); iterint++)
             {
                 poly.push_back(*iterint);
             }
-            polygons.push_back(std::move(poly));
+            lines.push_back(std::move(poly));
 
         }
-        return polygons;
+        return lines;
+    }
+
+    std::vector<std::vector<pi>> CleanerMaster::get_polygons()
+    {
+        std::vector<std::vector<pi>> polys;
+
+        mux_out->lock();
+        int layer;
+        int datatype;
+        if(!outList->empty())
+        {
+            datatype = outList->back();
+            outList->pop_back();
+            layer = outList->back();
+            outList->pop_back();
+            mux_out->unlock();
+        }
+        else
+        {
+            mux_out->unlock();
+            std::vector<pi> ld;
+            ld.push_back(std::make_pair(-1,-1));
+            polys.push_back(ld);
+            return polys;
+        }
+        std::vector<pi> ld;
+        ld.push_back(std::make_pair(layer,datatype));
+        polys.push_back(ld);
+        std::string layername = std::to_string(layer) + "/" + std::to_string(datatype);
+        ShPVVector* polygons = segment->find<ShPVVector>(layername.data()).first;
+
+        for(ShPVVector::iterator iter = polygons->begin(); iter != polygons->end(); iter++)
+        {
+            std::vector<pi> poly;
+            for(ShPVector::iterator piter = iter->begin(); piter != iter->end(); piter++)
+            {
+                poly.push_back(*piter);
+            }
+            polys.push_back(std::move(poly));
+        }
+        mux_out->unlock();
+        return polys;
+
     }
 
 }
