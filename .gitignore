@@ -6,7 +6,7 @@
 slcleaner.cpp
 python/drc/slcleaner_source/build/
 .idea
-slcleaner.o
+*.o
 cleaner_engine
 cleaner_client.o
 cleaner_client.cpp

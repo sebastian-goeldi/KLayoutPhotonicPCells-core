@@ -23,7 +23,10 @@
 
 typedef std::pair<int,int> pi;
 
+
+
 namespace drclean{
+
 
     struct SplitPolygon {
 
@@ -36,11 +39,11 @@ namespace drclean{
                 left = new std::vector<pi>();
                 merge_to = new std::vector<std::vector<SplitPolygon>::iterator>();
             };
-            ~SplitPolygon(){
-                delete right;
-                delete left;
-                delete merge_to;
-            }
+//            ~SplitPolygon(){
+//                delete right;
+//                delete left;
+//                delete merge_to;
+//            }
             int can_append(int x1, int x2, int l)
             {
                 if (l != line +1 )
@@ -64,17 +67,17 @@ namespace drclean{
                 if(x1 == left->back().first){
                     left->back().second++;
                 } else {
-                    left->push_back(std::make_pair(x1,l-1));
                     left->push_back(std::make_pair(x1,l));
+                    left->push_back(std::make_pair(x1,l+1));
                 }
 
                 if(x2 == right->back().first){
                     right->back().second++;
                 } else {
-                    right->push_back(std::make_pair(x2,l-1));
                     right->push_back(std::make_pair(x2,l));
+                    right->push_back(std::make_pair(x2,l+1));
                 }
-                line = l;
+                line = l+1;
                 return true;
             }
             void right_insert(std::vector<pi> polygon)
@@ -85,7 +88,6 @@ namespace drclean{
             {
                 right->insert(right->end(),left->rbegin(),left->rend());
                 left->clear();
-                merged = true;
             }
 
             int line;
@@ -93,6 +95,8 @@ namespace drclean{
             bool merged;
             bool passed;
     };
+
+    typedef std::vector<SplitPolygon> spv;
 
     enum orientation
     {
@@ -114,6 +118,9 @@ namespace drclean{
         edgecoord(int p, int t, bool r = false): pos(p), type(t), rem(r) {};
         virtual ~edgecoord(){};
     };
+
+
+    typedef std::vector<edgecoord> ev;
 
 
     class DrcSl

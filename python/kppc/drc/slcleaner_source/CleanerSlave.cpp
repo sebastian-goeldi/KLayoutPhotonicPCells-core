@@ -58,8 +58,8 @@ namespace drclean{
             return;
         }
 
-        boost::asio::post(*pool,boost::bind(&CleanerSlave::threaded_DrcSl,this,inp));
-//        threaded_DrcSl(inp);
+//        boost::asio::post(*pool,boost::bind(&CleanerSlave::threaded_DrcSl,this,inp));
+        threaded_DrcSl(inp);
     }
 
     void CleanerSlave::threaded_DrcSl(std::vector<int> *inp)
@@ -94,10 +94,11 @@ namespace drclean{
         delete inp;
         sl.sortlist();
         sl.clean();
-        std::vector<std::vector<int>> lines = sl.get_lines();
+//        std::vector<std::vector<int>> lines = sl.get_lines();
         std::string layername = std::to_string(layer) + "/" + std::to_string(datatype);
 
         std::vector<std::vector<pi>> polys = sl.get_polygons();
+        std::cout << "Polygon size" << polys.size();
 
         ShPVVector* polygons = segment->construct<ShPVVector>(layername.data())(*alloc_pvec);
 

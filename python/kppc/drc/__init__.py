@@ -241,20 +241,16 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     time.sleep(.1)
 
                 count += 1
-                print("Added edges for process on Layer {}/{}".format(ln,ld))
-
+                
         for i in range(count):
             while True:
                 polygons = cm.polygons()
-                print(polygons[0][0])
                 waiting = np.all(polygons[0][0] == (-1, -1))
                 if waiting:
                     time.sleep(1)
                     continue
                 else:
-                    print("Got Polygons")
                     layer = cell.layout().layer(polygons[0][0][0], polygons[0][0][1])
-
                     bbox = cell.bbox_per_layer(layer)
 
                     region_cleaned = pya.Region()
@@ -265,9 +261,10 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     #        y2 = row + 1
                     #        for x1, x2 in zip(r[::2], r[1::2]):
                     #            region_cleaned.insert(pya.Box(int(x1), int(y1), int(x2), int(y2)))
-                    for p in polygons:
+                    for p in polygons[1:]:
                         #print(pya.Polygon([pya.Point(x[0],x[1]) for x in p[1:]]))
-                        region_cleaned.insert(pya.Polygon([pya.Point(x[0],x[1]) for x in p[1:]]))
+                        region_cleaned.insert(pya.Polygon([pya.Point(x[0],x[1]) for x in p]))
+                        
 
                     region_cleaned.merge()
 
