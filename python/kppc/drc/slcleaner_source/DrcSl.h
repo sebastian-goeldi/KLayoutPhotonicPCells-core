@@ -60,6 +60,7 @@ namespace drclean{
                 left->push_back(std::make_pair(x1,l+1));
                 right->push_back(std::make_pair(x2,l));
                 right->push_back(std::make_pair(x2,l+1));
+                line = l+1;
             }
 
             int append(int x1, int x2, int l)

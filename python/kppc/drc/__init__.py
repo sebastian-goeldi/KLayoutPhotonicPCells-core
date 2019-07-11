@@ -254,6 +254,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     bbox = cell.bbox_per_layer(layer)
 
                     region_cleaned = pya.Region()
+                    region_cleaned.merged_semantics=False
                     #for row in range(bbox.p1.y, bbox.p2.y):
                     #    r = polygons[row - bbox.p1.y + 1]
                     #    if len(r):

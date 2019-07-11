@@ -696,108 +696,159 @@ namespace drclean{
 //        std::vector<SplitPolygon>::iterator spit_first_good = splits.begin();
 
 //        std::cout << "Processing Lines" << std::endl;
-        //int begin = 0;
-        auto spit_last = splits.begin();
+        int begin = 0;
 
         for(int i = 1; i< this->s(); i++)
         {
-            std::vector<SplitPolygon>::iterator spit = splits.begin();// + begin;
-//            std::cout << "Beg " << std::distance(splits.end(),spit) << " " << std::distance(splits.begin(),spit) << std::endl;
+//            std::vector<SplitPolygon>::iterator spit = splits.begin();// + begin;
+//            std::cout << "new Line Kappa" << std::endl;
+            int y = i - offset;
+            spv::iterator spit = splits.begin() + begin;
+            spv::iterator spit_last = splits.begin() + begin;
 
-//            spv::iterator spit = splits.begin() + begin;
-
-            while(spit != splits.end() && (spit->line != i))
-            {
-                spit++;
-//                begin++;
-            }
+//            while(spit != splits.end() && (spit->line != i))
+//            {
+//                spit++;
+////                begin++;
+//            }
             ev::iterator append_first = this->l[i].begin();
             ev::iterator append_last = this->l[i].begin();
+
+            bool advance = false;
 
             for(ev::iterator ei = this->l[i].begin(); ei != this->l[i].end(); ei+=2)
             {
                 int x1 = ei->pos - offset_d2;
                 int x2 = (ei+1)->pos - offset_d2;
-                int y = i - offset;
-//                TODO spit == splits.end() or splits.size() == 0
-                bool atend = (spit == splits.end());
-//                std::cout << "Next ROUND" << atend << std::endl;
-                if(!atend)
+
+                if(advance)
                 {
-                    std::cout << "at end" << std::endl;
-//                    std::cout << "Here?" << std::endl;
-//                    std:: cout <<spit->left->size() << std::endl;
-//                    std::cout << spit->right->size() << std::endl;
-                    int ex1 = spit_last->left->back().first;
-                    int ex2 = spit_last->right->back().first;
-                    int l = i;
-    //                auto spit_to_append =  spit;
-//                    std::cout << "Shouldn't be here" << std::endl;
-                    // If we are not appending to the previous polygon anymore, append or create new polygons if multiple
-                    std::cout << "here?" << std::endl;
-                    if((ex2 < x1) || (ex1 > x2))
+                    while(spit != splits.end() && ((spit->line != y) || (spit->right->back().first - offset_d2 < x1) || (spit->left->back().first - offset_d2 > x2)))
                     {
-                        std::cout << append_last - append_first << std::endl;
-                        if(append_last - append_first == 2)
-                        {
-                            spit_last->append(append_first->pos,append_last->pos,i);
-                        }
-                        else if(append_last - append_first > 2)
-                        {
-                            for(ev::iterator append = append_first; append != append_last; append += 2)
-                            {
-                                splits.push_back(SplitPolygon());
-                                splits.back().init(append->pos - offset_d2,(append+1)->pos - offset_d2,y);
-                                splits.back().merged = true;
-                                splits.back().merge_to->push_back(spit_last);
-//                                std::cout << splits.back().right->size() << std::endl;;
-//                                std::cout << splits.back().left->size() << std::endl;;
-                            }
-                            spit_last = splits.begin();
-                        }
-//                        spit = splits.begin() + begin;
-    //                    doneTODO handle the case increasing and thus have to write all the new objects into the merge part of spit_old
-                    }else{
-                        std::cout << "appending" << std::endl;
-                        append_last += 2;
-                        continue;
+                            spit++;
                     }
                 }
-                std::cout << "not at end" << std::endl;
-                spit_last = spit;
-                spit = splits.begin(); //+ begin;
-//                TODO reset spit and look for a fitting one
-//                std::cout << "blub" << std::endl;
-                while(spit != splits.end() && (x1 > spit->right->back().first || x2 < spit->left->back().first) && i != spit->right->back().second)
+
+//                TODO spit == splits.end() or splits.size() == 0
+//                bool atend = (spit == splits.end());
+
+                if(spit != splits.end())
                 {
-                    spit++;
-                }
-                std::cout << (spit == splits.end()) << std::endl;
-//                std::cout << (spit == splits.end()) << std::endl;
-//                std::cout << "blab" << std::endl;
-                // If we are at the end of the polygons, append
-//                TODO couldn't find one, so create new polygon which doesn't need merging
-                bool begend = (spit_last == splits.end());
-                if(spit == splits.end())
-                {
-//                    std::cout << "Or here" << std::endl;
-                    SplitPolygon sp = SplitPolygon();
-                    sp.init(x1,x2,y);
-                    splits.push_back(sp);
-                    spit = splits.end() - 1;
-//                    std::cout << "don" << std::endl;
-//                    spit = splits.end();
-//                    spit_last = splits.begin();
+//                    std::cout << "here?" << std::endl;
+                    int ex1 = spit->left->back().first - offset_d2;
+                    int ex2 = spit->right->back().first - offset_d2;
+
+                    if((x1 > ex2) || (x2 < ex1))
+                    {
+                        int l = append_last - append_first;
+                        if(l == 2)
+                        {
+                            spit->append(append_first->pos - offset_d2, append_last->pos -offset_d2, y);
+                        }
+                        else if(l > 2)
+                        {
+//                            std::cout << "KEK" << std::endl;
+                            for(ev::iterator edge = append_first; edge != append_last; edge++)
+                            {
+
+                            }
+                        }
+                        spit = splits.begin() + begin;
+
+                        while(spit != splits.end() && ((spit->line != y) || (spit->right->back().first - offset_d2 < x1) || (spit->left->back().first - offset_d2 > x2)))
+                        {
+                            spit++;
+                        }
+                        if(spit == splits.end())
+                        {
+                            SplitPolygon sp = SplitPolygon();
+                            sp.init(x1,x2,y);
+                            splits.push_back(sp);
+                            spit = splits.begin();
+                            spit_last = splits.begin();
+                            append_first = ei + 2;
+                            append_last = ei + 2;
+                            spit = splits.begin();
+                            advance = true;
+                        } else {
+                            append_first = ei;
+                            append_last = ei+2;
+                        }
+                    } else {
+                        append_last += 2;
+                    }
                 } else {
-//                    std::cout << "Finally here" << std::endl;
-                    append_first = ei;
-                    append_last = ei+2;
+
+//                if(!atend && (append_last-append_first != 0))
+//                {
+//                    std::cout << "at end" << std::endl;
+//                    int ex1 = spit_last->left->back().first;
+//                    int ex2 = spit_last->right->back().first;
+//                    int l = i;
+//                    // If we are not appending to the previous polygon anymore, append or create new polygons if multiple
+//                    std::cout << "here?" << std::endl;
+//                    if(((ex2 < x1) || (ex1 > x2)) && i == spit_last->line)
+//                    {
+//                        std::cout << append_last - append_first << std::endl;
+//                        if(append_last - append_first == 2)
+//                        {
+//                            spit_last->append(append_first->pos,append_last->pos,i);
+//                        }
+//                        else if(append_last - append_first > 2)
+//                        {
+//                            for(ev::iterator append = append_first; append != append_last; append += 2)
+//                            {
+//                                bool reset = (spit == splits.end());
+//                                splits.push_back(SplitPolygon());
+//                                splits.back().init(append->pos,(append+1)->pos,y);
+//                                splits.back().merged = true;
+//                                spit_last->merge_to->push_back(splits.end()-1);
+//                                if(reset)
+//                                {
+//                                    spit = splits.begin();
+//                                }
+//                            }
+//                            spit_last = splits.begin();
+//                        }
+//                    }else{
+//                        std::cout << "appending" << std::endl;
+//                        append_last += 2;
+//                        continue;
+//                    }
+//                }
+//                        std::cout << "not at end" << std::endl;
+                        spit_last = spit;
+                        spit = splits.begin(); //+ begin;
+        //                TODO reset spit and look for a fitting one
+        //                while(spit != splits.end() && (x1 > spit->right->back().first || x2 < spit->left->back().first) && i != spit->line)
+        //                {
+        //                    spit++;
+        //                }
+//                        std::cout << (spit == splits.end()) << std::endl;
+                        // If we are at the end of the polygons, append
+        //                TODO couldn't find one, so create new polygon which doesn't need merging
+                        bool begend = (spit_last == splits.end());
+        //                if(spit == splits.end())
+        //                {
+                        SplitPolygon sp = SplitPolygon();
+                        sp.init(x1,x2,y);
+                        splits.push_back(sp);
+                        spit = splits.begin();
+                        spit_last = splits.begin();
+                        append_first = ei + 2;
+                        append_last = ei + 2;
+                        spit_last = spit;
+                        spit = splits.begin();
+                        advance = true;
+        //                } else {
+        //                    append_first = ei;
+        //                    append_last = ei+2;
+                    }
                 }
-
-
-
             }
-//            std::cout << "here?" << (append_last - append_first) << " " << (spit_last == splits.end()) << " " << splits.size() << std::endl;
+
+            std::cout << "in the end" << std::endl;
+//            std::cout << append_last - append_first << std::endl;
 //            if(append_last - append_first == 2)
 //            {
 //                spit_last->append(append_first->pos,append_last->pos,i);
@@ -806,161 +857,34 @@ namespace drclean{
 //            {
 //                for(ev::iterator append = append_first; append != append_last; append += 2)
 //                {
+//                    bool reset = (spit == splits.end());
 //                    splits.push_back(SplitPolygon());
-//                    splits.back().init(append->pos - offset_d2,(append+1)->pos - offset_d2,i - offset);
+//                    splits.back().init(append->pos,(append+1)->pos,y);
 //                    splits.back().merged = true;
-//                    splits.back().merge_to->push_back(spit_last);
-////                                std::cout << splits.back().right->size() << std::endl;;
-////                                std::cout << splits.back().left->size() << std::endl;;
-//                }
-//            }
-//            std::cout << "But not here?" << std::endl;
-
-
-//            while(spit != splits.end())
-//            {
-//                std::cout << "Here?125" << spit - splits.begin() << std:: endl;
-//                if(spit->passed){
-//                    std::cout << "inc" << std::endl;
-//                    spit++;
-//                } else {
-//                    break;
-//                }
-//                std::cout << "Here????" << std::endl;
-//            }
-//            std::cout << "Beg" << std::endl;
-//            if(spit != splits.end())
-//            {
-//                begin = spit - splits.begin();
-//            }
-//            // If the last wor was empty, only new polygons can be encoundered here
-//            if(this->l[i-1].empty() || splits.empty())
-//            {
-//                for(std::vector<SplitPolygon>::iterator sp = splits.begin() + begin; sp != splits.end(); sp++)
-//                {
-//                    sp->passed = true;
-//                }
-//                begin = splits.size();
-//                bool first = true;
-//                for(std::vector<edgecoord>::iterator iter=this->l[i].begin();iter!=this->l[i].end();iter+=2)
-//                {
-//                    std::cout << "sp generation?1" << std::endl;
-//                    SplitPolygon sp = SplitPolygon();
-//                    sp.init(iter->pos,(iter+1)->pos,i);
-//                    splits.push_back(sp);
-//                    std::cout << sp.passed << sp.merged << std::endl;
-////                    if(first)
-////                    {
-////                        spit_first_good = splits.end()-1;
-////                        first = false;
-////                    }
-////                    std::cout << splits.back().right->size() << std::endl;
-//                }
-//                std::cout << "Not Here" << std::endl;
-//                continue;
-//            }
-//            else{
-//                std::cout << "here?1" << std::endl;
-//                std::vector<edgecoord>::iterator iter_first = this->l[i].begin();
-//                std::vector<edgecoord>::iterator iter_last = this->l[i].begin();
-//                std::vector<SplitPolygon>::iterator spit_last = splits.begin();
-//
-//                for(auto iter=this->l[i].begin();iter!=this->l[i].end();iter+=2)
-//                {
-//                    std::cout << "here1?" << std::endl;
-//                    int x1 = iter->pos;
-//                    int x2 = (iter+1)->pos;
-//                    bool increased = false;
-//                    std::cout << "before" << std::endl;
-//                    // Cycle through the split polygons
-//                    while(spit != splits.end() && (spit->passed || spit->left->back().first < x1))
+//                    spit_last->merge_to->push_back(splits.end()-1);
+//                    if(reset)
 //                    {
-//                        std::cout << "after" << std::endl;
-//                        spit->passed = true;
-//                        spit++;
-//                        increased = true;
-//                    }
-//                    std::cout << "here11?" << std::endl;
-//                    if(increased ==true || spit == splits.end() || x2 < spit->left->back().first)
-//                    {
-//                        for(std::vector<edgecoord>::iterator it=iter_first;it < iter_last;it+=2)
-//                        {
-//                            std::cout << "Here and there" << std::endl << splits.size() << std::endl;
-//                            SplitPolygon sp = SplitPolygon();
-//                            sp.init(it->pos,(it+1)->pos,i);
-//                            std::cout << sp.passed << sp.merged << std::endl;
-//                            if(iter_last - iter_first > 2)
-//                            {
-//                                std::cout << "Here?" << std::endl << splits.size() << std::endl;
-//                                std::cout << "done" << std::endl;
-//                                sp.merged = true;
-//                                spit_last->merge_to->push_back(splits.end()-1);
-//                            }
-//
-//                            std::cout << "done" << std::endl;
-//                            splits.push_back(sp);
-//                            iter_first = iter;
-//                            iter_last = iter+1;
-//                            std::cout << "done" << std::endl;
-//                        }
-//                        iter_first = iter;
-//                        iter_last = iter+1;
-//                        if(spit == splits.end())
-//                        {
-//                            continue;
-//                        }
-//                    } else {
-//                        iter_last += 2;
-//                    }
-//                    spit_last = spit;
-//                }
-//                std::cout << "here????????" << std::endl;
-//                if(iter_first != this->l[i].end())
-//                {
-//                    for(auto it=iter_first;it<iter_last;it+=2)
-//                    {
-//                        splits.push_back(SplitPolygon());
-////                        SplitPolygon sp = SplitPolygon();
-//                        splits.back().init(it->pos,(it+1)->pos,i);
-//
-//                        std::cout << splits.back().passed << splits.back().merged <<  " blublub" << std::endl;
-////                        if(iter_last - iter_first > 2)
-////                        {
-////                            sp.merged = true;
-////                            spit_last->merge_to->push_back(splits.end()-1);
-////                        }
-////                        splits.push_back(sp);
-//                        std::cout << "done" << std::endl;
+//                        spit = splits.begin();
 //                    }
 //                }
-//                std::cout << "here3?" << std::endl;
+//                spit_last = splits.begin();
 //            }
-
-
-        }
-
-//        std::cout << "Splits:" << splits.size() << std::endl;
-
-//        std::cout << "Merging Polygons" << std::endl;
-
+            std::cout << "it doesn't even matter" << std::endl;
+//        }
         for(auto sp = splits.rbegin(); sp!=splits.rend(); sp++)
         {
-//            std::cout<< "Merging..." << std::endl;
-//            for(auto mp = sp->merge_to->rbegin(); mp != sp->merge_to->rend(); mp++)
-//            {
-//                sp->right_insert(*((*mp)->right));
-//            }
+            for(auto mp = sp->merge_to->rbegin(); mp != sp->merge_to->rend(); mp++)
+            {
+                sp->right_insert(*((*mp)->right));
+            }
             sp->right_merge();
             if(!sp->merged)
             {
-//                std::cout << "Pushing back" << std::endl;
                 polygons.push_back(*(sp->right));
             }
-            for(auto i = sp->right->begin(); i!= sp->right->end(); i++)
-            {
-//                std::cout << i->first << " " << i->second << std:: endl;
-            }
         }
+        std::cout << "i tried so hard" << std::endl;
         return polygons;
     }
+
 }//end namespace drclean
