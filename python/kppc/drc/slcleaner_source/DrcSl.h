@@ -20,6 +20,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 typedef std::pair<int,int> pi;
 
@@ -67,6 +68,7 @@ namespace drclean{
             {
                 if(x1 == left->back().first){
                     left->back().second++;
+                    std::cout << "this1?" << std::endl;
                 } else {
                     left->push_back(std::make_pair(x1,l));
                     left->push_back(std::make_pair(x1,l+1));
@@ -74,6 +76,7 @@ namespace drclean{
 
                 if(x2 == right->back().first){
                     right->back().second++;
+                    std::cout << "this2?" << std::endl;
                 } else {
                     right->push_back(std::make_pair(x2,l));
                     right->push_back(std::make_pair(x2,l+1));

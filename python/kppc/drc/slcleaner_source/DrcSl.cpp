@@ -691,7 +691,8 @@ namespace drclean{
         splits.clear();
         polygons.clear();
         int offset = this->orientation ? -this-> hor1 : -this-> ver1;
-        int offset_d2 = this->orientation ? -this->ver1 : -this-> hor1;
+        int offset_d1 = (this->orientation ? -this->ver1 : -this-> hor1) - 1;
+        int offset_d2 = (this->orientation ? -this->ver1 : -this-> hor1) + 1;
 
 //        std::vector<SplitPolygon>::iterator spit_first_good = splits.begin();
 
@@ -701,7 +702,7 @@ namespace drclean{
         for(int i = 1; i< this->s(); i++)
         {
 //            std::vector<SplitPolygon>::iterator spit = splits.begin();// + begin;
-//            std::cout << "new Line Kappa" << std::endl;
+            std::cout << "new Line Kappa" << std::endl;
             int y = i - offset;
             spv::iterator spit = splits.begin() + begin;
             spv::iterator spit_last = splits.begin() + begin;
@@ -718,15 +719,16 @@ namespace drclean{
 
             for(ev::iterator ei = this->l[i].begin(); ei != this->l[i].end(); ei+=2)
             {
-                int x1 = ei->pos - offset_d2;
+                int x1 = ei->pos - offset_d1;
                 int x2 = (ei+1)->pos - offset_d2;
 
                 if(advance)
                 {
-                    while(spit != splits.end() && ((spit->line != y) || (spit->right->back().first - offset_d2 < x1) || (spit->left->back().first - offset_d2 > x2)))
+                    while(spit != splits.end() && ((spit->line != y) || (spit->right->back().first - offset_d2 < x1) || (spit->left->back().first - offset_d1 > x2)))
                     {
                             spit++;
                     }
+                    advance = false;
                 }
 
 //                TODO spit == splits.end() or splits.size() == 0
@@ -735,7 +737,7 @@ namespace drclean{
                 if(spit != splits.end())
                 {
 //                    std::cout << "here?" << std::endl;
-                    int ex1 = spit->left->back().first - offset_d2;
+                    int ex1 = spit->left->back().first - offset_d1;
                     int ex2 = spit->right->back().first - offset_d2;
 
                     if((x1 > ex2) || (x2 < ex1))
@@ -743,19 +745,12 @@ namespace drclean{
                         int l = append_last - append_first;
                         if(l == 2)
                         {
-                            spit->append(append_first->pos - offset_d2, append_last->pos -offset_d2, y);
+                            spit->append(append_first->pos - offset_d1, (append_first+1)->pos -offset_d2, y);
                         }
-                        else if(l > 2)
-                        {
-//                            std::cout << "KEK" << std::endl;
-                            for(ev::iterator edge = append_first; edge != append_last; edge++)
-                            {
 
-                            }
-                        }
                         spit = splits.begin() + begin;
 
-                        while(spit != splits.end() && ((spit->line != y) || (spit->right->back().first - offset_d2 < x1) || (spit->left->back().first - offset_d2 > x2)))
+                        while(spit != splits.end() && (spit->line != y) && ((spit->right->back().first - offset_d2 < x1) || (spit->left->back().first - offset_d2 > x2)))
                         {
                             spit++;
                         }
@@ -768,13 +763,14 @@ namespace drclean{
                             spit_last = splits.begin();
                             append_first = ei + 2;
                             append_last = ei + 2;
-                            spit = splits.begin();
+                            spit = splits.begin() + begin;
                             advance = true;
                         } else {
                             append_first = ei;
                             append_last = ei+2;
                         }
                     } else {
+                        std::cout << "here?" << std::endl;
                         append_last += 2;
                     }
                 } else {
@@ -845,6 +841,22 @@ namespace drclean{
         //                    append_last = ei+2;
                     }
                 }
+
+                int l = append_last - append_first;
+                if(l == 2)
+                {
+                    spit->append(append_first->pos - offset_d1, (append_first+1)->pos -offset_d2, y);
+                }
+                else if(l > 2)
+                {
+//                            std::cout << "KEK" << std::endl;
+//                            for(ev::iterator edge = append_first; edge != append_last; edge++)
+//                            {
+//
+//                            }
+                }
+                spit = splits.begin() + begin;
+
             }
 
             std::cout << "in the end" << std::endl;
