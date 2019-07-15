@@ -58,8 +58,8 @@ namespace drclean{
             return;
         }
 
-//        boost::asio::post(*pool,boost::bind(&CleanerSlave::threaded_DrcSl,this,inp));
-        threaded_DrcSl(inp);
+        boost::asio::post(*pool,boost::bind(&CleanerSlave::threaded_DrcSl,this,inp));
+//        threaded_DrcSl(inp); //For single thread calculation
     }
 
     void CleanerSlave::threaded_DrcSl(std::vector<int> *inp)
@@ -86,7 +86,6 @@ namespace drclean{
         }
         else
         {
-            std::cout << "*hurgh*" << std::endl;
             delete inp;
             return;
         }
@@ -94,11 +93,9 @@ namespace drclean{
         delete inp;
         sl.sortlist();
         sl.clean();
-//        std::vector<std::vector<int>> lines = sl.get_lines();
         std::string layername = std::to_string(layer) + "/" + std::to_string(datatype);
 
         std::vector<std::vector<pi>> polys = sl.get_polygons();
-        std::cout << "Polygon size" << polys.size();
 
         ShPVVector* polygons = segment->construct<ShPVVector>(layername.data())(*alloc_pvec);
 
@@ -111,19 +108,6 @@ namespace drclean{
             }
             polygons->push_back(boost::move(*poly));
         }
-        std::cout << "Size " << polygons->size() << " other size" << polys.size() << std::endl;
-
-//        ShIVVector* linevec = segment->construct<ShIVVector>(layername.data())(*alloc_vec);
-//        for(std::vector<std::vector<int>>::iterator iter =  lines.begin(); iter!=lines.end();iter++)
-//        {
-//            ShIVector* line = segment->construct<ShIVector>(bi::anonymous_instance) (*alloc_inst);
-//            for(std::vector<int>::iterator iterint=iter->begin(); iterint!=iter->end(); iterint++)
-//            {
-//                line->push_back(*iterint);
-//            }
-//            linevec->push_back(boost::move(*line));
-//        }
-
         mux_out->lock();
         outList->push_back(layer);
         outList->push_back(datatype);

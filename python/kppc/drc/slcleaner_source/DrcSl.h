@@ -62,13 +62,14 @@ namespace drclean{
                 right->push_back(std::make_pair(x2,l));
                 right->push_back(std::make_pair(x2,l+1));
                 line = l+1;
+                lx = x1;
+                rx = x2;
             }
 
             int append(int x1, int x2, int l)
             {
                 if(x1 == left->back().first){
                     left->back().second++;
-                    std::cout << "this1?" << std::endl;
                 } else {
                     left->push_back(std::make_pair(x1,l));
                     left->push_back(std::make_pair(x1,l+1));
@@ -76,12 +77,13 @@ namespace drclean{
 
                 if(x2 == right->back().first){
                     right->back().second++;
-                    std::cout << "this2?" << std::endl;
                 } else {
                     right->push_back(std::make_pair(x2,l));
                     right->push_back(std::make_pair(x2,l+1));
                 }
                 line = l+1;
+                lx = x1;
+                rx = x2;
                 return true;
             }
             void right_insert(std::vector<pi> polygon)
@@ -95,6 +97,7 @@ namespace drclean{
             }
 
             int line;
+            int lx,rx;
 
             bool merged;
             bool passed;

@@ -193,8 +193,8 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     t = time.time()
 
     cm = kppc.drc.cleanermaster.PyCleanerMaster()
-    #cs = subprocess.Popen([os.path.dirname(os.path.abspath(__file__)) + '/cleanermain'], stdout=subprocess.PIPE,
-    #                      stderr=subprocess.STDOUT)
+    cs = subprocess.Popen([os.path.dirname(os.path.abspath(__file__)) + '/cleanermain'], stdout=subprocess.PIPE,
+                          stderr=subprocess.STDOUT)
 
     if kppc.settings.qtprogress:
         progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
@@ -254,19 +254,8 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     bbox = cell.bbox_per_layer(layer)
 
                     region_cleaned = pya.Region()
-                    region_cleaned.merged_semantics=False
-                    #for row in range(bbox.p1.y, bbox.p2.y):
-                    #    r = polygons[row - bbox.p1.y + 1]
-                    #    if len(r):
-                    #        y1 = row
-                    #        y2 = row + 1
-                    #        for x1, x2 in zip(r[::2], r[1::2]):
-                    #            region_cleaned.insert(pya.Box(int(x1), int(y1), int(x2), int(y2)))
                     for p in polygons[1:]:
-                        #print(pya.Polygon([pya.Point(x[0],x[1]) for x in p[1:]]))
                         region_cleaned.insert(pya.Polygon([pya.Point(x[0],x[1]) for x in p]))
-                        
-
                     region_cleaned.merge()
 
                     # Clean the target layer and fill in the cleaned data
@@ -277,12 +266,10 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     break
 
     except Exception as e:
-        print("whoops")
         print(e)
         traceback.print_exc(file=sys.stdout)
     finally:
-        print("Done. Time passed")
-        print(time.time() - t)
+        print("Done. Time passed: {}".format(time.time() - t))
         progress._destroy()
         cs.send_signal(signal.SIGUSR1)
         cs.wait()

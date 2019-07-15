@@ -33,5 +33,4 @@ cdef class PyCleanerMaster:
     def polygons(self):
         cdef vector[vector[pair[int,int]]] polygons
         polygons = move(self.c_cc.get_polygons())
-        print(len(polygons))
         return polygons
