@@ -1,3 +1,4 @@
+# $autorun
 # This file is part of KLayoutPhotonicPcells, an extension for Photonic Layouts in KLayout.
 # Copyright (c) 2018, Sebastian Goeldi
 #
@@ -183,12 +184,12 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     """
     Clean a cell for width and space violations.
     This function will clear the output layers of any shapes and insert a cleaned region.
+    Does the cleaning in a seperate Process started as a childprocess, which will calculate in parallel with multiple threads
 
     :param cell: pointer to the cell that needs to be cleaned
     :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
         purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
     """
-    # print("Multiprocessed Cleaning started")
 
     t = time.time()
 
@@ -231,7 +232,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                 shapeit = cell.begin_shapes_rec(layer)
                 shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
 
-                # feed the data into the cleaner
+                # Feed the data into the cleaner
                 reg = pya.Region(shapeit)
                 reg.merge()
                 for poly in reg.each_merged():
@@ -273,39 +274,3 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
         progress._destroy()
         cs.send_signal(signal.SIGUSR1)
         cs.wait()
-        
-        
-#def merge_layer_from_shared_memory():
-#    cm = kppc.drc.cleaner_client.PyCleanerClient()
-#    layout = pya.Layout()
-#    cell = layout.create_cell("TOP")
-#    while True:
-#        lines = cm.get_layer()
-#        waiting = np.all(lines[0] == [-1, -1])
-#        if waiting:
-#            time.sleep(.1)
-#            continue
-#        else:
-#            layer = cell.layout().layer(lines[0][0], lines[0][1])
-#
-#            bbox = cell.bbox_per_layer(layer)
-#
-#            region_cleaned = pya.Region()
-#            for row in range(len(lines)-1):
-#                r = lines[row+1]
-#                if len(r):
-#                    y1 = row
-#                    y2 = row + 1
-#                    for x in range(0,len(r),2):
-#                    #zip(r[::2], r[1::2])
-#                        region_cleaned.insert(pya.Box(int(r[x]), int(y1), int(r[x+1]), int(y2)))
-#
-#            region_cleaned.merge()
-#
-#            # Clean the target layer and fill in the cleaned data
-#            cell.clear(layer)
-#            cell.shapes(layer).insert(region_cleaned)
-#            break
-#    layout.save("{}/{}.gds".format(layer,datatype))
-
-    

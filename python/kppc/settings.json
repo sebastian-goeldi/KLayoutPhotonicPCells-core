@@ -1,4 +1,4 @@
 {
-  "multiprocessing": true,
-  "qtprogress": true
+    "multiprocessing": false,
+    "qtprogress": true
 }

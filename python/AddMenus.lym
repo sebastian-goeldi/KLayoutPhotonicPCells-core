@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<klayout-macro>
+ <description/>
+ <version/>
+ <category>pymacros</category>
+ <prolog/>
+ <epilog/>
+ <doc/>
+ <autorun>true</autorun>
+ <autorun-early>false</autorun-early>
+ <shortcut/>
+ <show-in-menu>false</show-in-menu>
+ <group-name/>
+ <menu-path/>
+ <interpreter>python</interpreter>
+ <dsl-interpreter-name/>
+ <text>import pya
+from pathlib import Path
+import kppc
+import json
+from pathlib import Path
+
+
+
+
+
+
+class SettingsDialog(pya.QDialog):
+
+    def __init__(self, parent = None):
+        settingspath = Path(__file__).parent/"kppc/settings.json"
+        grid = pya.QGridLayout(self)
+        self.setLayout(grid)
+        self.settings = []
+        self.setWindowTitle("KLayoutPhotonicPCells Settings")
+        vsize = len(vars(kppc.settings))
+        self.resize(300,100+vsize*25)
+        
+        prop = pya.QLabel("Property",self)
+        self.layout.addWidget(prop,0,0)
+        value = pya.QLabel("Value",self)
+        self.layout.addWidget(value,0,1,pya.Qt.AlignmentFlag.AlignRight)
+        settingdict = vars(kppc.settings)
+        for i,setting in enumerate(settingdict.keys()):
+            l = pya.QLabel(setting,self)
+            self.layout.addWidget(l,i+1,0)
+            s = settingdict[setting]
+            if(isinstance(s,bool)):
+                v = pya.QCheckBox(self)
+                v.toggeled = v.setChecked(s)
+            self.layout.addWidget(v,i+1,1,pya.Qt.AlignmentFlag.AlignRight)
+            self.settings.append([l,v])
+            
+        save = pya.QPushButton("Save",self)
+        save.clicked = self.save
+        abort = pya.QPushButton("Cancel",self)
+        abort.clicked = self.abort
+        self.layout.addWidget(save,i+2,1)
+        self.layout.addWidget(abort,i+2,0)
+        
+    def abort(self, checked):
+        self.reject()
+            
+    def save(self, checked):
+        sdict = {}
+        for s in self.settings:
+            if isinstance(s[1],pya.QCheckBox):
+                sdict[s[0].text] = bool(s[1].checkState.to_i())
+        with open(settingspath, 'w') as f:
+            json.dump(sdict, f, indent=4, sort_keys=True)
+        self.accept()
+
+def open_settings():
+    dialog = SettingsDialog(pya.Application.instance().main_window())
+    dialog.exec_()
+
+# Main
+app = pya.Application.instance()
+menu = app.main_window().menu()
+menu.insert_menu("@toolbar.end","KPP","PhotonicPCells")    
+settings = pya.Action()
+settings.title = "KLayout Photonic PCells Settings"
+settings.on_triggered = open_settings
+menu.insert_item("@toolbar.KPP.end","Settings",settings)</text>
+</klayout-macro>
