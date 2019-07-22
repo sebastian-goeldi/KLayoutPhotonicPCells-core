@@ -68,17 +68,16 @@ if not sl_path:
     msg.addButton(pya.QMessageBox.StandardButton.Abort)
 
     msg.exec_()
-    print(msg.clickedButton())
 
     if msg.clickedButton() == compile_button:
-        src_dir = dir_path / "source"
+        src_dir = dir_path.parent.parent.parent / "cpp/source"
         print('Trying to Compile')
-        p1 = subprocess.Popen(['python3', 'setup.py', 'build_ext', '-b', '../'], stdout=subprocess.PIPE,
+        p1 = subprocess.Popen(['python3', 'setup.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, cwd=src_dir)
-        p2 = subprocess.Popen(['python3', 'setup_cc.py', 'build_ext', '-b', '../'], stdout=subprocess.PIPE,
+        p2 = subprocess.Popen(['python3', 'setup_cc.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, cwd=src_dir)
         p3 = subprocess.Popen(
-            ['g++', 'CleanerMain.cpp', 'CleanerSlave.cpp', 'DrcSl.cpp', 'SignalHandler.cpp', '-o', '../cleanermain', '-isystem',
+            ['g++', 'CleanerMain.cpp', 'CleanerSlave.cpp', 'DrcSl.cpp', 'SignalHandler.cpp', '-o', dir_path/'cleanermain', '-isystem',
              '/usr/include/boost/', '-lboost_system', '-pthread', '-lboost_thread', '-lrt'], stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT, cwd=src_dir)
         p1.wait()

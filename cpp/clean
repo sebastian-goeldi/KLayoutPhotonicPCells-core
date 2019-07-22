@@ -1,12 +1,12 @@
 #!/bin/bash
 rm -r ../python/kppc/drc/__pycache__
-rm -r ../python/kppc/drc/photonics/__pycache__
+rm -r ../python/kppc/photonics/__pycache__
+rm -r source/build
+rm source/cleanermaster.cpp
+rm source/slcleaner.cpp
 cd ../python/kppc/drc/
 rm *.cpy*
 rm cleanermain
 rm slcleaner.cp*
 rm cleanermain
 rm cleanermaster.cp*
-rm -r source/build
-rm source/cleanermaster.cpp
-rm source/slcleaner.cpp

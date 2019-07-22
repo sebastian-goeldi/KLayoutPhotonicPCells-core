@@ -28,5 +28,5 @@ void SignalHandler::setSignal(int unused)
 
 bool SignalHandler::isSignalSet()
 {
-    return m_signalSet;
+    return signalSet;
 }
