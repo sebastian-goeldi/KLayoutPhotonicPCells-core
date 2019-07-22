@@ -8,16 +8,17 @@ Photonic PCell Library Extension Documentation
 ==============================================
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: Contents:
    
     introduction
-    first_steps
-    ports
-    techfile
+    photonics/first_steps
+    photonics/ports
+    photonics/techfile
     modules
-    example_library
+    photonics/example_library
     tips
+    sourcecodes
 
 Glossary:
 

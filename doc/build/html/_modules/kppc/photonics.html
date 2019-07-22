@@ -1,19 +1,19 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>kppc.photonics &#8212; KLayout Photonic PCells 0.1 documentation</title>
+    <meta charset="utf-8" />
+    <title>kppc.photonics &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
   </head><body>
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -82,6 +82,8 @@
 <span class="kn">import</span> <span class="nn">kppc.photonics.dataprep</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">clock</span>
+<span class="kn">import</span> <span class="nn">kppc</span>
+
 
 <span class="c1"># Namedtuple to hold position of a port.</span>
 <span class="n">PortCreation</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;PortCreation&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;rot&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">])</span>
@@ -101,7 +103,7 @@
 
 
 
-<div class="viewcode-block" id="isnamedtupleinstance"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.isnamedtupleinstance">[docs]</a><span class="k">def</span> <span class="nf">isnamedtupleinstance</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="isnamedtupleinstance"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.isnamedtupleinstance">[docs]</a><span class="k">def</span> <span class="nf">isnamedtupleinstance</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test if something is a named tuple</span>
 <span class="sd">    This allows to test if `x` is a port (PortCreation object) or just a list of instance descriptions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -113,7 +115,7 @@
     <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="InstanceHolder"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.InstanceHolder">[docs]</a><span class="k">class</span> <span class="nc">InstanceHolder</span><span class="p">:</span>
+<div class="viewcode-block" id="InstanceHolder"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.InstanceHolder">[docs]</a><span class="k">class</span> <span class="nc">InstanceHolder</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Class to keep track and hold the information of a pcell instance. The information will be processed to a PCell in</span>
 <span class="sd">     :func:`~kppc.photonics.PhotDevice.produce_impl`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -141,7 +143,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pcell_decl</span> <span class="o">=</span> <span class="n">pcell_decl</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">placed</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="InstanceHolder.port_to_port"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.InstanceHolder.port_to_port">[docs]</a>    <span class="k">def</span> <span class="nf">port_to_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_holder</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
+<div class="viewcode-block" id="InstanceHolder.port_to_port"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.InstanceHolder.port_to_port">[docs]</a>    <span class="k">def</span> <span class="nf">port_to_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inst_holder</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Attach one of this instance&#39;s ports to another instance&#39;s port.</span>
 
 <span class="sd">        :param port: port of this instance</span>
@@ -154,7 +156,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">connection_port</span> <span class="o">=</span> <span class="n">inst_holder</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">port_to_connect</span> <span class="o">=</span> <span class="n">port</span></div>
 
-<div class="viewcode-block" id="InstanceHolder.port"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.InstanceHolder.port">[docs]</a>    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="InstanceHolder.port"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.InstanceHolder.port">[docs]</a>    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a reference to itself and the port number. No checks are made whether this port is valid or not!</span>
 <span class="sd">        Available ports can be seen if such an object is instantiated.</span>
@@ -164,7 +166,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">,</span> <span class="n">port</span></div>
 
-<div class="viewcode-block" id="InstanceHolder.move"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.InstanceHolder.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rot</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mirrx</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">mag</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="InstanceHolder.move"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.InstanceHolder.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rot</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mirrx</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">mag</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Moves an instance. Units of microns relative to origin.</span>
 
 <span class="sd">        :param x: x position where to move</span>
@@ -184,7 +186,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">movement</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">DCplxTrans</span><span class="p">(</span><span class="n">mag</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">mirrx</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="PhotDevice"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice">[docs]</a><span class="k">class</span> <span class="nc">PhotDevice</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">PCellDeclarationHelper</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice">[docs]</a><span class="k">class</span> <span class="nc">PhotDevice</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">PCellDeclarationHelper</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Wrapper for calls to the Klayout API.</span>
 
 <span class="sd">    :ivar dict layermap: The layermap dictionary. This value has to be written by a child class. If undefined this</span>
@@ -229,7 +231,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="PhotDevice.get_layer"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.get_layer">[docs]</a>    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">purpose</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.get_layer"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.get_layer">[docs]</a>    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">purpose</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates LayerInfo object</span>
 
 <span class="sd">        Creates a pya.LayerInfo object to find layer indexes in the current layout.</span>
@@ -244,7 +246,7 @@
             <span class="n">layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]][</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span>
         <span class="k">return</span> <span class="n">pya</span><span class="o">.</span><span class="n">LayerInfo</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">layer</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">layer</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.connect_port_to_port"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.connect_port_to_port">[docs]</a>    <span class="k">def</span> <span class="nf">connect_port_to_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port1</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">port2</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.connect_port_to_port"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.connect_port_to_port">[docs]</a>    <span class="k">def</span> <span class="nf">connect_port_to_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port1</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">port2</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Connect Ports from two InstanceHolder instances.</span>
 
 <span class="sd">        Connect two `InstanceHolders` together. Attach &lt;InstanceHolder instance1&gt;.port(&lt;port1&gt;) to &lt;InstanceHolder instance2&gt;.port(&lt;port2&gt;).</span>
@@ -255,21 +257,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">port2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">port_to_port</span><span class="p">(</span><span class="n">port2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">port1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.flip_shape_xaxis"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.flip_shape_xaxis">[docs]</a>    <span class="k">def</span> <span class="nf">flip_shape_xaxis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="s1">&#39;pya.Shape&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.flip_shape_xaxis"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.flip_shape_xaxis">[docs]</a>    <span class="k">def</span> <span class="nf">flip_shape_xaxis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="s1">&#39;pya.Shape&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Flip a polygon (or any shape) at the x-axis</span>
 
 <span class="sd">        :param shape: pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">shape</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">ICplxTrans</span><span class="o">.</span><span class="n">M0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.flip_shape_yaxis"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.flip_shape_yaxis">[docs]</a>    <span class="k">def</span> <span class="nf">flip_shape_yaxis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="s1">&#39;pya.Shape&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.flip_shape_yaxis"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.flip_shape_yaxis">[docs]</a>    <span class="k">def</span> <span class="nf">flip_shape_yaxis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="s1">&#39;pya.Shape&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Flip a polygon (or any shape) at the y-axis</span>
 
 <span class="sd">        :param shape: pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">shape</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">ICplxTrans</span><span class="o">.</span><span class="n">M90</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.create_port"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.create_port">[docs]</a>    <span class="k">def</span> <span class="nf">create_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rot</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.create_port"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.create_port">[docs]</a>    <span class="k">def</span> <span class="nf">create_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rot</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a Port at the specified coordinates.</span>
 
 <span class="sd">        This function will be used when a port is created through the PortCreation tuple.</span>
@@ -287,13 +289,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">portlist</span> <span class="o">+=</span> <span class="s2">&quot;:&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">portlist</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">length</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PhotDevice.clear_ports"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.clear_ports">[docs]</a>    <span class="k">def</span> <span class="nf">clear_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.clear_ports"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.clear_ports">[docs]</a>    <span class="k">def</span> <span class="nf">clear_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clears self.portlist and by that delete all ports. This is used when updating the Ports</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Delete all ports in the string</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">portlist</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="PhotDevice.connect_port"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.connect_port">[docs]</a>    <span class="k">def</span> <span class="nf">connect_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pos2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="PhotDevice.connect_port"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.connect_port">[docs]</a>    <span class="k">def</span> <span class="nf">connect_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pos2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Connect ports of two instances. The second instance will be transformed to attach to the first instance.</span>
 
 <span class="sd">        :param pos1: index of instance1</span>
@@ -327,7 +329,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="n">transformation</span>
         <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="PhotDevice.create_polygon"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.create_polygon">[docs]</a>    <span class="k">def</span> <span class="nf">create_polygon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="s1">&#39;list or pya.DPolygon&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.create_polygon"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.create_polygon">[docs]</a>    <span class="k">def</span> <span class="nf">create_polygon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="s1">&#39;list or pya.DPolygon&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a Polygon and adjusts from microns to database units. Format: [[x1,y1],[x2,y2],...] in microns</span>
 
 <span class="sd">        :param points: Points defining the corners of the polygon.</span>
@@ -342,7 +344,7 @@
                 <span class="n">pts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">DPoint</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">shapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">find_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">DPolygon</span><span class="p">(</span><span class="n">pts</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PhotDevice.create_path"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.create_path">[docs]</a>    <span class="k">def</span> <span class="nf">create_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="s1">&#39;pya.LayerInfo&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.create_path"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.create_path">[docs]</a>    <span class="k">def</span> <span class="nf">create_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="s1">&#39;pya.LayerInfo&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a pya.Path object and inserts it into the Library-PCell.</span>
 
 <span class="sd">        :param points: The points describing the path [[x1,y1],[x2,y2],...] in microns</span>
@@ -355,7 +357,7 @@
         <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">shapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">find_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PhotDevice.insert_shape"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.insert_shape">[docs]</a>    <span class="k">def</span> <span class="nf">insert_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">pya</span><span class="o">.</span><span class="n">Shape</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="s1">&#39;pya.LayerInfo&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.insert_shape"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.insert_shape">[docs]</a>    <span class="k">def</span> <span class="nf">insert_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">pya</span><span class="o">.</span><span class="n">Shape</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="s1">&#39;pya.LayerInfo&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Any other Klayout shape can be added to the PCell through this function.</span>
 
 <span class="sd">        :param shape: pya.Shape object</span>
@@ -364,7 +366,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">shapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">find_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.add_layer"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.add_layer">[docs]</a>    <span class="k">def</span> <span class="nf">add_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">datatype</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ld</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span>
+<div class="viewcode-block" id="PhotDevice.add_layer"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.add_layer">[docs]</a>    <span class="k">def</span> <span class="nf">add_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">datatype</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ld</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span>
                   <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                   <span class="n">hidden</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add a layer to the layer list of the pcell by name.</span>
@@ -389,7 +391,7 @@
             <span class="c1"># datatype = int(datatype)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TypeLayer</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=</span><span class="n">hidden</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">linfo</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.add_params"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.add_params">[docs]</a>    <span class="k">def</span> <span class="nf">add_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.add_params"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.add_params">[docs]</a>    <span class="k">def</span> <span class="nf">add_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create the PCell conform dictionary from a parameter list</span>
 
 <span class="sd">        :param params: Dictionary of parameters</span>
@@ -417,7 +419,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PhotDevice.decl"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.decl">[docs]</a>    <span class="k">def</span> <span class="nf">decl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">libname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cellname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.decl"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.decl">[docs]</a>    <span class="k">def</span> <span class="nf">decl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">libname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cellname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get pya.PCellDeclaration of a cell in a library</span>
 
 <span class="sd">        :param libname: Name of the library</span>
@@ -433,7 +435,7 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unkown PCell &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cellname</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">pcell_decl</span></div>
 
-<div class="viewcode-block" id="PhotDevice.update_parameter_list"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.update_parameter_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_parameter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">decl</span><span class="p">:</span> <span class="s1">&#39;pya.PCellDeclaration&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.update_parameter_list"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.update_parameter_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_parameter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">decl</span><span class="p">:</span> <span class="s1">&#39;pya.PCellDeclaration&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Coerces parameter list. This is necessary to calculate port locations and update parameters in general.</span>
 
 <span class="sd">        :param params: dict of parameters</span>
@@ -444,7 +446,7 @@
         <span class="n">param_list</span> <span class="o">=</span> <span class="n">decl</span><span class="o">.</span><span class="n">coerce_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">param_list</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">param_list</span></div>
 
-<div class="viewcode-block" id="PhotDevice.calculate_ports"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.calculate_ports">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.calculate_ports"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.calculate_ports">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates port locations in the cell layout. This is to propagate the port locations upwards</span>
 
 <span class="sd">        :param instances: list containing :class:`kppc.photonics.InstanceHolder`</span>
@@ -475,14 +477,14 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">portlist</span> <span class="o">+=</span> <span class="s1">&#39;;&#39;</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">portlist</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="PhotDevice.get_transformations"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.get_transformations">[docs]</a>    <span class="k">def</span> <span class="nf">get_transformations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.get_transformations"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.get_transformations">[docs]</a>    <span class="k">def</span> <span class="nf">get_transformations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert transformation strings back to pya.ICplxTrans objects</span>
 
 <span class="sd">        :return: list of pya.ICplxTrans objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">pya</span><span class="o">.</span><span class="n">ICplxTrans</span><span class="o">.</span><span class="n">from_s</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)]</span></div>
 
-<div class="viewcode-block" id="PhotDevice.set_transformation"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.set_transformation">[docs]</a>    <span class="k">def</span> <span class="nf">set_transformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">trans</span><span class="p">:</span> <span class="s1">&#39;pya.ICplxTrans&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.set_transformation"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.set_transformation">[docs]</a>    <span class="k">def</span> <span class="nf">set_transformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">trans</span><span class="p">:</span> <span class="s1">&#39;pya.ICplxTrans&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Transforms child cells to the intended position, defined either by connected ports or by manual</span>
 <span class="sd">        positioning.</span>
 
@@ -497,7 +499,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">+=</span> <span class="s1">&#39;;&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">+=</span> <span class="n">t</span><span class="o">.</span><span class="n">to_s</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="PhotDevice.add_pcell_variant"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.add_pcell_variant">[docs]</a>    <span class="k">def</span> <span class="nf">add_pcell_variant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.add_pcell_variant"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.add_pcell_variant">[docs]</a>    <span class="k">def</span> <span class="nf">add_pcell_variant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add variants of PCells. Creates a list of InstanceHolders and modifies their parameters accordingly.</span>
 
 <span class="sd">        :param params: parameter list from which to create pcells</span>
@@ -521,7 +523,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">instance_list</span></div>
 
-<div class="viewcode-block" id="PhotDevice.add_pcells"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.add_pcells">[docs]</a>    <span class="k">def</span> <span class="nf">add_pcells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.add_pcells"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.add_pcells">[docs]</a>    <span class="k">def</span> <span class="nf">add_pcells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates list of instances of PCells. These are the effective Klayout cell instances.</span>
 <span class="sd">        </span>
 <span class="sd">        :param instance_list: list of :class:`kppc.photonics.InstanceHolder`</span>
@@ -552,7 +554,7 @@
             <span class="n">instances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">pcell_var</span><span class="p">,</span> <span class="n">trans</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
         <span class="k">return</span> <span class="n">instances</span></div>
 
-<div class="viewcode-block" id="PhotDevice.move_instance"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.move_instance">[docs]</a>    <span class="k">def</span> <span class="nf">move_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">trans</span><span class="p">:</span> <span class="s1">&#39;pya.ICplxTrans&#39;</span><span class="p">,</span> <span class="n">mirror</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.move_instance"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.move_instance">[docs]</a>    <span class="k">def</span> <span class="nf">move_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">trans</span><span class="p">:</span> <span class="s1">&#39;pya.ICplxTrans&#39;</span><span class="p">,</span> <span class="n">mirror</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Moves an InstanceHolder object</span>
 
 <span class="sd">        :param ind: id of the InstanceHolder</span>
@@ -562,7 +564,7 @@
         <span class="n">trans</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">ICplxTrans</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">trans</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">mirror</span><span class="p">,</span> <span class="n">trans</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">trans</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_transformation</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.coerce_parameters_impl"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.coerce_parameters_impl">[docs]</a>    <span class="k">def</span> <span class="nf">coerce_parameters_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.coerce_parameters_impl"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.coerce_parameters_impl">[docs]</a>    <span class="k">def</span> <span class="nf">coerce_parameters_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method called by Klayout to update a PCell. For photonic PCells the ports are updated/calculated in the</span>
 <span class="sd">        parameter of the PCell. And desired movement transformations are performed.</span>
 
@@ -640,7 +642,7 @@
         <span class="c1"># Update the transformations and self.portlist with the calculated transformations of the children</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_ports</span><span class="p">(</span><span class="n">insts</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.produce_impl"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.produce_impl">[docs]</a>    <span class="k">def</span> <span class="nf">produce_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.produce_impl"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.produce_impl">[docs]</a>    <span class="k">def</span> <span class="nf">produce_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create the effective Klayout shapes. For this all the InstanceHolders are cycled through and all the child</span>
 <span class="sd">        instances are created. Furthermore, if desired, dataprep is performed, which copies and sizes the shapes as</span>
 <span class="sd">        desired. Dataprep will only create shapes on the topmost cell. Finally, if desired DR-cleaning is performed and</span>
@@ -720,51 +722,91 @@
             <span class="c1"># For the dataprep, do we want to keep the original shapes and child-cells?</span>
         <span class="n">cl1</span> <span class="o">=</span> <span class="n">clock</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep</span><span class="p">:</span>
-            <span class="c1"># Yes, so we create a new child cell called &#39;DataPrep&#39; to create the dataprep shapes in</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
-                <span class="n">prep_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep&#39;</span><span class="p">)</span>
-                <span class="n">prep_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
-                <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">prep_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">prep_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
-                <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
-                <span class="c1"># Convert Micrometers to database units</span>
-                <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
-                    <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
-                    <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
-                <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">prep_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># the dataprep will clean all children and shapes and then insert cleaned ones</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
-                <span class="n">temp_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep_del&#39;</span><span class="p">)</span>
-                <span class="n">temp_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
-                <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">temp_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
-
+        <span class="k">if</span> <span class="n">kppc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">multiprocessing</span><span class="p">:</span>
+        
+            <span class="c1">#print(&quot;Doing multiprocess cleaning&quot;) </span>
+        
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep</span><span class="p">:</span>
+                <span class="c1"># Yes, so we create a new child cell called &#39;DataPrep&#39; to create the dataprep shapes in</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
+                    <span class="n">prep_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep&#39;</span><span class="p">)</span>
+                    <span class="n">prep_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">prep_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">prep_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
                     <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
                     <span class="c1"># Convert Micrometers to database units</span>
                     <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
                         <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
                         <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
-                    <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">temp_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
-                <span class="c1"># Delete all child cells</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">temp_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">multiprocessing_clean</span><span class="p">(</span><span class="n">prep_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+    
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># the dataprep will clean all children and shapes and then insert cleaned ones</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
+                    <span class="n">temp_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep_del&#39;</span><span class="p">)</span>
+                    <span class="n">temp_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">temp_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+    
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
+                        <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
+                        <span class="c1"># Convert Micrometers to database units</span>
+                        <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                        <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">multiprocessing_clean</span><span class="p">(</span><span class="n">temp_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+                    <span class="c1"># Delete all child cells</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">temp_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="k">else</span><span class="p">:</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time for dataprep and DR-cleaning:&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">cl1</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep</span><span class="p">:</span>
+                <span class="c1"># Yes, so we create a new child cell called &#39;DataPrep&#39; to create the dataprep shapes in</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
+                    <span class="n">prep_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep&#39;</span><span class="p">)</span>
+                    <span class="n">prep_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">prep_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">prep_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
+                    <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
+                    <span class="c1"># Convert Micrometers to database units</span>
+                    <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
+                        <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                        <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">prep_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+    
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># the dataprep will clean all children and shapes and then insert cleaned ones</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
+                    <span class="n">temp_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep_del&#39;</span><span class="p">)</span>
+                    <span class="n">temp_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">temp_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+    
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
+                        <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
+                        <span class="c1"># Convert Micrometers to database units</span>
+                        <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                        <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">temp_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+                    <span class="c1"># Delete all child cells</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">temp_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhotDevice.create_param_inst"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.create_param_inst">[docs]</a>    <span class="k">def</span> <span class="nf">create_param_inst</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#print(&#39;Time for dataprep and DR-cleaning:&#39;)</span>
+        <span class="c1">#print(clock() - cl1)</span>
+
+<div class="viewcode-block" id="PhotDevice.create_param_inst"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.create_param_inst">[docs]</a>    <span class="k">def</span> <span class="nf">create_param_inst</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;To be overwritten by the effective PCell</span>
 
 <span class="sd">        :return: Iterable with the declarations of the child PCells.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="PhotDevice.shapes"><a class="viewcode-back" href="../../photonics.html#kppc.photonics.PhotDevice.shapes">[docs]</a>    <span class="k">def</span> <span class="nf">shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhotDevice.shapes"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.shapes">[docs]</a>    <span class="k">def</span> <span class="nf">shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;To be overwritten by effective PCell if shapes should be desired.</span>
 
 <span class="sd">        :rtype: None</span>
@@ -778,13 +820,11 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -802,13 +842,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, Sebastian Goeldi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+        &#169; Copyright 2019, Sebastian Goeldi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

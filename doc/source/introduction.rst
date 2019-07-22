@@ -5,7 +5,7 @@ The KLayoutPhotonicPCells`kppc` module is an extension for KLayout PCells to fac
 Photonics often works with the concept of ports.
 Ports are defined by a coordinate and a direction. In the case of this module ports will be stored in PCell parameters in the background.
 They are serialized `KLayout Trans`_ objects. For an introduction on how to build your own PCell Library, have a look at
-how to create :doc:`Example Library <example_library>`.
+how to create :doc:`Example Library <photonics/example_library>`.
 
 When building PCell Libraries it is recommended to build it with three packages as shown in :numref:`p_format`
 

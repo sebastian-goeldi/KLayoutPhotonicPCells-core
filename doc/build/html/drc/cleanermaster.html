@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>kppc.drc.cleanermaster module &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="kppc-drc-cleanermaster-module">
+<span id="cm"></span><h1>kppc.drc.cleanermaster module<a class="headerlink" href="#kppc-drc-cleanermaster-module" title="Permalink to this headline">¶</a></h1>
+<p>Wrapper Class for CleanerMaster.cpp</p>
+<p>This Class creates a managed shared memory space. Polygon data for cleaning are streamed into this memory space. A slave process (cleanermain, which is a little loop for CleanerSlave.cpp).</p>
+<div class="section" id="python-class">
+<h2>Python Class<a class="headerlink" href="#python-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="PyCleanerMaster">
+<em class="property">class </em><code class="sig-name descname">PyCleanerMaster</code><a class="headerlink" href="#PyCleanerMaster" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="PyCleanerMaster.add_edge">
+<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x1 : int</em>, <em class="sig-param">x2 : int</em>, <em class="sig-param">y1 : int</em>, <em class="sig-param">y2 : int</em><span class="sig-paren">)</span><a class="headerlink" href="#PyCleanerMaster.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an edge to the cleaner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> – first x coordinate</p></li>
+<li><p><strong>x2</strong> – second x coordinate</p></li>
+<li><p><strong>y1</strong> – first y coordinate</p></li>
+<li><p><strong>y2</strong> – second y coordinate</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="PyCleanerMaster.done">
+<code class="sig-name descname">done</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#PyCleanerMaster.done" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether there is data still in the buffer from the last read or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>false if the buffer is empty and the data has been read by the slave.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="PyCleanerMaster.get_layer">
+<code class="sig-name descname">get_layer</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#PyCleanerMaster.get_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the next processed layer in the memory space and returns it in per line style (x coordinates per line (y coordinate)). This is considerably slower than returning the polygons.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PyCleanerMaster.polygons">
+<code class="sig-name descname">polygons</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#PyCleanerMaster.polygons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the next processed layer in the memory and assembles the line style to polygons.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PyCleanerMaster.set_box">
+<code class="sig-name descname">set_box</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">layer : int</em>, <em class="sig-param">datatype : int</em>, <em class="sig-param">violation_width : int</em>, <em class="sig-param">violation_space : int</em>, <em class="sig-param">x1 : int</em>, <em class="sig-param">x2 : int</em>, <em class="sig-param">y1 : int</em>, <em class="sig-param">y2 : int</em><span class="sig-paren">)</span><a class="headerlink" href="#PyCleanerMaster.set_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allocate enough space in the shared memory to stream the cell and its polygons in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer</strong> – layer number</p></li>
+<li><p><strong>datatype</strong> – datatype number</p></li>
+<li><p><strong>viospace</strong> (<em>minimum space violation in database units</em>) – minimum space violation in database units</p></li>
+<li><p><strong>viowidth</strong> (<em>minimum width violation in database units</em>) – minimum width violation in database units</p></li>
+<li><p><strong>x1</strong> – left bound of box</p></li>
+<li><p><strong>x2</strong> – right bound of box</p></li>
+<li><p><strong>y1</strong> – bottom bound of box</p></li>
+<li><p><strong>y2</strong> – top bound of box</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="c-class">
+<h2>C++ Class<a class="headerlink" href="#c-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv413CleanerMaster">
+<span id="_CPPv313CleanerMaster"></span><span id="_CPPv213CleanerMaster"></span><span id="CleanerMaster"></span><em class="property">class </em><code class="sig-name descname">CleanerMaster</code><a class="headerlink" href="#_CPPv413CleanerMaster" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="union">
+<dt id="_CPPv4N13CleanerMasterUt5_cmcppE">
+<span id="_CPPv3N13CleanerMasterUt5_cmcppE"></span><em class="property">union </em><strong>[anonymous]</strong><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcppE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="function">
+<dt id="_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi">
+<span id="_CPPv3N13CleanerMasterUt5_cmcpp13CleanerMasterEi"></span><code class="sig-name descname">CleanerMaster</code><span class="sig-paren">(</span>int <em>nlayers</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates the shared memory space and resizes the vectors for nlayers</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N13CleanerMasterUt5_cmcpp7set_boxEiiiiiiii">
+<span id="_CPPv3N13CleanerMasterUt5_cmcpp7set_boxEiiiiiiii"></span>void <code class="sig-name descname">set_box</code><span class="sig-paren">(</span>int <em>layer</em>, int <em>datatype</em>, int <em>violation_width</em>, int <em>violation_space</em>, int <em>x1</em>, int <em>x2</em>, int <em>y1</em>, int <em>y2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp7set_boxEiiiiiiii" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allocate enough space in the shared memory to stream the cell and its polygons in.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N13CleanerMasterUt5_cmcpp8add_edgeEiiii">
+<span id="_CPPv3N13CleanerMasterUt5_cmcpp8add_edgeEiiii"></span>void <code class="sig-name descname">add_edge</code><span class="sig-paren">(</span>int <em>x1</em>, int <em>x2</em>, int <em>y1</em>, int <em>y2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp8add_edgeEiiii" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add an edge to the cleaner.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N13CleanerMasterUt5_cmcpp4doneEv">
+<span id="_CPPv3N13CleanerMasterUt5_cmcpp4doneEv"></span>bool <code class="sig-name descname">done</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp4doneEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Indicates whether there is data still in the buffer from the last read or not.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster9get_layerEv">
+<span id="_CPPv3N13CleanerMasterUt5_cmcpp13CleanerMaster9get_layerEv"></span>std::vector&lt;std::vector&lt;int&gt;&gt; <code class="sig-prename descclassname"><a class="reference internal" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi" title="CleanerMaster::[anonymous]::CleanerMaster">CleanerMaster</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_layer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster9get_layerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read the next processed layer in the memory space and returns it in per line style (x coordinates per line (y coordinate)).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster12get_polygonsEv">
+<span id="_CPPv3N13CleanerMasterUt5_cmcpp13CleanerMaster12get_polygonsEv"></span>std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt;&gt;&gt; <code class="sig-prename descclassname"><a class="reference internal" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi" title="CleanerMaster::[anonymous]::CleanerMaster">CleanerMaster</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_polygons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster12get_polygonsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Reads the next processed layer in the memory and assembles the line style to polygons.</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<p>C++ Source Code: <a class="reference internal" href="../source_code/cleanermaster_source.html#cmsource"><span class="std std-ref">CleanerMaster Source</span></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">kppc.drc.cleanermaster module</a><ul>
+<li><a class="reference internal" href="#python-class">Python Class</a></li>
+<li><a class="reference internal" href="#c-class">C++ Class</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/drc/cleanermaster.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Sebastian Goeldi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

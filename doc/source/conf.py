@@ -14,10 +14,11 @@
 #
 import os
 import sys
+from sphinx_markdown_parser.parser import MarkdownParser
 sys.path.insert(0, os.path.abspath('../../python'))
 sys.path.insert(0, os.path.expanduser("~/.local/bin"))
-numfig = True
 
+numfig = True
 
 #from unittest.mock import MagicMock
 #class Mock(MagicMock):
@@ -32,13 +33,13 @@ numfig = True
 # -- Project information -----------------------------------------------------
 
 project = 'KLayout Photonic PCells'
-copyright = '2018, Sebastian Goeldi'
+copyright = '2019, Sebastian Goeldi'
 author = 'Sebastian Goeldi'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.1.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -53,6 +54,7 @@ release = '0.1'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
+    'sphinx.ext.napoleon',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
@@ -215,3 +217,12 @@ intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.md': 'markdown'
+}
+
+def setup(app):
+    app.add_source_suffix('.md', 'markdown')
+    app.add_source_parser(MarkdownParser)

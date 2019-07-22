@@ -1,19 +1,19 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Photonic PCell Library Extension Documentation &#8212; KLayout Photonic PCells 0.1 documentation</title>
+    <meta charset="utf-8" />
+    <title>Photonic PCell Library Extension Documentation &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Introduction" href="introduction.html" /> 
@@ -30,7 +30,7 @@
         <li class="right" >
           <a href="introduction.html" title="Introduction"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">KLayout Photonic PCells 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -45,35 +45,54 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="first_steps.html">First Steps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="first_steps.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_steps.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photonics/first_steps.html">First Steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="photonics/first_steps.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photonics/first_steps.html#installation">Installation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ports.html">Ports</a></li>
-<li class="toctree-l1"><a class="reference internal" href="techfile.html">Technology Import</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="techfile.html#import-techfile-creation-of-layerproperties">Import Techfile &amp; Creation of LayerProperties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="techfile.html#import-of-example-vias">Import of example Vias</a></li>
-<li class="toctree-l2"><a class="reference internal" href="techfile.html#layermap">Layermap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photonics/ports.html">Ports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photonics/techfile.html">Technology Import</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="photonics/techfile.html#import-techfile-creation-of-layerproperties">Import Techfile &amp; Creation of LayerProperties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photonics/techfile.html#import-of-example-vias">Import of example Vias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photonics/techfile.html#layermap">Layermap</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Code Documentation of KLayoutPhtonicPCells</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="drc.html">drc package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photonics.html">photonics package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drc/drc.html">drc Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drc/drc.html#module-kppc.drc">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drc/drc.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drc/drc.html#multiprocessing">Multiprocessing</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="example_library.html">Example: Create Sample Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photonics/photonics.html">photonics Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="photonics/photonics.html#module-kppc.photonics">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="photonics/photonics.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="photonics/example_library.html">Example: Create Sample Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="photonics/example_library.html#code-explanation">Code Explanation</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tips.html">Tips &amp; Tricks</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tips.html#variable-names-in-klayout-python">Variable Names in KLayout Python</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sourcecodes.html">C++ Source Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source_code/drcsl_source.html">DrcSl Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source_code/cleanermaster_source.html">CleanerMaster Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source_code/cleanermain_source.html">CleanerMain Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source_code/cleanerslave_source.html">CleanerSlave Source</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <p>Glossary:</p>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
 
@@ -94,13 +113,11 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -121,12 +138,12 @@
         <li class="right" >
           <a href="introduction.html" title="Introduction"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">KLayout Photonic PCells 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, Sebastian Goeldi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+        &#169; Copyright 2019, Sebastian Goeldi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

@@ -4,7 +4,7 @@
 
 # cython
 slcleaner.cpp
-python/drc/slcleaner_source/build/
+python/drc/source/build/
 .idea
 *.o
 cleaner_engine

@@ -1,8 +1,8 @@
-Code Documentation of KLayoutPhtonicPCells
-==========================================
+Code Documentation
+==================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
-   drc
-   photonics
+   drc/drc
+   photonics/photonics

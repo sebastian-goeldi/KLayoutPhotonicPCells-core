@@ -1,4 +1,3 @@
-# $autorun
 # This file is part of KLayoutPhotonicPcells, an extension for Photonic Layouts in KLayout.
 # Copyright (c) 2018, Sebastian Goeldi
 #
@@ -34,7 +33,7 @@ To execute the script open a console and execute the following commands:
 
 The bash script executes the following commands:
 
-.. literalinclude:: ../../python/kppc/drc/compile.sh
+.. literalinclude:: ../../../python/kppc/drc/compile.sh
     :language: bash
 
 .. _Cython Documentation: http://cython.org/
@@ -72,7 +71,7 @@ if not sl_path:
     print(msg.clickedButton())
 
     if msg.clickedButton() == compile_button:
-        src_dir = dir_path / "slcleaner_source"
+        src_dir = dir_path / "source"
         print('Trying to Compile')
         p1 = subprocess.Popen(['python3', 'setup.py', 'build_ext', '-b', '../'], stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, cwd=src_dir)
@@ -108,6 +107,7 @@ if not can_multi:
     kppc.settings.multiprocessing = False
 else:
     import kppc.drc.cleanermaster
+    print("Using the multiprocessing module")
 
 
 def clean(cell: 'pya. Cell', cleanrules: list):
@@ -184,7 +184,8 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     """
     Clean a cell for width and space violations.
     This function will clear the output layers of any shapes and insert a cleaned region.
-    Does the cleaning in a seperate Process started as a childprocess, which will calculate in parallel with multiple threads
+    Does the cleaning in a seperate Process started as a childprocess,
+    which will calculate in parallel with multiple threads.
 
     :param cell: pointer to the cell that needs to be cleaned
     :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
