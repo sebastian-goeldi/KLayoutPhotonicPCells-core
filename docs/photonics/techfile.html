@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Technology Import &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Code Documentation" href="../modules.html" />
+    <link rel="prev" title="Ports" href="ports.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modules.html" title="Code Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ports.html" title="Ports"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="technology-import">
+<h1>Technology Import<a class="headerlink" href="#technology-import" title="Permalink to this headline">¶</a></h1>
+<p>To use KLayout and the Photonics-extension efficiently, it is recommended to create a KLayout technology. This chapter explains how to import a technology.</p>
+<p>To use a new technology either create a new technology from the technology manager <span class="menuselection">Tools ‣ Manage Technologies</span> or create a new package
+<span class="menuselection">Tools ‣ Manage Packages</span> for the technology.</p>
+<div class="section" id="import-techfile-creation-of-layerproperties">
+<h2>Import Techfile &amp; Creation of LayerProperties<a class="headerlink" href="#import-techfile-creation-of-layerproperties" title="Permalink to this headline">¶</a></h2>
+<p>KLayout provides an import script for Cadence techfiles. This import creats the Layer Properties automatically for the defined layers.</p>
+<p>The script can be found in <span class="menuselection">File ‣ Import Cadence Techfile</span></p>
+<p>After importing, the properties can be saved via <span class="menuselection">File ‣ Save Layer Properties</span>. Recommended location for the file is in the technology folder in <cite>~/.klayout/tech/&lt;technology-name&gt;/&lt;file&gt;</cite> or if using a package
+<cite>~/.klayout/salt/&lt;technology-package&gt;/tech/&lt;filename&gt;</cite></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Suggested filename for easy use with the sample cells: FreePDK45.tf / FreePDK45.lyp</p>
+<p>In order to use the additional abstract layers in the sample cells paste the following xml snippets into the &lt;&gt;.lyp file:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;frame-color&gt;</span>#01ff6b<span class="nt">&lt;/frame-color&gt;</span>
+    <span class="nt">&lt;fill-color&gt;</span>#01ff6b<span class="nt">&lt;/fill-color&gt;</span>
+    <span class="nt">&lt;frame-brightness&gt;</span>0<span class="nt">&lt;/frame-brightness&gt;</span>
+    <span class="nt">&lt;fill-brightness&gt;</span>0<span class="nt">&lt;/fill-brightness&gt;</span>
+    <span class="nt">&lt;dither-pattern&gt;</span>I3<span class="nt">&lt;/dither-pattern&gt;</span>
+    <span class="nt">&lt;line-style&gt;</span>I6<span class="nt">&lt;/line-style&gt;</span>
+    <span class="nt">&lt;valid&gt;</span>true<span class="nt">&lt;/valid&gt;</span>
+    <span class="nt">&lt;visible&gt;</span>true<span class="nt">&lt;/visible&gt;</span>
+    <span class="nt">&lt;transparent&gt;</span>false<span class="nt">&lt;/transparent&gt;</span>
+    <span class="nt">&lt;width&gt;</span>1<span class="nt">&lt;/width&gt;</span>
+    <span class="nt">&lt;marked&gt;</span>false<span class="nt">&lt;/marked&gt;</span>
+    <span class="nt">&lt;xfill&gt;</span>false<span class="nt">&lt;/xfill&gt;</span>
+    <span class="nt">&lt;animation&gt;</span>0<span class="nt">&lt;/animation&gt;</span>
+    <span class="nt">&lt;name&gt;</span>phot_silicon.drawing<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;source&gt;</span>400/0@1<span class="nt">&lt;/source&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;frame-color&gt;</span>#808080<span class="nt">&lt;/frame-color&gt;</span>
+    <span class="nt">&lt;fill-color&gt;</span>#808080<span class="nt">&lt;/fill-color&gt;</span>
+    <span class="nt">&lt;frame-brightness&gt;</span>0<span class="nt">&lt;/frame-brightness&gt;</span>
+    <span class="nt">&lt;fill-brightness&gt;</span>0<span class="nt">&lt;/fill-brightness&gt;</span>
+    <span class="nt">&lt;dither-pattern&gt;</span>I2<span class="nt">&lt;/dither-pattern&gt;</span>
+    <span class="nt">&lt;line-style&gt;</span>I0<span class="nt">&lt;/line-style&gt;</span>
+    <span class="nt">&lt;valid&gt;</span>true<span class="nt">&lt;/valid&gt;</span>
+    <span class="nt">&lt;visible&gt;</span>true<span class="nt">&lt;/visible&gt;</span>
+    <span class="nt">&lt;transparent&gt;</span>false<span class="nt">&lt;/transparent&gt;</span>
+    <span class="nt">&lt;width&gt;</span>1<span class="nt">&lt;/width&gt;</span>
+    <span class="nt">&lt;marked&gt;</span>false<span class="nt">&lt;/marked&gt;</span>
+    <span class="nt">&lt;xfill&gt;</span>false<span class="nt">&lt;/xfill&gt;</span>
+    <span class="nt">&lt;animation&gt;</span>0<span class="nt">&lt;/animation&gt;</span>
+    <span class="nt">&lt;name&gt;</span>phot_poly.drawing<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;source&gt;</span>410/0@1<span class="nt">&lt;/source&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;frame-color&gt;</span>#ff0000<span class="nt">&lt;/frame-color&gt;</span>
+    <span class="nt">&lt;fill-color&gt;</span>#ff0000<span class="nt">&lt;/fill-color&gt;</span>
+    <span class="nt">&lt;frame-brightness&gt;</span>0<span class="nt">&lt;/frame-brightness&gt;</span>
+    <span class="nt">&lt;fill-brightness&gt;</span>0<span class="nt">&lt;/fill-brightness&gt;</span>
+    <span class="nt">&lt;dither-pattern&gt;</span>I9<span class="nt">&lt;/dither-pattern&gt;</span>
+    <span class="nt">&lt;line-style/&gt;</span>
+    <span class="nt">&lt;valid&gt;</span>true<span class="nt">&lt;/valid&gt;</span>
+    <span class="nt">&lt;visible&gt;</span>true<span class="nt">&lt;/visible&gt;</span>
+    <span class="nt">&lt;transparent&gt;</span>false<span class="nt">&lt;/transparent&gt;</span>
+    <span class="nt">&lt;width&gt;</span>1<span class="nt">&lt;/width&gt;</span>
+    <span class="nt">&lt;marked&gt;</span>false<span class="nt">&lt;/marked&gt;</span>
+    <span class="nt">&lt;xfill&gt;</span>false<span class="nt">&lt;/xfill&gt;</span>
+    <span class="nt">&lt;animation&gt;</span>0<span class="nt">&lt;/animation&gt;</span>
+    <span class="nt">&lt;name&gt;</span>phot_pwell.drawing<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;source&gt;</span>420/0@1<span class="nt">&lt;/source&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;frame-color&gt;</span>#0000ff<span class="nt">&lt;/frame-color&gt;</span>
+    <span class="nt">&lt;fill-color&gt;</span>#0000ff<span class="nt">&lt;/fill-color&gt;</span>
+    <span class="nt">&lt;frame-brightness&gt;</span>0<span class="nt">&lt;/frame-brightness&gt;</span>
+    <span class="nt">&lt;fill-brightness&gt;</span>0<span class="nt">&lt;/fill-brightness&gt;</span>
+    <span class="nt">&lt;dither-pattern&gt;</span>I5<span class="nt">&lt;/dither-pattern&gt;</span>
+    <span class="nt">&lt;line-style/&gt;</span>
+    <span class="nt">&lt;valid&gt;</span>true<span class="nt">&lt;/valid&gt;</span>
+    <span class="nt">&lt;visible&gt;</span>true<span class="nt">&lt;/visible&gt;</span>
+    <span class="nt">&lt;transparent&gt;</span>false<span class="nt">&lt;/transparent&gt;</span>
+    <span class="nt">&lt;width&gt;</span>1<span class="nt">&lt;/width&gt;</span>
+    <span class="nt">&lt;marked&gt;</span>false<span class="nt">&lt;/marked&gt;</span>
+    <span class="nt">&lt;xfill&gt;</span>false<span class="nt">&lt;/xfill&gt;</span>
+    <span class="nt">&lt;animation&gt;</span>0<span class="nt">&lt;/animation&gt;</span>
+    <span class="nt">&lt;name&gt;</span>phot_nwell.drawing<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;source&gt;</span>430/0@1<span class="nt">&lt;/source&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;frame-color&gt;</span>#ff0000<span class="nt">&lt;/frame-color&gt;</span>
+    <span class="nt">&lt;fill-color&gt;</span>#ff0000<span class="nt">&lt;/fill-color&gt;</span>
+    <span class="nt">&lt;frame-brightness&gt;</span>0<span class="nt">&lt;/frame-brightness&gt;</span>
+    <span class="nt">&lt;fill-brightness&gt;</span>0<span class="nt">&lt;/fill-brightness&gt;</span>
+    <span class="nt">&lt;dither-pattern&gt;</span>I11<span class="nt">&lt;/dither-pattern&gt;</span>
+    <span class="nt">&lt;line-style/&gt;</span>
+    <span class="nt">&lt;valid&gt;</span>true<span class="nt">&lt;/valid&gt;</span>
+    <span class="nt">&lt;visible&gt;</span>true<span class="nt">&lt;/visible&gt;</span>
+    <span class="nt">&lt;transparent&gt;</span>false<span class="nt">&lt;/transparent&gt;</span>
+    <span class="nt">&lt;width&gt;</span>1<span class="nt">&lt;/width&gt;</span>
+    <span class="nt">&lt;marked&gt;</span>false<span class="nt">&lt;/marked&gt;</span>
+    <span class="nt">&lt;xfill&gt;</span>false<span class="nt">&lt;/xfill&gt;</span>
+    <span class="nt">&lt;animation&gt;</span>0<span class="nt">&lt;/animation&gt;</span>
+    <span class="nt">&lt;name&gt;</span>phot_pimplant.drawing<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;source&gt;</span>440/0@1<span class="nt">&lt;/source&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;frame-color&gt;</span>#0000ff<span class="nt">&lt;/frame-color&gt;</span>
+    <span class="nt">&lt;fill-color&gt;</span>#0000ff<span class="nt">&lt;/fill-color&gt;</span>
+    <span class="nt">&lt;frame-brightness&gt;</span>0<span class="nt">&lt;/frame-brightness&gt;</span>
+    <span class="nt">&lt;fill-brightness&gt;</span>0<span class="nt">&lt;/fill-brightness&gt;</span>
+    <span class="nt">&lt;dither-pattern&gt;</span>I7<span class="nt">&lt;/dither-pattern&gt;</span>
+    <span class="nt">&lt;line-style/&gt;</span>
+    <span class="nt">&lt;valid&gt;</span>true<span class="nt">&lt;/valid&gt;</span>
+    <span class="nt">&lt;visible&gt;</span>true<span class="nt">&lt;/visible&gt;</span>
+    <span class="nt">&lt;transparent&gt;</span>false<span class="nt">&lt;/transparent&gt;</span>
+    <span class="nt">&lt;width&gt;</span>1<span class="nt">&lt;/width&gt;</span>
+    <span class="nt">&lt;marked&gt;</span>false<span class="nt">&lt;/marked&gt;</span>
+    <span class="nt">&lt;xfill&gt;</span>false<span class="nt">&lt;/xfill&gt;</span>
+    <span class="nt">&lt;animation&gt;</span>0<span class="nt">&lt;/animation&gt;</span>
+    <span class="nt">&lt;name&gt;</span>phot_nimplant.drawing<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;source&gt;</span>450/0@1<span class="nt">&lt;/source&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+</pre></div>
+</div>
+<p>Put this block between the last properties block but befor the end of the name block.</p>
+</div>
+</div>
+<div class="section" id="import-of-example-vias">
+<h2>Import of example Vias<a class="headerlink" href="#import-of-example-vias" title="Permalink to this headline">¶</a></h2>
+<p>Importing a .LEF will create the layerproperties. The layerproperties are the layer-purpose-pairs of KLayout. When using the lef import script built into
+KLayout, it will automatically load example vias into a new layout. Unfortunately, the layers are not the correct layers from the technology files.
+The layers can be edited by selecting a layer in the layers sub-window and then editing the layer via <span class="menuselection">Edit ‣ Layer ‣ Edit Layer Specification</span>.
+Recommended place is in the <cite>~/.klayout/tech/libraries</cite> or if using a package: <cite>~/.klayout/salt/&lt;package-name&gt;/tech/libraries</cite>. These will automatically be loaded and are available as static cells for insert or in PCells.</p>
+</div>
+<div class="section" id="layermap">
+<h2>Layermap<a class="headerlink" href="#layermap" title="Permalink to this headline">¶</a></h2>
+<p>The .layermap file is usually supplied by the foundry. This file can be used in the pcell_lib_ext to use layernames instead of layer numbers in the PCell Library.
+It contains layername | layernumber | layerdatatype on each line for each layer. They have to be separated by white spaces. Afterwards, they can by used by the <cite>self.add_layer(str varname, str layername)</cite>
+function during the <cite>__init__</cite> of a new class of a PCell. Later the layer is accessible as <cite>self.varname</cite>.</p>
+<p>Recommended place is again in the tech folder.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Technology Import</a><ul>
+<li><a class="reference internal" href="#import-techfile-creation-of-layerproperties">Import Techfile &amp; Creation of LayerProperties</a></li>
+<li><a class="reference internal" href="#import-of-example-vias">Import of example Vias</a></li>
+<li><a class="reference internal" href="#layermap">Layermap</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ports.html"
+                        title="previous chapter">Ports</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../modules.html"
+                        title="next chapter">Code Documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/photonics/techfile.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modules.html" title="Code Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ports.html" title="Ports"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Sebastian Goeldi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>
