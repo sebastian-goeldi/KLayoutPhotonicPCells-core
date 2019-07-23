@@ -38,15 +38,14 @@ The main functionality for this module is in the class :class:`~kppc.photonics.P
 
 import pya
 import kppc.drc
-from collections import namedtuple
 import kppc.photonics.dataprep
 from time import clock
 import kppc
 
 
-# Namedtuple to hold position of a port.
-class PortCreation(namedtuple('PortCreation', ['x', 'y', 'rot', 'length'])):
-    """Custom namedtuple
+# Class with port information.
+class PortCreation:
+    """Custom Class similar to a namedtuple
 
     This will hold informations for creating ports.
 
@@ -59,7 +58,11 @@ class PortCreation(namedtuple('PortCreation', ['x', 'y', 'rot', 'length'])):
     :param length: Port length [microns]
     :type length: float
     """
-    pass
+    def __init__(self,x, y, rot, length):
+        self.x = x
+        self.y = y
+        self.rot = rot
+        self.length = length
 
 
 def is_named_tuple_instance(x):
