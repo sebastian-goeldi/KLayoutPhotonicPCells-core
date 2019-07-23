@@ -5,7 +5,7 @@
 This module uses the C++ submodule slcleaner. It has to be compiled after installing the
 extension.
 
-To compile the module execute the setup script `python/drc/compile.sh`.
+To compile the module execute the setup script `scripts/compile.sh`.
 Or alternatively execute the `python/kppc/drc/slcleaner_source/setup.py` with the python3 executable
 and copy/move the resulting `slcleaner.[...].so` library file ino the `python/drc/` folder.
 
@@ -14,11 +14,21 @@ For further information consult the [Cython Documentation](http://cython.org/).
 To execute the script open a console and execute the following commands:
 
 ```
-cd ~/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc
+cd ~/.klayout/salt/KLayoutPhotonicPCells/core/scripts
 sh compile.sh
 ```
 
 The bash script executes the following commands:
+
+```
+#!/bin/bash
+
+#Script that compiles the C++ scanline algorithm with cython to a python module and copies it into the current folder
+#If there is an __init__.py in the folder the setup script will create subfolders, so avoid that
+
+sh ./clean
+sh ./compile.sh
+```
 
 
 #### kppc.drc.clean(cell, cleanrules)

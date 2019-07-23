@@ -3,5 +3,5 @@
 CleanerMain Source
 ^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../python/kppc/drc/source/CleanerMain.cpp
+.. literalinclude:: ../../../cpp/source/CleanerMain.cpp
     :language: c++

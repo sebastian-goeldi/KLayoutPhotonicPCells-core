@@ -3,5 +3,5 @@
 CleanerMaster Source
 ====================
 
-.. literalinclude:: ../../../python/kppc/drc/source/DrcSl.cpp
+.. literalinclude:: ../../../cpp/source/DrcSl.cpp
         :language: c++

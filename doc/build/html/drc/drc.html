@@ -17,7 +17,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="photonics Module" href="../photonics/photonics.html" />
-    <link rel="prev" title="Code Documentation of KLayoutPhtonicPCells" href="../modules.html" /> 
+    <link rel="prev" title="Code Documentation" href="../modules.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -32,10 +32,10 @@
           <a href="../photonics/photonics.html" title="photonics Module"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../modules.html" title="Code Documentation of KLayoutPhtonicPCells"
+          <a href="../modules.html" title="Code Documentation"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../modules.html" accesskey="U">Code Documentation of KLayoutPhtonicPCells</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../modules.html" accesskey="U">Code Documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -50,12 +50,12 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kppc.drc" title="Permalink to this headline">¶</a></h2>
 <p>This module uses the C++ submodule <a class="reference internal" href="#slcleaner"><span class="std std-ref">slcleaner</span></a>. It has to be compiled after installing the
 extension.</p>
-<p>To compile the module execute the setup script <code class="file docutils literal notranslate"><span class="pre">python/drc/compile.sh</span></code>.
+<p>To compile the module execute the setup script <code class="file docutils literal notranslate"><span class="pre">scripts/compile.sh</span></code>.
 Or alternatively execute the <code class="file docutils literal notranslate"><span class="pre">python/kppc/drc/slcleaner_source/setup.py</span></code> with the python3 executable
 and copy/move the resulting <code class="file docutils literal notranslate"><span class="pre">slcleaner.[...].so</span></code> library file ino the <code class="file docutils literal notranslate"><span class="pre">python/drc/</span></code> folder.</p>
 <p>For further information consult the <a class="reference external" href="http://cython.org/">Cython Documentation</a>.</p>
 <p>To execute the script open a console and execute the following commands:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ~/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ~/.klayout/salt/KLayoutPhotonicPCells/core/scripts</span>
 <span class="go">sh compile.sh</span>
 </pre></div>
 </div>
@@ -64,14 +64,9 @@ and copy/move the resulting <code class="file docutils literal notranslate"><spa
 
 <span class="c1">#Script that compiles the C++ scanline algorithm with cython to a python module and copies it into the current folder</span>
 <span class="c1">#If there is an __init__.py in the folder the setup script will create subfolders, so avoid that</span>
-<span class="nb">cd</span> <span class="s2">&quot;</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
-<span class="nb">cd</span> <span class="nb">source</span>
-python3 setup.py build_ext -b ../ <span class="p">&amp;</span>
-python3 setup_cc.py build_ext -b ../ <span class="p">&amp;</span>
-g++ CleanerMain.cpp CleanerSlave.cpp DrcSl.cpp SignalHandler.cpp -o ../cleanermain -isystem /usr/include/boost/ -lboost_system -pthread -lboost_thread -lrt
 
-<span class="c1">#/usr/bin/python3 setup.py build_ext -b ./</span>
-<span class="c1">#cp slcleaner.cpython* ../</span>
+sh ./clean
+sh ./compile.sh
 </pre></div>
 </div>
 <dl class="function">
@@ -470,7 +465,7 @@ The constructor opens the shared memory and initializes the allocators for the s
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="../modules.html"
-                        title="previous chapter">Code Documentation of KLayoutPhtonicPCells</a></p>
+                        title="previous chapter">Code Documentation</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../photonics/photonics.html"
                         title="next chapter">photonics Module</a></p>
@@ -508,10 +503,10 @@ The constructor opens the shared memory and initializes the allocators for the s
           <a href="../photonics/photonics.html" title="photonics Module"
              >next</a> |</li>
         <li class="right" >
-          <a href="../modules.html" title="Code Documentation of KLayoutPhtonicPCells"
+          <a href="../modules.html" title="Code Documentation"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../modules.html" >Code Documentation of KLayoutPhtonicPCells</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../modules.html" >Code Documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

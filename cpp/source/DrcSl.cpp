@@ -683,7 +683,6 @@ std::vector<std::vector<int>> DrcSl::get_lines()
 {
     std::vector<std::vector<int>>lines (this->s());
 
-    int offset = this->orientation ? -this-> hor1 : -this-> ver1;
     int offset_d2 = this->orientation ? -this->ver1 : -this-> hor1;
 
     for(int i = 0; i< this->s(); i++)

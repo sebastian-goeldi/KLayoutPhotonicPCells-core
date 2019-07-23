@@ -3,5 +3,5 @@
 CleanerSlave Source
 ===================
 
-.. literalinclude:: ../../../python/kppc/drc/source/CleanerSlave.cpp
+.. literalinclude:: ../../../cpp/source/CleanerSlave.cpp
     :language: c++

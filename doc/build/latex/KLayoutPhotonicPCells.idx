@@ -30,10 +30,10 @@
 \indexentry{CleanerSlave (C++ class)@\spxentry{CleanerSlave}\spxextra{C++ class}|hyperpage}{15}
 \indexentry{CleanerSlave::CleanerSlave (C++ member)@\spxentry{CleanerSlave::CleanerSlave}\spxextra{C++ member}|hyperpage}{15}
 \indexentry{CleanerSlave::clean (C++ member)@\spxentry{CleanerSlave::clean}\spxextra{C++ member}|hyperpage}{15}
-\indexentry{CleanerSlave::join\_threads (C++ member)@\spxentry{CleanerSlave::join\_threads}\spxextra{C++ member}|hyperpage}{16}
+\indexentry{CleanerSlave::join\_threads (C++ member)@\spxentry{CleanerSlave::join\_threads}\spxextra{C++ member}|hyperpage}{15}
 \indexentry{kppc.photonics (module)@\spxentry{kppc.photonics}\spxextra{module}|hyperpage}{16}
 \indexentry{InstanceHolder (class in kppc.photonics)@\spxentry{InstanceHolder}\spxextra{class in kppc.photonics}|hyperpage}{16}
-\indexentry{move() (kppc.photonics.InstanceHolder method)@\spxentry{move()}\spxextra{kppc.photonics.InstanceHolder method}|hyperpage}{17}
+\indexentry{move() (kppc.photonics.InstanceHolder method)@\spxentry{move()}\spxextra{kppc.photonics.InstanceHolder method}|hyperpage}{16}
 \indexentry{port() (kppc.photonics.InstanceHolder method)@\spxentry{port()}\spxextra{kppc.photonics.InstanceHolder method}|hyperpage}{17}
 \indexentry{port\_to\_port() (kppc.photonics.InstanceHolder method)@\spxentry{port\_to\_port()}\spxextra{kppc.photonics.InstanceHolder method}|hyperpage}{17}
 \indexentry{PhotDevice (class in kppc.photonics)@\spxentry{PhotDevice}\spxextra{class in kppc.photonics}|hyperpage}{17}
@@ -42,8 +42,8 @@
 \indexentry{add\_pcell\_variant() (kppc.photonics.PhotDevice method)@\spxentry{add\_pcell\_variant()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{18}
 \indexentry{add\_pcells() (kppc.photonics.PhotDevice method)@\spxentry{add\_pcells()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{18}
 \indexentry{calculate\_ports() (kppc.photonics.PhotDevice method)@\spxentry{calculate\_ports()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{18}
-\indexentry{clear\_ports() (kppc.photonics.PhotDevice method)@\spxentry{clear\_ports()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{19}
-\indexentry{coerce\_parameters\_impl() (kppc.photonics.PhotDevice method)@\spxentry{coerce\_parameters\_impl()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{19}
+\indexentry{clear\_ports() (kppc.photonics.PhotDevice method)@\spxentry{clear\_ports()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{18}
+\indexentry{coerce\_parameters\_impl() (kppc.photonics.PhotDevice method)@\spxentry{coerce\_parameters\_impl()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{18}
 \indexentry{connect\_port() (kppc.photonics.PhotDevice method)@\spxentry{connect\_port()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{19}
 \indexentry{connect\_port\_to\_port() (kppc.photonics.PhotDevice method)@\spxentry{connect\_port\_to\_port()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{19}
 \indexentry{create\_param\_inst() (kppc.photonics.PhotDevice method)@\spxentry{create\_param\_inst()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{19}
@@ -61,7 +61,7 @@
 \indexentry{set\_transformation() (kppc.photonics.PhotDevice method)@\spxentry{set\_transformation()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{21}
 \indexentry{shapes() (kppc.photonics.PhotDevice method)@\spxentry{shapes()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{21}
 \indexentry{update\_parameter\_list() (kppc.photonics.PhotDevice method)@\spxentry{update\_parameter\_list()}\spxextra{kppc.photonics.PhotDevice method}|hyperpage}{21}
-\indexentry{PortCreation (class in kppc.photonics)@\spxentry{PortCreation}\spxextra{class in kppc.photonics}|hyperpage}{22}
+\indexentry{PortCreation (class in kppc.photonics)@\spxentry{PortCreation}\spxextra{class in kppc.photonics}|hyperpage}{21}
 \indexentry{length() (kppc.photonics.PortCreation property)@\spxentry{length()}\spxextra{kppc.photonics.PortCreation property}|hyperpage}{22}
 \indexentry{rot() (kppc.photonics.PortCreation property)@\spxentry{rot()}\spxextra{kppc.photonics.PortCreation property}|hyperpage}{22}
 \indexentry{x() (kppc.photonics.PortCreation property)@\spxentry{x()}\spxextra{kppc.photonics.PortCreation property}|hyperpage}{22}

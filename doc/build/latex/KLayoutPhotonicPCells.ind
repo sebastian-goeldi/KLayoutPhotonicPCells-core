@@ -35,10 +35,10 @@
   \item \spxentry{CleanerSlave}\spxextra{C++ class}, \hyperpage{15}
   \item \spxentry{CleanerSlave::clean}\spxextra{C++ member}, \hyperpage{15}
   \item \spxentry{CleanerSlave::CleanerSlave}\spxextra{C++ member}, \hyperpage{15}
-  \item \spxentry{CleanerSlave::join\_threads}\spxextra{C++ member}, \hyperpage{16}
-  \item \spxentry{clear\_ports()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{19}
+  \item \spxentry{CleanerSlave::join\_threads}\spxextra{C++ member}, \hyperpage{15}
+  \item \spxentry{clear\_ports()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{18}
   \item \spxentry{coerce\_parameters\_impl()}\spxextra{kppc.photonics.PhotDevice method}, 
-		\hyperpage{19}
+		\hyperpage{18}
   \item \spxentry{connect\_port()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{19}
   \item \spxentry{connect\_port\_to\_port()}\spxextra{kppc.photonics.PhotDevice method}, 
 		\hyperpage{19}
@@ -92,7 +92,7 @@
 
   \indexspace
   \bigletter M
-  \item \spxentry{move()}\spxextra{kppc.photonics.InstanceHolder method}, \hyperpage{17}
+  \item \spxentry{move()}\spxextra{kppc.photonics.InstanceHolder method}, \hyperpage{16}
   \item \spxentry{move\_instance()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{21}
   \item \spxentry{multiprocessing\_clean()}\spxextra{in module kppc.drc}, \hyperpage{11}
 
@@ -103,7 +103,7 @@
   \item \spxentry{polygons()}\spxextra{kppc.drc.PyCleanerMaster method}, \hyperpage{14}
   \item \spxentry{port()}\spxextra{kppc.photonics.InstanceHolder method}, \hyperpage{17}
   \item \spxentry{port\_to\_port()}\spxextra{kppc.photonics.InstanceHolder method}, \hyperpage{17}
-  \item \spxentry{PortCreation}\spxextra{class in kppc.photonics}, \hyperpage{22}
+  \item \spxentry{PortCreation}\spxextra{class in kppc.photonics}, \hyperpage{21}
   \item \spxentry{printvector()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, 
 		\hyperpage{13}
   \item \spxentry{produce\_impl()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{21}

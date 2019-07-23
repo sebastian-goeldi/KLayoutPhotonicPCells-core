@@ -76,7 +76,7 @@
 
 
 \title{KLayout Photonic PCells Documentation}
-\date{Jul 22, 2019}
+\date{Jul 23, 2019}
 \release{0.1.2}
 \author{Sebastian Goeldi}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -365,7 +365,7 @@ Recommended place is again in the tech folder.
 This module uses the C++ submodule {\hyperref[\detokenize{drc/drc:slcleaner}]{\sphinxcrossref{\DUrole{std,std-ref}{slcleaner}}}}. It has to be compiled after installing the
 extension.
 
-To compile the module execute the setup script \sphinxcode{\sphinxupquote{python/drc/compile.sh}}.
+To compile the module execute the setup script \sphinxcode{\sphinxupquote{scripts/compile.sh}}.
 Or alternatively execute the \sphinxcode{\sphinxupquote{python/kppc/drc/slcleaner\_source/setup.py}} with the python3 executable
 and copy/move the resulting \sphinxcode{\sphinxupquote{slcleaner.{[}...{]}.so}} library file ino the \sphinxcode{\sphinxupquote{python/drc/}} folder.
 
@@ -378,7 +378,7 @@ For further information consult the \sphinxhref{http://cython.org/}{Cython Docum
 To execute the script open a console and execute the following commands:
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{g+go}{cd \PYGZti{}/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc}
+\PYG{g+go}{cd \PYGZti{}/.klayout/salt/KLayoutPhotonicPCells/core/scripts}
 \PYG{g+go}{sh compile.sh}
 \end{sphinxVerbatim}
 
@@ -389,14 +389,9 @@ The bash script executes the following commands:
 
 \PYG{c+c1}{\PYGZsh{}Script that compiles the C++ scanline algorithm with cython to a python module and copies it into the current folder}
 \PYG{c+c1}{\PYGZsh{}If there is an \PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}.py in the folder the setup script will create subfolders, so avoid that}
-\PYG{n+nb}{cd} \PYG{l+s+s2}{\PYGZdq{}}\PYG{k}{\PYGZdl{}(}dirname \PYG{l+s+s2}{\PYGZdq{}}\PYG{n+nv}{\PYGZdl{}0}\PYG{l+s+s2}{\PYGZdq{}}\PYG{k}{)}\PYG{l+s+s2}{\PYGZdq{}}
-\PYG{n+nb}{cd} \PYG{n+nb}{source}
-python3 setup.py build\PYGZus{}ext \PYGZhy{}b ../ \PYG{p}{\PYGZam{}}
-python3 setup\PYGZus{}cc.py build\PYGZus{}ext \PYGZhy{}b ../ \PYG{p}{\PYGZam{}}
-g++ CleanerMain.cpp CleanerSlave.cpp DrcSl.cpp SignalHandler.cpp \PYGZhy{}o ../cleanermain \PYGZhy{}isystem /usr/include/boost/ \PYGZhy{}lboost\PYGZus{}system \PYGZhy{}pthread \PYGZhy{}lboost\PYGZus{}thread \PYGZhy{}lrt
 
-\PYG{c+c1}{\PYGZsh{}/usr/bin/python3 setup.py build\PYGZus{}ext \PYGZhy{}b ./}
-\PYG{c+c1}{\PYGZsh{}cp slcleaner.cpython* ../}
+sh ./clean
+sh ./compile.sh
 \end{sphinxVerbatim}
 \index{clean() (in module kppc.drc)@\spxentry{clean()}\spxextra{in module kppc.drc}}
 

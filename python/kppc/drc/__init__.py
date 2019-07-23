@@ -18,7 +18,7 @@
 """This module uses the C++ submodule :ref:`slcleaner <slcleaner>`. It has to be compiled after installing the
 extension.
 
-To compile the module execute the setup script :file:`python/drc/compile.sh`.
+To compile the module execute the setup script :file:`scripts/compile.sh`.
 Or alternatively execute the :file:`python/kppc/drc/slcleaner_source/setup.py` with the python3 executable
 and copy/move the resulting :file:`slcleaner.[...].so` library file ino the :file:`python/drc/` folder.
 
@@ -28,12 +28,12 @@ To execute the script open a console and execute the following commands:
 
 .. code-block:: console
 
-    cd ~/.klayout/salt/KLayoutPhotonicPCells/core/python/kppc/drc
+    cd ~/.klayout/salt/KLayoutPhotonicPCells/core/scripts
     sh compile.sh
 
 The bash script executes the following commands:
 
-.. literalinclude:: ../../../python/kppc/drc/compile.sh
+.. literalinclude:: ../../../scripts/clean_compile.sh
     :language: bash
 
 .. _Cython Documentation: http://cython.org/
@@ -46,15 +46,15 @@ import numpy as np
 import time
 import sys
 import traceback
-import os
 import subprocess
 import signal
 
 from importlib.util import find_spec
 
 dir_path = Path(__file__).parent
+cpp_path = dir_path.parent.parent.parent / "cpp"
 sl_path = find_spec('kppc.drc.slcleaner')
-can_multi = find_spec('kppc.drc.cleanermaster') and Path(dir_path / 'cleanermain').exists()
+can_multi = find_spec('kppc.drc.cleanermaster') and Path(cpp_path / 'build/cleanermain').exists()
 
 # Check if C++ cleaner is compiled
 
@@ -70,15 +70,20 @@ if not sl_path:
     msg.exec_()
 
     if msg.clickedButton() == compile_button:
-        src_dir = dir_path.parent.parent.parent / "cpp/source"
+        src_dir = cpp_path / "source"
         print('Trying to Compile')
+
+        (cpp_path / 'build').mkdir(parents=True, exist_ok=True)
+
         p1 = subprocess.Popen(['python3', 'setup.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, cwd=src_dir)
         p2 = subprocess.Popen(['python3', 'setup_cc.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, cwd=src_dir)
         p3 = subprocess.Popen(
-            ['g++', 'CleanerMain.cpp', 'CleanerSlave.cpp', 'DrcSl.cpp', 'SignalHandler.cpp', '-o', dir_path/'cleanermain', '-isystem',
-             '/usr/include/boost/', '-lboost_system', '-pthread', '-lboost_thread', '-lrt'], stdout=subprocess.PIPE,
+            ('g++', cpp_path / 'source/CleanerMain.cpp', cpp_path / 'source/CleanerSlave.cpp',
+             cpp_path / 'source/DrcSl.cpp', cpp_path / 'source/SignalHandler.cpp', '-o', cpp_path / 'build/cleanermain',
+             '-isystem',
+             '/usr/include/boost/', '-lboost_system', '-pthread', '-lboost_thread', '-lrt'), stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT, cwd=src_dir)
         p1.wait()
         p2.wait()
@@ -91,7 +96,9 @@ if not sl_path:
             msg.exec_()
         else:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
-            msg.text = 'The compilation failed. Please compile manually'
+            msg.text = 'The compilation failed. Please compile manually\n Return Code slcleaner: {}\n Return Code ' \
+                       'cleanermaster: {}\n Return Code: {}\n {}'.format(p1.returncode, p2.returncode, p3.returncode,
+                                                                         p3.stdout.read())
             msg.Title = 'Compilation'
             msg.exec_()
             exit(-1)
@@ -106,6 +113,7 @@ if not can_multi:
     kppc.settings.multiprocessing = False
 else:
     import kppc.drc.cleanermaster
+
     print("Using the multiprocessing module")
 
 
@@ -176,7 +184,8 @@ def clean(cell: 'pya. Cell', cleanrules: list):
         cell.shapes(layer).insert(region_cleaned)
         if kppc.settings.qtprogress:
             progress.inc()
-    progress._destroy()
+    if kppc.settings.qtprogress:
+        progress._destroy()
 
 
 def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
@@ -190,11 +199,10 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     :param cleanrules: list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
         purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], ...]
     """
-
     t = time.time()
 
     cm = kppc.drc.cleanermaster.PyCleanerMaster()
-    cs = subprocess.Popen([os.path.dirname(os.path.abspath(__file__)) + '/cleanermain'], stdout=subprocess.PIPE,
+    cs = subprocess.Popen([cpp_path / 'build/cleanermain'], stdout=subprocess.PIPE,
                           stderr=subprocess.STDOUT)
 
     if kppc.settings.qtprogress:
@@ -227,7 +235,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
             else:
 
                 cm.set_box(ln, ld, viowidth, viospace, bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
-                print("Initialized Layer {}/{}".format(ln,ld))
+                print("Initialized Layer {}/{}".format(ln, ld))
                 # Retrieve the recursive
                 shapeit = cell.begin_shapes_rec(layer)
                 shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
@@ -242,7 +250,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     time.sleep(.1)
 
                 count += 1
-                
+
         for i in range(count):
             while True:
                 polygons = cm.polygons()
@@ -256,7 +264,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
 
                     region_cleaned = pya.Region()
                     for p in polygons[1:]:
-                        region_cleaned.insert(pya.Polygon([pya.Point(x[0],x[1]) for x in p]))
+                        region_cleaned.insert(pya.Polygon([pya.Point(x[0], x[1]) for x in p]))
                     region_cleaned.merge()
 
                     # Clean the target layer and fill in the cleaned data
@@ -271,6 +279,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
         traceback.print_exc(file=sys.stdout)
     finally:
         print("Done. Time passed: {}".format(time.time() - t))
-        progress._destroy()
+        if kppc.settings.qtprogress:
+            progress._destroy()
         cs.send_signal(signal.SIGUSR1)
         cs.wait()
