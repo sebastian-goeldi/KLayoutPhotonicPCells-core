@@ -15,9 +15,7 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import pya
-import numpy as np
-
-qtprogress = True
+import kppc
 
 
 def file_len(fname: str):
@@ -121,7 +119,7 @@ def dataprep(in_cell, layout, out_cell=None, config=None, layers_org=None):
         return
     layers = {}
 
-    if qtprogress:
+    if kppc.settings.qtprogress:
         l = file_len(config)
         progress = pya.RelativeProgress('Layermapping from abstract to Foundry Layers', l)
 

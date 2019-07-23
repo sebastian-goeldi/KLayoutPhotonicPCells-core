@@ -19,6 +19,7 @@
 import re
 import os
 
+
 def load_from_tech(techfile: str):
     
     read = False

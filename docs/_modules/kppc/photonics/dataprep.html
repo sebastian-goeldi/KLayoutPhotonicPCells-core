@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>kppc.photonics.dataprep &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <title>kppc.photonics.dataprep &#8212; KLayout Photonic PCells 1.0.2 documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../photonics.html" accesskey="U">kppc.photonics</a> &#187;</li> 
       </ul>
@@ -55,9 +55,7 @@
 <span class="c1">#   along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 
 <span class="kn">import</span> <span class="nn">pya</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="n">qtprogress</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="kn">import</span> <span class="nn">kppc</span>
 
 
 <div class="viewcode-block" id="file_len"><a class="viewcode-back" href="../../../photonics/photonics.html#kppc.photonics.dataprep.file_len">[docs]</a><span class="k">def</span> <span class="nf">file_len</span><span class="p">(</span><span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -161,7 +159,7 @@
         <span class="k">return</span>
     <span class="n">layers</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">if</span> <span class="n">qtprogress</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">kppc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">qtprogress</span><span class="p">:</span>
         <span class="n">l</span> <span class="o">=</span> <span class="n">file_len</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="n">progress</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">RelativeProgress</span><span class="p">(</span><span class="s1">&#39;Layermapping from abstract to Foundry Layers&#39;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
 
@@ -231,7 +229,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../photonics.html" >kppc.photonics</a> &#187;</li> 
       </ul>

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>kppc.drc.cleanermaster module &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <title>kppc.drc.cleanermaster module &#8212; KLayout Photonic PCells 1.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -23,7 +23,10 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -111,45 +114,40 @@
 <dl class="class">
 <dt id="_CPPv413CleanerMaster">
 <span id="_CPPv313CleanerMaster"></span><span id="_CPPv213CleanerMaster"></span><span id="CleanerMaster"></span><em class="property">class </em><code class="sig-name descname">CleanerMaster</code><a class="headerlink" href="#_CPPv413CleanerMaster" title="Permalink to this definition">¶</a><br /></dt>
-<dd><dl class="union">
-<dt id="_CPPv4N13CleanerMasterUt5_cmcppE">
-<span id="_CPPv3N13CleanerMasterUt5_cmcppE"></span><em class="property">union </em><strong>[anonymous]</strong><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcppE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="function">
-<dt id="_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi">
-<span id="_CPPv3N13CleanerMasterUt5_cmcpp13CleanerMasterEi"></span><code class="sig-name descname">CleanerMaster</code><span class="sig-paren">(</span>int <em>nlayers</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N13CleanerMaster13CleanerMasterEi">
+<span id="_CPPv3N13CleanerMaster13CleanerMasterEi"></span><span id="_CPPv2N13CleanerMaster13CleanerMasterEi"></span><span id="CleanerMaster::CleanerMaster__i"></span><code class="sig-name descname">CleanerMaster</code><span class="sig-paren">(</span>int <em>nlayers</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMaster13CleanerMasterEi" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Creates the shared memory space and resizes the vectors for nlayers</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="_CPPv4N13CleanerMasterUt5_cmcpp7set_boxEiiiiiiii">
-<span id="_CPPv3N13CleanerMasterUt5_cmcpp7set_boxEiiiiiiii"></span>void <code class="sig-name descname">set_box</code><span class="sig-paren">(</span>int <em>layer</em>, int <em>datatype</em>, int <em>violation_width</em>, int <em>violation_space</em>, int <em>x1</em>, int <em>x2</em>, int <em>y1</em>, int <em>y2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp7set_boxEiiiiiiii" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N13CleanerMaster7set_boxEiiiiiiii">
+<span id="_CPPv3N13CleanerMaster7set_boxEiiiiiiii"></span><span id="_CPPv2N13CleanerMaster7set_boxEiiiiiiii"></span><span id="CleanerMaster::set_box__i.i.i.i.i.i.i.i"></span>void <code class="sig-name descname">set_box</code><span class="sig-paren">(</span>int <em>layer</em>, int <em>datatype</em>, int <em>violation_width</em>, int <em>violation_space</em>, int <em>x1</em>, int <em>x2</em>, int <em>y1</em>, int <em>y2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMaster7set_boxEiiiiiiii" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Allocate enough space in the shared memory to stream the cell and its polygons in.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="_CPPv4N13CleanerMasterUt5_cmcpp8add_edgeEiiii">
-<span id="_CPPv3N13CleanerMasterUt5_cmcpp8add_edgeEiiii"></span>void <code class="sig-name descname">add_edge</code><span class="sig-paren">(</span>int <em>x1</em>, int <em>x2</em>, int <em>y1</em>, int <em>y2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp8add_edgeEiiii" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N13CleanerMaster8add_edgeEiiii">
+<span id="_CPPv3N13CleanerMaster8add_edgeEiiii"></span><span id="_CPPv2N13CleanerMaster8add_edgeEiiii"></span><span id="CleanerMaster::add_edge__i.i.i.i"></span>void <code class="sig-name descname">add_edge</code><span class="sig-paren">(</span>int <em>x1</em>, int <em>x2</em>, int <em>y1</em>, int <em>y2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMaster8add_edgeEiiii" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Add an edge to the cleaner.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="_CPPv4N13CleanerMasterUt5_cmcpp4doneEv">
-<span id="_CPPv3N13CleanerMasterUt5_cmcpp4doneEv"></span>bool <code class="sig-name descname">done</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp4doneEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N13CleanerMaster4doneEv">
+<span id="_CPPv3N13CleanerMaster4doneEv"></span><span id="_CPPv2N13CleanerMaster4doneEv"></span><span id="CleanerMaster::done"></span>bool <code class="sig-name descname">done</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMaster4doneEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Indicates whether there is data still in the buffer from the last read or not.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster9get_layerEv">
-<span id="_CPPv3N13CleanerMasterUt5_cmcpp13CleanerMaster9get_layerEv"></span>std::vector&lt;std::vector&lt;int&gt;&gt; <code class="sig-prename descclassname"><a class="reference internal" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi" title="CleanerMaster::[anonymous]::CleanerMaster">CleanerMaster</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_layer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster9get_layerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N13CleanerMaster9get_layerEv">
+<span id="_CPPv3N13CleanerMaster9get_layerEv"></span><span id="_CPPv2N13CleanerMaster9get_layerEv"></span><span id="CleanerMaster::get_layer"></span>std::vector&lt;std::vector&lt;int&gt;&gt; <code class="sig-name descname">get_layer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMaster9get_layerEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read the next processed layer in the memory space and returns it in per line style (x coordinates per line (y coordinate)).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster12get_polygonsEv">
-<span id="_CPPv3N13CleanerMasterUt5_cmcpp13CleanerMaster12get_polygonsEv"></span>std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt;&gt;&gt; <code class="sig-prename descclassname"><a class="reference internal" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMasterEi" title="CleanerMaster::[anonymous]::CleanerMaster">CleanerMaster</a><code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_polygons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMasterUt5_cmcpp13CleanerMaster12get_polygonsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N13CleanerMaster12get_polygonsEv">
+<span id="_CPPv3N13CleanerMaster12get_polygonsEv"></span><span id="_CPPv2N13CleanerMaster12get_polygonsEv"></span><span id="CleanerMaster::get_polygons"></span>std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt;&gt;&gt; <code class="sig-name descname">get_polygons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13CleanerMaster12get_polygonsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Reads the next processed layer in the memory and assembles the line style to polygons.</p>
-</dd></dl>
-
 </dd></dl>
 
 </dd></dl>
@@ -200,7 +198,10 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

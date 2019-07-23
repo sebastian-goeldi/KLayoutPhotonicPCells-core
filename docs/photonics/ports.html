@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Ports &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <title>Ports &#8212; KLayout Photonic PCells 1.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -26,12 +26,15 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="techfile.html" title="Technology Import"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="first_steps.html" title="First Steps"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -49,7 +52,7 @@ two waveguides are connected, the connected endings have to point on the opposit
 be the same size.</p>
 <p>This module implements the concept of ports into KLayout PCells. Currently ports track location, orientation and length.
 If two ports have a mismatch in width, they cannot be connected. New ports can be created in PCells with the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.PortCreation</span></code> when overriding the <code class="xref py py-meth docutils literal notranslate"><span class="pre">kppc.photonics.PhotDevice.create_param_inst()</span></code> method
+<a class="reference internal" href="photonics.html#kppc.photonics.PortCreation" title="kppc.photonics.PortCreation"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.PortCreation</span></code></a> when overriding the <a class="reference internal" href="photonics.html#kppc.photonics.PhotDevice.create_param_inst" title="kppc.photonics.PhotDevice.create_param_inst"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kppc.photonics.PhotDevice.create_param_inst()</span></code></a> method
 in the PCell Library. If any instantiated child cells in a PCell have any open ports (not connected to another port of another
 child cell), they are passed upwards to the cell itself and are announced as ports of this cell.
 This hierarchical design allows to create arbitrary Devices independent of the order when assembling them.</p>
@@ -101,12 +104,15 @@ and make sure the text font is not set to the default font.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="techfile.html" title="Technology Import"
              >next</a> |</li>
         <li class="right" >
           <a href="first_steps.html" title="First Steps"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

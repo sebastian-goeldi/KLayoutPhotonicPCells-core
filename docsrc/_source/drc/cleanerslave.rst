@@ -3,7 +3,8 @@
 CleanerSlave
 ^^^^^^^^^^^^
 
-C++ documentation of the Class CleanerSlave
+C++ Class
+"""""""""
 
 .. cpp:class:: CleanerSlave
     

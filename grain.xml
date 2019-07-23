@@ -3,12 +3,12 @@
  <name>KLayoutPhotonicPCells/core</name>
  <token/>
  <hidden>false</hidden>
- <version>1.0.1</version>
+ <version>1.0.2</version>
  <api-version>0.25</api-version>
  <title>KLayout Photonic PCells Core</title>
  <doc>KLayout Photonic PCells introduces the concept of ports to KLayout. Ports in contrast to pins also track directions. Additionally, PCells can be built hierarchically from other PCells and new shapes. The sub-cells can be connected to each other through ports.</doc>
  <doc-url>https://sebastian-goeldi.github.io/KLayoutPhotonicPCells-core/</doc-url>
- <url>https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core</url>
+ <url/>
  <license>AGPLv3</license>
  <author>Sebastian Goeldi</author>
  <author-contact>sebastian.goeldi@protonmail.com</author-contact>

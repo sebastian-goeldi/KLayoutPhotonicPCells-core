@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Example: Create Sample Library &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <title>Example: Create Sample Library &#8212; KLayout Photonic PCells 1.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -26,12 +26,15 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="../tips.html" title="Tips &amp; Tricks"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="photonics.html" title="photonics Module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -43,10 +46,10 @@
   <div class="section" id="example-create-sample-library">
 <h1>Example: Create Sample Library<a class="headerlink" href="#example-create-sample-library" title="Permalink to this headline">¶</a></h1>
 <p>In this chapter we will create an example library consisting of an MMI built with a box and linear tapers. This example builds on FreePDK45 technology. Therefore, please get the <cite>KLayoutPhotonicPCells/FreePDK45_tech</cite> package from the KLayout package manager. The finished file of this example can
-be found here <a class="reference download internal" download="" href="../_downloads/40b302ece5a0df31bf1c5bc793342fdf/MMI_Example.lym"><code class="xref download docutils literal notranslate"><span class="pre">MMI_Example</span></code></a>. This file can be copied into the KLayout pymacros folder (<code class="file docutils literal notranslate"><span class="pre">~/.klayout/pymacros/</span></code>) and executed.</p>
+be found here <a class="reference download internal" download="" href="../_downloads/cc6cf1257ca965545793108a2e49fc9c/MMI_Example.lym"><code class="xref download docutils literal notranslate"><span class="pre">MMI_Example</span></code></a>. This file can be copied into the KLayout pymacros folder (<code class="file docutils literal notranslate"><span class="pre">~/.klayout/pymacros/</span></code>) and executed.</p>
 <div class="section" id="code-explanation">
 <h2>Code Explanation<a class="headerlink" href="#code-explanation" title="Permalink to this headline">¶</a></h2>
-<p>All photonic libraries are derived from <code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code>.</p>
+<p>All photonic libraries are derived from <a class="reference internal" href="photonics.html#kppc.photonics.PhotDevice" title="kppc.photonics.PhotDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotDevice</span></code></a>.</p>
 <p>As an example, we will use a modified FreePDK45_Cell. We will create a 2x2 MMI.
 To create a new PCell Library open the MacroDevelopment of Klayout in the menu Macros-&gt;MacroDevelopment.</p>
 <div class="figure align-default" id="id1">
@@ -347,7 +350,7 @@ each side. The box will have four ports and each port of the box is the same siz
 </td></tr></table></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If we only declare one <code class="xref py py-class docutils literal notranslate"><span class="pre">PortCreation</span></code> in self.create_param_inst(self), we have to return it as: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">[port]</span></code></p>
+<p>If we only declare one <a class="reference internal" href="photonics.html#kppc.photonics.PortCreation" title="kppc.photonics.PortCreation"><code class="xref py py-class docutils literal notranslate"><span class="pre">PortCreation</span></code></a> in self.create_param_inst(self), we have to return it as: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">[port]</span></code></p>
 </div>
 <p>Now let’s declare the MMI. In it we will create 4 instances of tapers and one box and then connect the tapers to
 the box.</p>
@@ -541,12 +544,15 @@ be the ones defined in the <code class="docutils literal notranslate"><span clas
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="../tips.html" title="Tips &amp; Tricks"
              >next</a> |</li>
         <li class="right" >
           <a href="photonics.html" title="photonics Module"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -65,8 +65,6 @@ C++ Class
 
 
 .. cpp:class:: CleanerMaster
-    
-    .. cpp:union:: @cmcpp
 
         .. cpp:function:: CleanerMaster(int nlayers)
             
@@ -84,11 +82,11 @@ C++ Class
         
             Indicates whether there is data still in the buffer from the last read or not.
             
-        .. cpp:function:: std::vector<std::vector<int>> CleanerMaster::get_layer()
+        .. cpp:function:: std::vector<std::vector<int>> get_layer()
         
             Read the next processed layer in the memory space and returns it in per line style (x coordinates per line (y coordinate)).
         
-        .. cpp:function:: std::vector<std::vector<std::pair<int,int>>> CleanerMaster::get_polygons()
+        .. cpp:function:: std::vector<std::vector<std::pair<int,int>>> get_polygons()
         
             Reads the next processed layer in the memory and assembles the line style to polygons.
             

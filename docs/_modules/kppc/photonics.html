@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>kppc.photonics &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <title>kppc.photonics &#8212; KLayout Photonic PCells 1.0.2 documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -76,34 +76,32 @@
 <span class="c1"># make sure the setup script is compiled</span>
 
 <span class="kn">import</span> <span class="nn">pya</span>
-<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">kppc.drc</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">kppc.photonics.dataprep</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">clock</span>
 <span class="kn">import</span> <span class="nn">kppc</span>
 
 
 <span class="c1"># Namedtuple to hold position of a port.</span>
-<span class="n">PortCreation</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;PortCreation&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;rot&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">])</span>
-<span class="sd">&quot;&quot;&quot;Custom namedtuple</span>
+<div class="viewcode-block" id="PortCreation"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PortCreation">[docs]</a><span class="k">class</span> <span class="nc">PortCreation</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;PortCreation&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;rot&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">])):</span>
+    <span class="sd">&quot;&quot;&quot;Custom namedtuple</span>
 
-<span class="sd">This will hold informations for creating ports.</span>
+<span class="sd">    This will hold informations for creating ports.</span>
 
-<span class="sd">:param x: x Coordinate [microns]</span>
-<span class="sd">:type x: int</span>
-<span class="sd">:param y: y Coordinate [microns]</span>
-<span class="sd">:type y: int</span>
-<span class="sd">:param rot: Rotation in degrees</span>
-<span class="sd">:type int: int</span>
-<span class="sd">:param length: Port length [microns]</span>
-<span class="sd">:type length: float</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param x: x Coordinate [microns]</span>
+<span class="sd">    :type x: int</span>
+<span class="sd">    :param y: y Coordinate [microns]</span>
+<span class="sd">    :type y: int</span>
+<span class="sd">    :param rot: Rotation in degrees</span>
+<span class="sd">    :type int: int</span>
+<span class="sd">    :param length: Port length [microns]</span>
+<span class="sd">    :type length: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
 
 
-
-<div class="viewcode-block" id="isnamedtupleinstance"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.isnamedtupleinstance">[docs]</a><span class="k">def</span> <span class="nf">isnamedtupleinstance</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="is_named_tuple_instance"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.is_named_tuple_instance">[docs]</a><span class="k">def</span> <span class="nf">is_named_tuple_instance</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test if something is a named tuple</span>
 <span class="sd">    This allows to test if `x` is a port (PortCreation object) or just a list of instance descriptions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -230,6 +228,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">layermap</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="PhotDevice.get_layer"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.get_layer">[docs]</a>    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">purpose</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates LayerInfo object</span>
@@ -295,7 +294,7 @@
         <span class="c1"># Delete all ports in the string</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">portlist</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="PhotDevice.connect_port"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.connect_port">[docs]</a>    <span class="k">def</span> <span class="nf">connect_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pos2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="PhotDevice.connect_port"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.connect_port">[docs]</a>    <span class="k">def</span> <span class="nf">connect_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pos2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">portlist2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Connect ports of two instances. The second instance will be transformed to attach to the first instance.</span>
 
 <span class="sd">        :param pos1: index of instance1</span>
@@ -384,11 +383,13 @@
         <span class="k">if</span> <span class="n">ld</span><span class="p">:</span>
             <span class="n">layer</span><span class="p">,</span> <span class="n">datatype</span> <span class="o">=</span> <span class="n">ld</span>
             <span class="n">linfo</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">LayerInfo</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">datatype</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">name</span><span class="p">:</span>
             <span class="c1"># ln, dn = name.split(&#39;.&#39;)</span>
             <span class="n">linfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># self.layermap[ln][dn]</span>
             <span class="c1"># layer = int(layer)</span>
             <span class="c1"># datatype = int(datatype)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ld or name, layer and datatype must be defined&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TypeLayer</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=</span><span class="n">hidden</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">linfo</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PhotDevice.add_params"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.add_params">[docs]</a>    <span class="k">def</span> <span class="nf">add_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
@@ -412,8 +413,10 @@
                 <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TypeString</span>
             <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="n">pya</span><span class="o">.</span><span class="n">Shape</span><span class="p">:</span>
                 <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TypeShape</span>
-            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TypeNone</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Type </span><span class="si">{}</span><span class="s2"> not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">)))</span>
             <span class="k">if</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;_choices&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">choices</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;_choices&#39;</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
@@ -544,8 +547,8 @@
                         <span class="n">insts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,ports. Instead got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">inst_port</span><span class="p">))))</span>
+                    <span class="s2">&quot;Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,&quot;</span>
+                    <span class="s2">&quot;ports. Instead got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">inst_port</span><span class="p">))))</span>
 
         <span class="n">trans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transformations</span><span class="p">()</span>
         <span class="n">instances</span> <span class="o">=</span> <span class="p">[]</span>
@@ -579,33 +582,34 @@
         <span class="n">instances_and_ports</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_param_inst</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">instances_and_ports</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="n">isnamedtupleinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">,</span> <span class="n">PortCreation</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
             <span class="n">instances_and_ports</span> <span class="o">=</span> <span class="p">[</span><span class="n">instances_and_ports</span><span class="p">]</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">insts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">instance_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">instances</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">inst_port</span> <span class="ow">in</span> <span class="n">instances_and_ports</span><span class="p">:</span>
-            <span class="c1"># For each object test if it is a list of InstanceHolders/Port or plain objects and then separate them accordingly</span>
+            <span class="c1"># For each object test if it is a list of InstanceHolders/Port or plain objects and then separate them</span>
+            <span class="c1"># accordingly</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst_port</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
-                <span class="n">inst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-                <span class="nb">id</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">insts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst_port</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">isnamedtupleinstance</span><span class="p">(</span><span class="n">inst_port</span><span class="p">):</span>
+                <span class="n">inst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">instance_id</span>
+                <span class="n">instance_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">instances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst_port</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst_port</span><span class="p">,</span> <span class="n">PortCreation</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="n">inst_port</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">inst_port</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">inst_port</span><span class="o">.</span><span class="n">rot</span><span class="p">,</span> <span class="n">inst_port</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">inst_port</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">iinst_port</span> <span class="ow">in</span> <span class="n">inst_port</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
-                        <span class="n">iinst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-                        <span class="nb">id</span> <span class="o">+=</span> <span class="mi">1</span>
-                        <span class="n">insts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">isnamedtupleinstance</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">):</span>
+                        <span class="n">iinst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">instance_id</span>
+                        <span class="n">instance_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">instances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">,</span> <span class="n">PortCreation</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="n">iinst_port</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">iinst_port</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">iinst_port</span><span class="o">.</span><span class="n">rot</span><span class="p">,</span> <span class="n">iinst_port</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,ports. Instead got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">inst_port</span><span class="p">))))</span>
+                    <span class="s2">&quot;Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,&quot;</span>
+                    <span class="s2">&quot;ports. Instead got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">inst_port</span><span class="p">))))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="c1"># If child instances have requested movements in their InstanceHolder move them now</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">inst</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">insts</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">inst</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">instances</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">transformations</span> <span class="o">+=</span> <span class="s1">&#39;;&#39;</span>
             <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">movement</span><span class="p">:</span>
@@ -625,22 +629,27 @@
         <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="n">all_placed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
             <span class="n">all_placed</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">inst</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">insts</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">inst</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">instances</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="p">:</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">placed</span><span class="p">:</span>
                         <span class="n">all_placed</span> <span class="o">=</span> <span class="kc">False</span>
                         <span class="k">continue</span>
-                    <span class="n">retcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect_port</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">params_mod</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inst</span><span class="o">.</span><span class="n">connection_port</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="n">retcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect_port</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">params_mod</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inst</span><span class="o">.</span><span class="n">connection_port</span><span class="p">,</span>
+                                                <span class="n">inst</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                                                 <span class="n">inst</span><span class="o">.</span><span class="n">params_mod</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inst</span><span class="o">.</span><span class="n">port_to_connect</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">retcode</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">msg</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">main_window</span><span class="p">())</span>
-                        <span class="n">msg</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Port </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1"> cannot be connected to Port </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">port_to_connect</span><span class="p">,</span><span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;cellname&#39;</span><span class="p">],</span><span class="n">inst</span><span class="o">.</span><span class="n">port_to_connect</span><span class="p">,</span><span class="n">inst</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;cellname&#39;</span><span class="p">])</span>
+                        <span class="n">msg</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Port </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1"> cannot be connected to Port </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">port_to_connect</span><span class="p">,</span>
+                                                                                               <span class="n">inst</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">params</span><span class="p">[</span>
+                                                                                                   <span class="s1">&#39;cellname&#39;</span><span class="p">],</span>
+                                                                                               <span class="n">inst</span><span class="o">.</span><span class="n">port_to_connect</span><span class="p">,</span>
+                                                                                               <span class="n">inst</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;cellname&#39;</span><span class="p">])</span>
                         <span class="n">msg</span><span class="o">.</span><span class="n">windowTitle</span> <span class="o">=</span> <span class="s1">&#39;ImportError&#39;</span>
                         <span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
                         <span class="k">return</span> <span class="kc">False</span>
                     <span class="n">inst</span><span class="o">.</span><span class="n">placed</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># Update the transformations and self.portlist with the calculated transformations of the children</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_ports</span><span class="p">(</span><span class="n">insts</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_ports</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PhotDevice.produce_impl"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.produce_impl">[docs]</a>    <span class="k">def</span> <span class="nf">produce_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create the effective Klayout shapes. For this all the InstanceHolders are cycled through and all the child</span>
@@ -655,48 +664,48 @@
                 <span class="s1">&#39;in a Class that all PCells inherit from. See the documentation for more details&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="s1">&#39;self.dataprep_config has to be defined by the PCell. You can either do this in the PCell initialization or &#39;</span>
-                <span class="s1">&#39;in a Class that all PCells inherit from. See the documentation for more details&#39;</span><span class="p">)</span>
+                <span class="s1">&#39;self.dataprep_config has to be defined by the PCell. You can either do this in the PCell &#39;</span>
+                <span class="s1">&#39;initialization or in a Class that all PCells inherit from. See the documentation for more details&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="s1">&#39;self.clean_rules has to be defined by the PCell. You can either do this in the PCell initialization or &#39;</span>
-                <span class="s1">&#39;in a Class that all PCells inherit from. See the documentation for more details&#39;</span><span class="p">)</span>
+                <span class="s1">&#39;self.clean_rules has to be defined by the PCell. You can either do this in the PCell initialization &#39;</span>
+                <span class="s1">&#39;or in a Class that all PCells inherit from. See the documentation for more details&#39;</span><span class="p">)</span>
         <span class="n">instances_and_ports</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_param_inst</span><span class="p">()</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">insts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">instance_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">instances</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># Because we cannot safe anything between coerce_parameters and here, we must calculate this again.</span>
-        <span class="k">if</span> <span class="n">isnamedtupleinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">,</span> <span class="n">PortCreation</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instances_and_ports</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
             <span class="n">instances_and_ports</span> <span class="o">=</span> <span class="p">[</span><span class="n">instances_and_ports</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">inst_port</span> <span class="ow">in</span> <span class="n">instances_and_ports</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst_port</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
-                <span class="n">inst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-                <span class="nb">id</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">insts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst_port</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">isnamedtupleinstance</span><span class="p">(</span><span class="n">inst_port</span><span class="p">):</span>
+                <span class="n">inst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">instance_id</span>
+                <span class="n">instance_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">instances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst_port</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst_port</span><span class="p">,</span> <span class="n">PortCreation</span><span class="p">):</span>
                 <span class="k">continue</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst_port</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">iinst_port</span> <span class="ow">in</span> <span class="n">inst_port</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">,</span> <span class="n">InstanceHolder</span><span class="p">):</span>
-                        <span class="n">iinst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-                        <span class="nb">id</span> <span class="o">+=</span> <span class="mi">1</span>
-                        <span class="n">insts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">isnamedtupleinstance</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">):</span>
+                        <span class="n">iinst_port</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">instance_id</span>
+                        <span class="n">instance_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">instances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iinst_port</span><span class="p">,</span> <span class="n">PortCreation</span><span class="p">):</span>
                         <span class="k">continue</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,ports. Instead got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">inst_port</span><span class="p">))))</span>
+                    <span class="s2">&quot;Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,&quot;</span>
+                    <span class="s2">&quot;ports. Instead got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">inst_port</span><span class="p">))))</span>
         <span class="c1"># If we have child cells to create, create them now</span>
-        <span class="k">if</span> <span class="n">insts</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">add_pcells</span><span class="p">(</span><span class="n">insts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">instances</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_pcells</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
         <span class="c1"># Create the shapes created in this PCell</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_top_ports</span><span class="p">:</span>
-            <span class="c1"># If this is a top cell or we want to draw all ports, draw the texts.</span>
-            <span class="c1"># To make sure that texts of ports get drawn correctly set the boolean to true in File-&gt; Setup -&gt; Display -&gt; Settings -&gt; Cells -&gt; &#39;Transform text with cell instance&#39;</span>
-            <span class="c1"># and make sure it&#39;s not set to Default font</span>
+            <span class="c1"># If this is a top cell or we want to draw all ports, draw the texts. To make sure that texts of ports</span>
+            <span class="c1"># get drawn correctly set the boolean to true in File-&gt; Setup -&gt; Display -&gt; Settings -&gt; Cells -&gt;</span>
+            <span class="c1"># &#39;Transform text with cell instance&#39; and make sure it&#39;s not set to Default font</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">portlist</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">portlist</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)):</span>
@@ -723,31 +732,32 @@
         <span class="n">cl1</span> <span class="o">=</span> <span class="n">clock</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">kppc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">multiprocessing</span><span class="p">:</span>
-        
-            <span class="c1">#print(&quot;Doing multiprocess cleaning&quot;) </span>
-        
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep</span><span class="p">:</span>
                 <span class="c1"># Yes, so we create a new child cell called &#39;DataPrep&#39; to create the dataprep shapes in</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
                     <span class="n">prep_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep&#39;</span><span class="p">)</span>
                     <span class="n">prep_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
-                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">prep_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">prep_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span>
+                                                     <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">prep_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
-                    <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
-                    <span class="c1"># Convert Micrometers to database units</span>
-                    <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
-                        <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
-                        <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
-                    <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">multiprocessing_clean</span><span class="p">(</span><span class="n">prep_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
-    
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
+                        <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
+                        <span class="c1"># Convert Micrometers to database units</span>
+                        <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                        <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">multiprocessing_clean</span><span class="p">(</span><span class="n">prep_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># the dataprep will clean all children and shapes and then insert cleaned ones</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
                     <span class="n">temp_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep_del&#39;</span><span class="p">)</span>
                     <span class="n">temp_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
-                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">temp_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
-    
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">temp_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span>
+                                                     <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
                         <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
                         <span class="c1"># Convert Micrometers to database units</span>
@@ -759,7 +769,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">temp_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        
+
         <span class="k">else</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep</span><span class="p">:</span>
@@ -767,23 +777,25 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
                     <span class="n">prep_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep&#39;</span><span class="p">)</span>
                     <span class="n">prep_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
-                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">prep_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">prep_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span>
+                                                     <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">prep_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
-                    <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
-                    <span class="c1"># Convert Micrometers to database units</span>
-                    <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
-                        <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
-                        <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
-                    <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">prep_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
-    
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
+                        <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
+                        <span class="c1"># Convert Micrometers to database units</span>
+                        <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">:</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                            <span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dbu</span><span class="p">)</span>
+                        <span class="n">kppc</span><span class="o">.</span><span class="n">drc</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">prep_cell</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># the dataprep will clean all children and shapes and then insert cleaned ones</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataprep</span><span class="p">:</span>
                     <span class="n">temp_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_cell</span><span class="p">(</span><span class="s1">&#39;DataPrep_del&#39;</span><span class="p">)</span>
                     <span class="n">temp_cell</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
-                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">temp_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span> <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
-    
+                    <span class="n">kppc</span><span class="o">.</span><span class="n">photonics</span><span class="o">.</span><span class="n">dataprep</span><span class="o">.</span><span class="n">dataprep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">temp_cell</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataprep_config</span><span class="p">,</span>
+                                                     <span class="n">layers_org</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layermap</span><span class="p">)</span>
+
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drc_clean</span><span class="p">:</span>
                         <span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_rules</span>
                         <span class="c1"># Convert Micrometers to database units</span>
@@ -795,9 +807,6 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">CellInstArray</span><span class="p">(</span><span class="n">temp_cell</span><span class="o">.</span><span class="n">cell_index</span><span class="p">(),</span> <span class="n">pya</span><span class="o">.</span><span class="n">Trans</span><span class="o">.</span><span class="n">R0</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
-
-        <span class="c1">#print(&#39;Time for dataprep and DR-cleaning:&#39;)</span>
-        <span class="c1">#print(clock() - cl1)</span>
 
 <div class="viewcode-block" id="PhotDevice.create_param_inst"><a class="viewcode-back" href="../../photonics/photonics.html#kppc.photonics.PhotDevice.create_param_inst">[docs]</a>    <span class="k">def</span> <span class="nf">create_param_inst</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;To be overwritten by the effective PCell</span>
@@ -842,7 +851,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

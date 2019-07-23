@@ -37,34 +37,32 @@ The main functionality for this module is in the class :class:`~kppc.photonics.P
 # make sure the setup script is compiled
 
 import pya
-import math
 import kppc.drc
 from collections import namedtuple
 import kppc.photonics.dataprep
-import numpy as np
 from time import clock
 import kppc
 
 
 # Namedtuple to hold position of a port.
-PortCreation = namedtuple('PortCreation', ['x', 'y', 'rot', 'length'])
-"""Custom namedtuple
+class PortCreation(namedtuple('PortCreation', ['x', 'y', 'rot', 'length'])):
+    """Custom namedtuple
 
-This will hold informations for creating ports.
+    This will hold informations for creating ports.
 
-:param x: x Coordinate [microns]
-:type x: int
-:param y: y Coordinate [microns]
-:type y: int
-:param rot: Rotation in degrees
-:type int: int
-:param length: Port length [microns]
-:type length: float
-"""
+    :param x: x Coordinate [microns]
+    :type x: int
+    :param y: y Coordinate [microns]
+    :type y: int
+    :param rot: Rotation in degrees
+    :type int: int
+    :param length: Port length [microns]
+    :type length: float
+    """
+    pass
 
 
-
-def isnamedtupleinstance(x):
+def is_named_tuple_instance(x):
     """Test if something is a named tuple
     This allows to test if `x` is a port (PortCreation object) or just a list of instance descriptions
     """
@@ -191,6 +189,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
         self.layermap = None
         self.dataprep_config = None
         self.clean_rules = None
+        self.transformations = None
 
     def get_layer(self, name: str, purpose: str = ''):
         """Creates LayerInfo object
@@ -256,7 +255,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
         # Delete all ports in the string
         self.portlist = ""
 
-    def connect_port(self, pos1: int, portlist1: str, port1: int, pos2: int, portlist2: str, port2: int) -> None:
+    def connect_port(self, pos1: int, portlist1: str, port1: int, pos2: int, portlist2: str, port2: int) -> int:
         """ Connect ports of two instances. The second instance will be transformed to attach to the first instance.
 
         :param pos1: index of instance1
@@ -345,11 +344,13 @@ class PhotDevice(pya.PCellDeclarationHelper):
         if ld:
             layer, datatype = ld
             linfo = pya.LayerInfo(layer, datatype)
-        if name:
+        elif name:
             # ln, dn = name.split('.')
             linfo = self.get_layer(name)  # self.layermap[ln][dn]
             # layer = int(layer)
             # datatype = int(datatype)
+        else:
+            raise ValueError("ld or name, layer and datatype must be defined")
         self.param(var_name, self.TypeLayer, field_name, hidden=hidden, default=linfo)
 
     def add_params(self, params: dict):
@@ -373,8 +374,10 @@ class PhotDevice(pya.PCellDeclarationHelper):
                 t = self.TypeString
             elif type(df) == pya.Shape:
                 t = self.TypeShape
-            elif type(df) == None:
+            elif type(df) is None:
                 t = self.TypeNone
+            else:
+                raise NotImplementedError("Type {} not found".format(type(df)))
             if key + '_choices' in params:
                 self.param(key, t, key, default=params[key], choices=params[key + '_choices'])
             else:
@@ -505,8 +508,8 @@ class PhotDevice(pya.PCellDeclarationHelper):
                         insts.append(iinst_port)
             else:
                 raise ValueError(
-                    "Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,ports. Instead got {}".format(
-                        str(type(inst_port))))
+                    "Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,"
+                    "ports. Instead got {}".format(str(type(inst_port))))
 
         trans = self.get_transformations()
         instances = []
@@ -540,33 +543,34 @@ class PhotDevice(pya.PCellDeclarationHelper):
         instances_and_ports = self.create_param_inst()
         if not instances_and_ports:
             return
-        if isnamedtupleinstance(instances_and_ports) or isinstance(instances_and_ports, InstanceHolder):
+        if isinstance(instances_and_ports, PortCreation) or isinstance(instances_and_ports, InstanceHolder):
             instances_and_ports = [instances_and_ports]
-        id = 0
-        insts = []
+        instance_id = 0
+        instances = []
         for inst_port in instances_and_ports:
-            # For each object test if it is a list of InstanceHolders/Port or plain objects and then separate them accordingly
+            # For each object test if it is a list of InstanceHolders/Port or plain objects and then separate them
+            # accordingly
             if isinstance(inst_port, InstanceHolder):
-                inst_port.id = id
-                id += 1
-                insts.append(inst_port)
-            elif isnamedtupleinstance(inst_port):
+                inst_port.id = instance_id
+                instance_id += 1
+                instances.append(inst_port)
+            elif isinstance(inst_port, PortCreation):
                 self.create_port(inst_port.x, inst_port.y, inst_port.rot, inst_port.length)
             elif type(inst_port) is list:
                 for iinst_port in inst_port:
                     if isinstance(iinst_port, InstanceHolder):
-                        iinst_port.id = id
-                        id += 1
-                        insts.append(iinst_port)
-                    elif isnamedtupleinstance(iinst_port):
+                        iinst_port.id = instance_id
+                        instance_id += 1
+                        instances.append(iinst_port)
+                    elif isinstance(iinst_port, PortCreation):
                         self.create_port(iinst_port.x, iinst_port.y, iinst_port.rot, iinst_port.length)
             else:
                 raise ValueError(
-                    "Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,ports. Instead got {}".format(
-                        str(type(inst_port))))
+                    "Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,"
+                    "ports. Instead got {}".format(str(type(inst_port))))
         self.transformations = ''
         # If child instances have requested movements in their InstanceHolder move them now
-        for i, inst in enumerate(insts):
+        for i, inst in enumerate(instances):
             if self.transformations:
                 self.transformations += ';'
             if inst.movement:
@@ -586,22 +590,27 @@ class PhotDevice(pya.PCellDeclarationHelper):
         while (not all_placed) and count < 50:
             all_placed = True
             count += 1
-            for i, inst in enumerate(insts):
+            for i, inst in enumerate(instances):
                 if inst.connection:
                     if not inst.connection.placed:
                         all_placed = False
                         continue
-                    retcode = self.connect_port(inst.connection.id, inst.connection.params_mod[0], inst.connection_port, inst.id,
+                    retcode = self.connect_port(inst.connection.id, inst.connection.params_mod[0], inst.connection_port,
+                                                inst.id,
                                                 inst.params_mod[0], inst.port_to_connect)
                     if retcode < 0:
                         msg = pya.QMessageBox(pya.Application.instance().main_window())
-                        msg.text = 'Port {} of {} cannot be connected to Port {} of {}'.format(inst.port_to_connect,inst.connection.params['cellname'],inst.port_to_connect,inst.params['cellname'])
+                        msg.text = 'Port {} of {} cannot be connected to Port {} of {}'.format(inst.port_to_connect,
+                                                                                               inst.connection.params[
+                                                                                                   'cellname'],
+                                                                                               inst.port_to_connect,
+                                                                                               inst.params['cellname'])
                         msg.windowTitle = 'ImportError'
                         msg.exec_()
                         return False
                     inst.placed = True
         # Update the transformations and self.portlist with the calculated transformations of the children
-        self.calculate_ports(insts)
+        self.calculate_ports(instances)
 
     def produce_impl(self):
         """Create the effective Klayout shapes. For this all the InstanceHolders are cycled through and all the child
@@ -616,48 +625,48 @@ class PhotDevice(pya.PCellDeclarationHelper):
                 'in a Class that all PCells inherit from. See the documentation for more details')
         if self.dataprep_config is None:
             raise NotImplementedError(
-                'self.dataprep_config has to be defined by the PCell. You can either do this in the PCell initialization or '
-                'in a Class that all PCells inherit from. See the documentation for more details')
+                'self.dataprep_config has to be defined by the PCell. You can either do this in the PCell '
+                'initialization or in a Class that all PCells inherit from. See the documentation for more details')
         if self.clean_rules is None:
             raise NotImplementedError(
-                'self.clean_rules has to be defined by the PCell. You can either do this in the PCell initialization or '
-                'in a Class that all PCells inherit from. See the documentation for more details')
+                'self.clean_rules has to be defined by the PCell. You can either do this in the PCell initialization '
+                'or in a Class that all PCells inherit from. See the documentation for more details')
         instances_and_ports = self.create_param_inst()
-        id = 0
-        insts = []
+        instance_id = 0
+        instances = []
 
         # Because we cannot safe anything between coerce_parameters and here, we must calculate this again.
-        if isnamedtupleinstance(instances_and_ports) or isinstance(instances_and_ports, InstanceHolder):
+        if isinstance(instances_and_ports, PortCreation) or isinstance(instances_and_ports, InstanceHolder):
             instances_and_ports = [instances_and_ports]
         for inst_port in instances_and_ports:
             if isinstance(inst_port, InstanceHolder):
-                inst_port.id = id
-                id += 1
-                insts.append(inst_port)
-            elif isnamedtupleinstance(inst_port):
+                inst_port.id = instance_id
+                instance_id += 1
+                instances.append(inst_port)
+            elif isinstance(inst_port, PortCreation):
                 continue
             elif isinstance(inst_port, list):
                 for iinst_port in inst_port:
                     if isinstance(iinst_port, InstanceHolder):
-                        iinst_port.id = id
-                        id += 1
-                        insts.append(iinst_port)
-                    elif isnamedtupleinstance(iinst_port):
+                        iinst_port.id = instance_id
+                        instance_id += 1
+                        instances.append(iinst_port)
+                    elif isinstance(iinst_port, PortCreation):
                         continue
             else:
                 raise ValueError(
-                    "Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,ports. Instead got {}".format(
-                        str(type(inst_port))))
+                    "Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,"
+                    "ports. Instead got {}".format(str(type(inst_port))))
         # If we have child cells to create, create them now
-        if insts:
-            self.add_pcells(insts)
+        if instances:
+            self.add_pcells(instances)
         # Create the shapes created in this PCell
         self.shapes()
 
         if self.top or not self.only_top_ports:
-            # If this is a top cell or we want to draw all ports, draw the texts.
-            # To make sure that texts of ports get drawn correctly set the boolean to true in File-> Setup -> Display -> Settings -> Cells -> 'Transform text with cell instance'
-            # and make sure it's not set to Default font
+            # If this is a top cell or we want to draw all ports, draw the texts. To make sure that texts of ports
+            # get drawn correctly set the boolean to true in File-> Setup -> Display -> Settings -> Cells ->
+            # 'Transform text with cell instance' and make sure it's not set to Default font
 
             if self.portlist:
                 for i, p in enumerate(self.portlist.split(';')):
@@ -684,31 +693,32 @@ class PhotDevice(pya.PCellDeclarationHelper):
         cl1 = clock()
 
         if kppc.settings.multiprocessing:
-        
-            #print("Doing multiprocess cleaning") 
-        
+
             if self.keep:
                 # Yes, so we create a new child cell called 'DataPrep' to create the dataprep shapes in
                 if self.dataprep:
                     prep_cell = self.layout.create_cell('DataPrep')
                     prep_cell._create()
-                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config, layers_org=self.layermap)
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config,
+                                                     layers_org=self.layermap)
                     self.cell.insert(pya.CellInstArray(prep_cell.cell_index(), pya.Trans.R0))
-                if self.drc_clean:
-                    rules = self.clean_rules
-                    # Convert Micrometers to database units
-                    for cr in rules:
-                        cr[1] = int(cr[1] / self.layout.dbu)
-                        cr[2] = int(cr[2] / self.layout.dbu)
-                    kppc.drc.multiprocessing_clean(prep_cell, rules)
-    
+
+                    if self.drc_clean:
+                        rules = self.clean_rules
+                        # Convert Micrometers to database units
+                        for cr in rules:
+                            cr[1] = int(cr[1] / self.layout.dbu)
+                            cr[2] = int(cr[2] / self.layout.dbu)
+                        kppc.drc.multiprocessing_clean(prep_cell, rules)
+
             else:
                 # the dataprep will clean all children and shapes and then insert cleaned ones
                 if self.dataprep:
                     temp_cell = self.layout.create_cell('DataPrep_del')
                     temp_cell._create()
-                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config, layers_org=self.layermap)
-    
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config,
+                                                     layers_org=self.layermap)
+
                     if self.drc_clean:
                         rules = self.clean_rules
                         # Convert Micrometers to database units
@@ -720,7 +730,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
                     self.cell.clear()
                     self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))
                     self.cell.flatten(True)
-        
+
         else:
 
             if self.keep:
@@ -728,23 +738,25 @@ class PhotDevice(pya.PCellDeclarationHelper):
                 if self.dataprep:
                     prep_cell = self.layout.create_cell('DataPrep')
                     prep_cell._create()
-                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config, layers_org=self.layermap)
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, prep_cell, config=self.dataprep_config,
+                                                     layers_org=self.layermap)
                     self.cell.insert(pya.CellInstArray(prep_cell.cell_index(), pya.Trans.R0))
-                if self.drc_clean:
-                    rules = self.clean_rules
-                    # Convert Micrometers to database units
-                    for cr in rules:
-                        cr[1] = int(cr[1] / self.layout.dbu)
-                        cr[2] = int(cr[2] / self.layout.dbu)
-                    kppc.drc.clean(prep_cell, rules)
-    
+                    if self.drc_clean:
+                        rules = self.clean_rules
+                        # Convert Micrometers to database units
+                        for cr in rules:
+                            cr[1] = int(cr[1] / self.layout.dbu)
+                            cr[2] = int(cr[2] / self.layout.dbu)
+                        kppc.drc.clean(prep_cell, rules)
+
             else:
                 # the dataprep will clean all children and shapes and then insert cleaned ones
                 if self.dataprep:
                     temp_cell = self.layout.create_cell('DataPrep_del')
                     temp_cell._create()
-                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config, layers_org=self.layermap)
-    
+                    kppc.photonics.dataprep.dataprep(self.cell, self.layout, temp_cell, config=self.dataprep_config,
+                                                     layers_org=self.layermap)
+
                     if self.drc_clean:
                         rules = self.clean_rules
                         # Convert Micrometers to database units
@@ -756,9 +768,6 @@ class PhotDevice(pya.PCellDeclarationHelper):
                     self.cell.clear()
                     self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))
                     self.cell.flatten(True)
-
-        #print('Time for dataprep and DR-cleaning:')
-        #print(clock() - cl1)
 
     def create_param_inst(self):
         """To be overwritten by the effective PCell

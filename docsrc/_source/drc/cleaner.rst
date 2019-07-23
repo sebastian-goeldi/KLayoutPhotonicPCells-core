@@ -50,13 +50,13 @@ An interface to the DrcSl.cpp Class.
             If a corner or a complete edge is outside the bounding box and is added through the add_data function, a Segmentation Fault will most likely occur and the module (including Klayout) crashes. Alternatively, it will just be confined to the bounding box and the rest will be cut off.
 
         :param x1: left bound of box
-        :type x1: :integers:
+        :type x1: int
         :param x2: right bound of box
-        :type x2: :integers:
+        :type x2: int
         :param y1: bottom bound of box
-        :type y1: :integers:
+        :type y1: int
         :param y2: top bound of box
-        :type y2: :integers
+        :type y2: int
         :param viospace: minimum space violation in database units
         :type viospace: minimum space violation in database units
         :param viowidth: minimum width violation in database units
@@ -67,7 +67,7 @@ An interface to the DrcSl.cpp Class.
         Get the edge data back to python from the C++ object.
 
         :param ind: index of the row to retrieve data from
-        :type ind: :integers:
+        :type ind: int
         :return: numpy array of the edges
     
     .. method:: get_row_types(ind: int)
@@ -75,7 +75,7 @@ An interface to the DrcSl.cpp Class.
         Get the type of edges in that row.
 
         :param ind: index of the row
-        :type ind: :integers:
+        :type ind: int
         :return: numpy array of types of edges (0 for upwards facing edge, 1 for downwards)
     
     .. method:: polygons()
@@ -90,9 +90,9 @@ An interface to the DrcSl.cpp Class.
         Print the data of rows/columns depending on current orientation
 
         :param beg: beginning of the rows/columns that should be printed
-        :type beg:  :integers:
+        :type beg: int
         :param end: ending of the rows/columns that should be printed
-        :type end:  :integers:
+        :type end: int
     
     .. method:: s()
     

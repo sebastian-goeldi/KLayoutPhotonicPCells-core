@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>kppc.drc &#8212; KLayout Photonic PCells 0.1.2 documentation</title>
+    <title>kppc.drc &#8212; KLayout Photonic PCells 1.0.2 documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -85,14 +85,13 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">signal</span>
 
 <span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">find_spec</span>
 
 <span class="n">dir_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
-<span class="n">cpp_path</span> <span class="o">=</span> <span class="n">dir_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">/</span><span class="s2">&quot;cpp&quot;</span>
+<span class="n">cpp_path</span> <span class="o">=</span> <span class="n">dir_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;cpp&quot;</span>
 <span class="n">sl_path</span> <span class="o">=</span> <span class="n">find_spec</span><span class="p">(</span><span class="s1">&#39;kppc.drc.slcleaner&#39;</span><span class="p">)</span>
 <span class="n">can_multi</span> <span class="o">=</span> <span class="n">find_spec</span><span class="p">(</span><span class="s1">&#39;kppc.drc.cleanermaster&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">Path</span><span class="p">(</span><span class="n">cpp_path</span> <span class="o">/</span> <span class="s1">&#39;build/cleanermain&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
 
@@ -112,13 +111,18 @@
     <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">clickedButton</span><span class="p">()</span> <span class="o">==</span> <span class="n">compile_button</span><span class="p">:</span>
         <span class="n">src_dir</span> <span class="o">=</span> <span class="n">cpp_path</span> <span class="o">/</span> <span class="s2">&quot;source&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trying to Compile&#39;</span><span class="p">)</span>
+
+        <span class="p">(</span><span class="n">cpp_path</span> <span class="o">/</span> <span class="s1">&#39;build&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
         <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="s1">&#39;setup.py&#39;</span><span class="p">,</span> <span class="s1">&#39;build_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">dir_path</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                               <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">src_dir</span><span class="p">)</span>
         <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="s1">&#39;setup_cc.py&#39;</span><span class="p">,</span> <span class="s1">&#39;build_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">dir_path</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                               <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">src_dir</span><span class="p">)</span>
         <span class="n">p3</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
-            <span class="p">[</span><span class="s1">&#39;g++&#39;</span><span class="p">,</span> <span class="n">cpp_path</span><span class="o">/</span><span class="s1">&#39;source/CleanerMain.cpp&#39;</span><span class="p">,</span> <span class="n">cpp_path</span><span class="o">/</span><span class="s1">&#39;source/CleanerSlave.cpp&#39;</span><span class="p">,</span> <span class="n">cpp_path</span><span class="o">/</span><span class="s1">&#39;source/DrcSl.cpp&#39;</span><span class="p">,</span> <span class="n">cpp_path</span><span class="o">/</span><span class="s1">&#39;source/SignalHandler.cpp&#39;</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">cpp_path</span><span class="o">/</span><span class="s1">&#39;build/cleanermain&#39;</span><span class="p">,</span> <span class="s1">&#39;-isystem&#39;</span><span class="p">,</span>
-             <span class="s1">&#39;/usr/include/boost/&#39;</span><span class="p">,</span> <span class="s1">&#39;-lboost_system&#39;</span><span class="p">,</span> <span class="s1">&#39;-pthread&#39;</span><span class="p">,</span> <span class="s1">&#39;-lboost_thread&#39;</span><span class="p">,</span> <span class="s1">&#39;-lrt&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="p">(</span><span class="s1">&#39;g++&#39;</span><span class="p">,</span> <span class="n">cpp_path</span> <span class="o">/</span> <span class="s1">&#39;source/CleanerMain.cpp&#39;</span><span class="p">,</span> <span class="n">cpp_path</span> <span class="o">/</span> <span class="s1">&#39;source/CleanerSlave.cpp&#39;</span><span class="p">,</span>
+             <span class="n">cpp_path</span> <span class="o">/</span> <span class="s1">&#39;source/DrcSl.cpp&#39;</span><span class="p">,</span> <span class="n">cpp_path</span> <span class="o">/</span> <span class="s1">&#39;source/SignalHandler.cpp&#39;</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">cpp_path</span> <span class="o">/</span> <span class="s1">&#39;build/cleanermain&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;-isystem&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;/usr/include/boost/&#39;</span><span class="p">,</span> <span class="s1">&#39;-lboost_system&#39;</span><span class="p">,</span> <span class="s1">&#39;-pthread&#39;</span><span class="p">,</span> <span class="s1">&#39;-lboost_thread&#39;</span><span class="p">,</span> <span class="s1">&#39;-lrt&#39;</span><span class="p">),</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
             <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">src_dir</span><span class="p">)</span>
         <span class="n">p1</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="n">p2</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
@@ -131,7 +135,8 @@
             <span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">main_window</span><span class="p">())</span>
-            <span class="n">msg</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;The compilation failed. Please compile manually</span><span class="se">\n</span><span class="s1"> Return Code slcleaner: </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> Return Code cleanermaster: </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> Return Code: </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">returncode</span><span class="p">,</span><span class="n">p2</span><span class="o">.</span><span class="n">returncode</span><span class="p">,</span><span class="n">p3</span><span class="o">.</span><span class="n">returncode</span><span class="p">,</span><span class="n">p3</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;The compilation failed. Please compile manually</span><span class="se">\n</span><span class="s1"> Return Code slcleaner: </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> Return Code &#39;</span> \
+                       <span class="s1">&#39;cleanermaster: </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> Return Code: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">returncode</span><span class="p">,</span> <span class="n">p2</span><span class="o">.</span><span class="n">returncode</span><span class="p">,</span> <span class="n">p3</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
             <span class="n">msg</span><span class="o">.</span><span class="n">Title</span> <span class="o">=</span> <span class="s1">&#39;Compilation&#39;</span>
             <span class="n">msg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
             <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -146,6 +151,7 @@
     <span class="n">kppc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">multiprocessing</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">kppc.drc.cleanermaster</span>
+
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using the multiprocessing module&quot;</span><span class="p">)</span>
 
 
@@ -216,7 +222,8 @@
         <span class="n">cell</span><span class="o">.</span><span class="n">shapes</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">region_cleaned</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kppc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">qtprogress</span><span class="p">:</span>
             <span class="n">progress</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
-    <span class="n">progress</span><span class="o">.</span><span class="n">_destroy</span><span class="p">()</span></div>
+    <span class="k">if</span> <span class="n">kppc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">qtprogress</span><span class="p">:</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">_destroy</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="multiprocessing_clean"><a class="viewcode-back" href="../../drc/drc.html#kppc.drc.multiprocessing_clean">[docs]</a><span class="k">def</span> <span class="nf">multiprocessing_clean</span><span class="p">(</span><span class="n">cell</span><span class="p">:</span> <span class="s1">&#39;pya. Cell&#39;</span><span class="p">,</span> <span class="n">cleanrules</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
@@ -266,7 +273,7 @@
             <span class="k">else</span><span class="p">:</span>
 
                 <span class="n">cm</span><span class="o">.</span><span class="n">set_box</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="n">ld</span><span class="p">,</span> <span class="n">viowidth</span><span class="p">,</span> <span class="n">viospace</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">p1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">p2</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">p1</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">p2</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initialized Layer </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span><span class="n">ld</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initialized Layer </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="n">ld</span><span class="p">))</span>
                 <span class="c1"># Retrieve the recursive</span>
                 <span class="n">shapeit</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">begin_shapes_rec</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
                 <span class="n">shapeit</span><span class="o">.</span><span class="n">shape_flags</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">Shapes</span><span class="o">.</span><span class="n">SPolygons</span> <span class="o">|</span> <span class="n">pya</span><span class="o">.</span><span class="n">Shapes</span><span class="o">.</span><span class="n">SBoxes</span>
@@ -281,7 +288,7 @@
                     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span>
 
                 <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-                
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">polygons</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">polygons</span><span class="p">()</span>
@@ -295,7 +302,7 @@
 
                     <span class="n">region_cleaned</span> <span class="o">=</span> <span class="n">pya</span><span class="o">.</span><span class="n">Region</span><span class="p">()</span>
                     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">polygons</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-                        <span class="n">region_cleaned</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">Polygon</span><span class="p">([</span><span class="n">pya</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">]))</span>
+                        <span class="n">region_cleaned</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pya</span><span class="o">.</span><span class="n">Polygon</span><span class="p">([</span><span class="n">pya</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">]))</span>
                     <span class="n">region_cleaned</span><span class="o">.</span><span class="n">merge</span><span class="p">()</span>
 
                     <span class="c1"># Clean the target layer and fill in the cleaned data</span>
@@ -310,7 +317,8 @@
         <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done. Time passed: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">))</span>
-        <span class="n">progress</span><span class="o">.</span><span class="n">_destroy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">kppc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">qtprogress</span><span class="p">:</span>
+            <span class="n">progress</span><span class="o">.</span><span class="n">_destroy</span><span class="p">()</span>
         <span class="n">cs</span><span class="o">.</span><span class="n">send_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">)</span>
         <span class="n">cs</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
 </pre></div>
@@ -343,7 +351,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">KLayout Photonic PCells 1.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
