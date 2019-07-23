@@ -97,8 +97,7 @@ if not sl_path:
         else:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
             msg.text = 'The compilation failed. Please compile manually\n Return Code slcleaner: {}\n Return Code ' \
-                       'cleanermaster: {}\n Return Code: {}\n {}'.format(p1.returncode, p2.returncode, p3.returncode,
-                                                                         p3.stdout.read())
+                       'cleanermaster: {}\n Return Code: {}\n}'.format(p1.returncode, p2.returncode, p3.returncode)
             msg.Title = 'Compilation'
             msg.exec_()
             exit(-1)
