@@ -94,6 +94,7 @@ if not sl_path:
             msg.Title = 'Compilation'
             can_multi = find_spec('kppc.drc.cleanermaster') and Path(dir_path / 'cleanermain').exists()
             msg.exec_()
+            import kppc.drc.slcleaner
         else:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
             msg.text = 'The compilation failed. Please compile manually\n Return Code slcleaner: {}\n Return Code ' \
