@@ -9,7 +9,7 @@ Photonic PCell Library Extension Documentation
 
 KLayout Photonic PCells introduces the concept of ports to KLayout. Ports in contrast to pins also track directions. Additionally, PCells can be built hierarchically from other PCells and new shapes. The sub-cells can be connected to each other through ports.
 
-The source code can be found on `Github <https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core>`
+The source code can be found on `Github <https://github.com/sebastian-goeldi/KLayoutPhotonicPCells-core>`_
 
 .. toctree::
     :maxdepth: 3
