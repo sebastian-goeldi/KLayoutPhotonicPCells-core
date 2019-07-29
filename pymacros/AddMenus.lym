@@ -18,17 +18,12 @@
 from pathlib import Path
 import kppc
 import json
-from pathlib import Path
-
-
-
-
-
+import importlib
 
 class SettingsDialog(pya.QDialog):
 
     def __init__(self, parent = None):
-        self.settingspath = Path(__file__).parent/"kppc/settings.json"
+        self.settingspath = Path(__file__).parent.parent/"settings.json"
         grid = pya.QGridLayout(self)
         self.setLayout(grid)
         self.settings = []
@@ -68,6 +63,7 @@ class SettingsDialog(pya.QDialog):
                 sdict[s[0].text] = bool(s[1].checkState.to_i())
         with open(self.settingspath, 'w') as f:
             json.dump(sdict, f, indent=4, sort_keys=True)
+        importlib.reload(kppc)
         self.accept()
 
 def open_settings():

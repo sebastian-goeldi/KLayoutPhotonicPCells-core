@@ -54,7 +54,7 @@ from importlib.util import find_spec
 dir_path = Path(__file__).parent
 cpp_path = dir_path.parent.parent.parent / "cpp"
 sl_path = find_spec('kppc.drc.slcleaner')
-can_multi = find_spec('kppc.drc.cleanermaster') and Path(cpp_path / 'build/cleanermain').exists()
+can_multi = find_spec('kppc.drc.cleanermaster') and Path(cpp_path / 'build/cleanermain').exists() and kppc.settings.multiprocessing
 
 # Check if C++ cleaner is compiled
 
@@ -112,9 +112,10 @@ if not can_multi:
     print("Cannot use mutliprocessing, falling back to single thread cleaning")
     kppc.settings.multiprocessing = False
 else:
-    import kppc.drc.cleanermaster
-
     print("Using the multiprocessing module")
+
+if find_spec('kppc.drc.cleanermaster') and Path(cpp_path / 'build/cleanermain').exists():
+    import kppc.drc.cleanermaster
 
 
 def clean(cell: 'pya. Cell', cleanrules: list):

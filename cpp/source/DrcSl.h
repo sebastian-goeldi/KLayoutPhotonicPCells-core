@@ -35,21 +35,21 @@ struct SplitPolygon
 public:
     std::vector<pi>* left;
     std::vector<pi>* right;
-    std::vector<std::vector<SplitPolygon>::iterator> *merge_to;
-    SplitPolygon():merged(false),passed(false)
+
+    int begin;
+    int end;
+    int blx,brx;
+    int elx,erx;
+    int merge_ind;
+
+    SplitPolygon():merge_ind(-1)
     {
         right = new std::vector<pi>();
         left = new std::vector<pi>();
-        merge_to = new std::vector<std::vector<SplitPolygon>::iterator>();
     };
-//            ~SplitPolygon(){
-//                delete right;
-//                delete left;
-//                delete merge_to;
-//            }
     int can_append(int x1, int x2, int l)
     {
-        if (l != line +1 )
+        if (l != end +1 )
             return 0;
         if(x2 < left->back().first)
             return 1;
@@ -57,15 +57,23 @@ public:
             return -1;
         return 2;
     }
+    void destroy()
+    {
+        delete right;
+        delete left;
+    }
     void init(int x1, int x2, int l)
     {
         left->push_back(std::make_pair(x1,l));
         left->push_back(std::make_pair(x1,l+1));
         right->push_back(std::make_pair(x2,l));
         right->push_back(std::make_pair(x2,l+1));
-        line = l+1;
-        lx = x1;
-        rx = x2;
+        begin = l;
+        end = l+1;
+        blx = x1;
+        brx = x2;
+        elx = x1;
+        erx = x2;
     }
 
     int append(int x1, int x2, int l)
@@ -89,26 +97,20 @@ public:
             right->push_back(std::make_pair(x2,l));
             right->push_back(std::make_pair(x2,l+1));
         }
-        line = l+1;
-        lx = x1;
-        rx = x2;
+        end = l+1;
+        elx = x1;
+        erx = x2;
         return true;
     }
-    void right_insert(std::vector<pi> polygon)
+    void right_insert(std::vector<pi>* polygon)
     {
-        right->insert(right->end(),polygon.begin(),polygon.end());
+        right->insert(right->end(),polygon->begin(),polygon->end());
     }
     void right_merge()
     {
         right->insert(right->end(),left->rbegin(),left->rend());
         left->clear();
     }
-
-    int line;
-    int lx,rx;
-
-    bool merged;
-    bool passed;
 };
 
 typedef std::vector<SplitPolygon> spv;

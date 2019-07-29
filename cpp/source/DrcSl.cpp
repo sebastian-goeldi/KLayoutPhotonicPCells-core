@@ -702,18 +702,14 @@ std::vector<std::vector<pi>> DrcSl::get_polygons()
     int offset = this->orientation ? -this-> hor1 : -this-> ver1;
     int offset_d1 = (this->orientation ? -this->ver1 : -this-> hor1) - 1;
     int offset_d2 = (this->orientation ? -this->ver1 : -this-> hor1) + 1;
-    int begin = 0;
 
     for(int i = 1; i< this->s(); i++)
     {
         int y = i - offset;
-        spv::iterator spit = splits.begin() + begin;
-        spv::iterator spit_last = splits.begin() + begin;
-
+        bool advance = true;
+        spv::iterator spit = splits.begin();
         ev::iterator append_first = this->l[i].begin();
         ev::iterator append_last = this->l[i].begin();
-
-        bool advance = true;
 
         for(ev::iterator ei = this->l[i].begin(); ei != this->l[i].end(); ei+=2)
         {
@@ -724,17 +720,17 @@ std::vector<std::vector<pi>> DrcSl::get_polygons()
             {
                 spit = std::find_if(splits.begin(),splits.end(), [x1,x2,y,offset_d2,offset_d1] (SplitPolygon & sp)
                 {
-                    return ((sp.line ==y) && !((sp.rx < x1) || (sp.lx > x2)));
+                    return ((sp.end ==y) && !((sp.erx < x1) || (sp.elx > x2)));
                 });
                 advance = false;
             }
 
             if(spit != splits.end())
             {
-                int ex1 = spit->lx;
-                int ex2 = spit->rx;
+                int ex1 = spit->elx;
+                int ex2 = spit->erx;
 
-                if(((x1 > ex2) || (x2 < ex1)) && spit->line == y)
+                if(((x1 > ex2) || (x2 < ex1)) && spit->end == y)
                 {
                     int l = append_last - append_first;
                     if(l == 2)
@@ -743,24 +739,24 @@ std::vector<std::vector<pi>> DrcSl::get_polygons()
                     }
                     if(l > 2)
                     {
+                        int merge_ind = spit - splits.begin();
                         for(ev::iterator eit = append_first; eit != append_last; eit +=2)
                         {
                             SplitPolygon sp = SplitPolygon();
-                            sp.init(eit->pos - offset_d2,(eit+1)->pos - offset_d2,y);
+                            sp.init(eit->pos - offset_d1,(eit+1)->pos - offset_d2,y);
+                            sp.merge_ind = merge_ind;
                             splits.push_back(sp);
-
                         }
                     }
                     spit = std::find_if(splits.begin(),splits.end(), [x1,x2,y,offset_d2,offset_d1] (SplitPolygon & sp)
                     {
-                        return ((sp.line ==y) && !((sp.rx < x1) || (sp.lx > x2)));
+                        return ((sp.end ==y) && !((sp.erx < x1) || (sp.elx > x2)));
                     });
                     if(spit == splits.end())
                     {
                         SplitPolygon sp = SplitPolygon();
                         sp.init(x1,x2,y);
                         splits.push_back(sp);
-                        spit_last = splits.begin();
                         append_first = ei + 2;
                         append_last = ei + 2;
                         advance = true;
@@ -778,8 +774,6 @@ std::vector<std::vector<pi>> DrcSl::get_polygons()
             }
             else
             {
-                spit_last = spit;
-                spit = splits.begin();
                 SplitPolygon sp = SplitPolygon();
                 sp.init(x1,x2,y);
                 splits.push_back(sp);
@@ -796,27 +790,28 @@ std::vector<std::vector<pi>> DrcSl::get_polygons()
         }
         else if(l > 2)
         {
+            int merge_ind = spit - splits.begin();
             for(ev::iterator eit = append_first; eit != append_last; eit +=2)
             {
                 SplitPolygon sp = SplitPolygon();
-                sp.init(eit->pos - offset_d2,(eit+1)->pos - offset_d2,y);
+                sp.init(eit->pos - offset_d1,(eit+1)->pos - offset_d2,y);
+                sp.merge_ind = merge_ind;
                 splits.push_back(sp);
             }
         }
-        spit = splits.begin() + begin;
-
     }
     for(auto sp = splits.rbegin(); sp!=splits.rend(); sp++)
     {
-        for(auto mp = sp->merge_to->rbegin(); mp != sp->merge_to->rend(); mp++)
-        {
-            sp->right_insert(*((*mp)->right));
-        }
         sp->right_merge();
-        if(!sp->merged)
+        if(sp->merge_ind >= 0)
+        {
+            splits[sp->merge_ind].right_insert(sp->right);
+        }
+        else
         {
             polygons.push_back(*(sp->right));
         }
+        sp->destroy();
     }
     return polygons;
 }
