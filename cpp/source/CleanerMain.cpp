@@ -15,15 +15,18 @@
 //    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "CleanerSlave.h"
+#include <string>
 
 int main(int argc, char* argv[])
 {
-
-    std::cout<< "Initializing" << std::endl;
-    drclean::CleanerSlave cs = drclean::CleanerSlave();
-
-    std::cout<< "Initialized" << std::endl;
-
+    drclean::CleanerSlave cs;
+    if(argc < 1)
+    {
+        cs = drclean::CleanerSlave();
+    } else if(argc == 1) {
+        cs = drclean::CleanerSlave(std::stoi(argv[0]));
+    }
+    
     if (!cs.initialized)
     {
         return -1;

@@ -1,4 +1,10 @@
 {
-    "multiprocessing": true,
-    "qtprogress": true
+    "General": {
+        "Progressbar": true
+    },
+    "Multithreading": {
+        "Enabled": true,
+        "Automatic": true,
+        "Threads": 4
+    }
 }

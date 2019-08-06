@@ -48,13 +48,15 @@ import sys
 import traceback
 import subprocess
 import signal
+import multiprocessing
 
 from importlib.util import find_spec
 
 dir_path = Path(__file__).parent
 cpp_path = dir_path.parent.parent.parent / "cpp"
 sl_path = find_spec('kppc.drc.slcleaner')
-can_multi = find_spec('kppc.drc.cleanermaster') and Path(cpp_path / 'build/cleanermain').exists() and kppc.settings.multiprocessing
+can_multi = find_spec('kppc.drc.cleanermaster') and Path(
+    cpp_path / 'build/cleanermain').exists() and kppc.settings.Multithreading.Enabled
 
 # Check if C++ cleaner is compiled
 
@@ -90,7 +92,7 @@ if not sl_path:
         p3.wait()
         if p1.returncode == 0 and p2.returncode == 0 and p3.returncode == 0:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
-            msg.text = 'The compilation was successfull'
+            msg.text = 'The compilation was successful'
             msg.Title = 'Compilation'
             can_multi = find_spec('kppc.drc.cleanermaster') and Path(dir_path / 'cleanermain').exists()
             msg.exec_()
@@ -109,8 +111,8 @@ else:
     import kppc.drc.slcleaner
 
 if not can_multi:
-    print("Cannot use mutliprocessing, falling back to single thread cleaning")
-    kppc.settings.multiprocessing = False
+    print("Cannot use multiprocessing, falling back to single thread cleaning")
+    kppc.settings.Multithreading.Enabled = False
 else:
     print("Using the multiprocessing module")
 
@@ -129,13 +131,13 @@ def clean(cell: 'pya. Cell', cleanrules: list):
     """
     sl = kppc.drc.slcleaner.PyDrcSl()
 
-    if kppc.settings.qtprogress:
+    if kppc.settings.General.Progressbar:
         progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
 
     for cr in cleanrules:
 
         # split the rules into their parts
-        layer_spec, viowidth, viospace = cr
+        layer_spec, violation_width, violation_space = cr
         ln, ld = layer_spec
 
         if ln is None:
@@ -143,16 +145,16 @@ def clean(cell: 'pya. Cell', cleanrules: list):
 
         layer = cell.layout().layer(ln, ld)
 
-        if kppc.settings.qtprogress:
+        if kppc.settings.General.Progressbar:
             progress.format = 'Layer {}/{}'.format(ln, ld)
 
         # Get the bounding box of the layer and initialize the cleaner
         bbox = cell.bbox_per_layer(layer)
         if bbox.empty():
-            if kppc.settings.qtprogress:
+            if kppc.settings.General.Progressbar:
                 progress.inc()
             continue
-        sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, viospace, viowidth)
+        sl.init_list(bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y, violation_space, violation_width)
 
         # Retrieve the recursive
         shapeit = cell.begin_shapes_rec(layer)
@@ -166,7 +168,7 @@ def clean(cell: 'pya. Cell', cleanrules: list):
                 sl.add_data(edge.x1, edge.x2, edge.y1, edge.y2)
         # Sort the edges in an ascending order. Also, removes touching edges or edges within other shapes.
         sl.sort()
-        if viowidth != 1 and viospace != 1:
+        if violation_width != 1 and violation_space != 1:
             sl.clean()
         # Create a region from the cleaned data. This is a bit slow. There might be a way to do it faster. The
         # Region merge seems to be the most time consuming process.
@@ -183,9 +185,9 @@ def clean(cell: 'pya. Cell', cleanrules: list):
         # Clean the target layer and fill in the cleaned data
         cell.clear(layer)
         cell.shapes(layer).insert(region_cleaned)
-        if kppc.settings.qtprogress:
+        if kppc.settings.General.Progressbar:
             progress.inc()
-    if kppc.settings.qtprogress:
+    if kppc.settings.General.Progressbar:
         progress._destroy()
 
 
@@ -203,20 +205,38 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
     t = time.time()
 
     cm = kppc.drc.cleanermaster.PyCleanerMaster()
-    cs = subprocess.Popen([cpp_path / 'build/cleanermain'], stdout=subprocess.PIPE,
-                          stderr=subprocess.STDOUT)
+    if kppc.settings.Multithreading.Automatic:
+        cs = subprocess.Popen([cpp_path / 'build/cleanermain', ], stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT)
+    else:
+        n = kppc.settings.Multithreading.Threads
+        if n < 1:
+            n = 1
+        elif n > multiprocessing.cpu_count():
+            n = multiprocessing.cpu_count()
+        cs = subprocess.Popen([cpp_path / 'build/cleanermain', str(n), ],
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT)
 
-    if kppc.settings.qtprogress:
-        progress = pya.RelativeProgress('Cleaning Design Rule Violations', len(cleanrules))
+    if kppc.settings.General.Progressbar:
+        processedlayers = {}
+        for cr in cleanrules:
+            layer_spec, violation_width, violation_space = cr
+            ln, ld = layer_spec
+            processedlayers['{}/{}'.format(ln, ld)] = False
+
+        progress = pya.RelativeProgress('Preparing Output Layers', len(cleanrules))
+        progress.format = 'Processed {} of {} layers'.format(0, len(cleanrules))
 
     try:
-
+        len_cr = len(cleanrules)
         count = 0
+        skip = 0
 
         for cr in cleanrules:
 
             # split the rules into their parts
-            layer_spec, viowidth, viospace = cr
+            layer_spec, violation_width, violation_space = cr
             ln, ld = layer_spec
 
             if ln is None:
@@ -224,19 +244,19 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
 
             layer = cell.layout().layer(ln, ld)
 
-            if kppc.settings.qtprogress:
-                progress.format = 'Layer {}/{}'.format(ln, ld)
-
             # Get the bounding box of the layer and initialize the cleaner
             bbox = cell.bbox_per_layer(layer)
-            if bbox.empty() or np.abs(bbox.p1.x - bbox.p2.x) < viowidth or np.abs(bbox.p1.y - bbox.p2.y) < viowidth:
-                if kppc.settings.qtprogress:
+            if bbox.empty() or np.abs(bbox.p1.x - bbox.p2.x) < violation_width or np.abs(
+                    bbox.p1.y - bbox.p2.y) < violation_width:
+                skip += 1
+                if kppc.settings.General.Progressbar:
+                    progress.format = 'Processed {} of {} Output Layers and scheduled for Cleaning'.format(
+                        count + skip, len_cr)
                     progress.inc()
                 continue
             else:
 
-                cm.set_box(ln, ld, viowidth, viospace, bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
-                print("Initialized Layer {}/{}".format(ln, ld))
+                cm.set_box(ln, ld, violation_width, violation_space, bbox.p1.x, bbox.p2.x, bbox.p1.y, bbox.p2.y)
                 # Retrieve the recursive
                 shapeit = cell.begin_shapes_rec(layer)
                 shapeit.shape_flags = pya.Shapes.SPolygons | pya.Shapes.SBoxes
@@ -252,6 +272,17 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
 
                 count += 1
 
+            if kppc.settings.General.Progressbar:
+                progress.format = 'Processed {} of {} Output Layers and scheduled for Cleaning'.format(count + skip,
+                                                                                                       len_cr)
+                progress.inc()
+
+        if kppc.settings.General.Progressbar:
+            progress._destroy()
+            progress = pya.RelativeProgress('Cleaning Design Rule Violations', count)
+            progress.format = 'Cleaned Violations in {} of {} Layers. Next expected layer: {}'.format(0, count, next(
+                (x for x in processedlayers.keys() if not processedlayers[x]), None))
+
         for i in range(count):
             while True:
                 polygons = cm.polygons()
@@ -260,7 +291,8 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     time.sleep(1)
                     continue
                 else:
-                    layer = cell.layout().layer(polygons[0][0][0], polygons[0][0][1])
+                    ln, ld = polygons[0][0][0], polygons[0][0][1]
+                    layer = cell.layout().layer(ln, ld)
                     bbox = cell.bbox_per_layer(layer)
 
                     region_cleaned = pya.Region()
@@ -271,7 +303,12 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     # Clean the target layer and fill in the cleaned data
                     cell.clear(layer)
                     cell.shapes(layer).insert(region_cleaned)
-                    if kppc.settings.qtprogress:
+                    if kppc.settings.General.Progressbar:
+                        processedlayers['{}/{}'.format(ln, ld)] = True
+                        text = 'Cleaned Violations in {} of {} Layers. Next expected layer: {}'
+                        text.format(i + 1, count,
+                                    next((x for x in processedlayers.keys() if not processedlayers[x]), None))
+                        progress.format = text
                         progress.inc()
                     break
 
@@ -280,7 +317,7 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
         traceback.print_exc(file=sys.stdout)
     finally:
         print("Done. Time passed: {}".format(time.time() - t))
-        if kppc.settings.qtprogress:
-            progress._destroy()
         cs.send_signal(signal.SIGUSR1)
         cs.wait()
+        if kppc.settings.General.Progressbar:
+            progress._destroy()

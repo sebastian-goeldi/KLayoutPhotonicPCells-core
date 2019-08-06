@@ -22,7 +22,7 @@ namespace drclean
 CleanerSlave::CleanerSlave()
 {
     segment = new bi::managed_shared_memory(bi::open_only, "DRCleanEngine");
-
+    
     std::cout<< "Initializing" << std::endl;
 
     alloc_inst = new ShmemAllocatorInt(segment->get_segment_manager());
@@ -32,10 +32,43 @@ CleanerSlave::CleanerSlave()
 
     input = segment->find<ShIVector>("input").first;
     outList = segment->find<ShIVector>("outList").first;
-//        imList = segment->find<ShIVector>("imList").first;
 
     mux_inp = new bi::named_mutex(bi::open_only, "mux_inp");
     mux_out = new bi::named_mutex(bi::open_only, "mux_out");
+
+    pool = new boost::asio::thread_pool(boost::thread::hardware_concurrency());
+
+    if (input)
+    {
+        initialized = true;
+    }
+}
+
+CleanerSlave::CleanerSlave(int nthreads)
+{
+    segment = new bi::managed_shared_memory(bi::open_only, "DRCleanEngine");
+    
+    std::cout<< "Initializing" << std::endl;
+
+    alloc_inst = new ShmemAllocatorInt(segment->get_segment_manager());
+    alloc_vec = new ShmemAllocatorIVec(segment->get_segment_manager());
+    alloc_pvec = new ShmemAllocatorPVec(segment->get_segment_manager());
+    alloc_poly = new ShmemAllocatorPair(segment->get_segment_manager());
+
+    input = segment->find<ShIVector>("input").first;
+    outList = segment->find<ShIVector>("outList").first;
+
+    mux_inp = new bi::named_mutex(bi::open_only, "mux_inp");
+    mux_out = new bi::named_mutex(bi::open_only, "mux_out");
+    
+    uint n = nthreads;
+    
+    if(n < 1)
+    {
+        n = 1;
+    } else if (n >  boost::thread::hardware_concurrency()) {
+        n = boost::thread::hardware_concurrency();
+    }
 
     pool = new boost::asio::thread_pool(boost::thread::hardware_concurrency());
 

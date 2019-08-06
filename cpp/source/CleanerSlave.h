@@ -68,6 +68,7 @@ class CleanerSlave
 
 public:
     CleanerSlave();
+    CleanerSlave(int nthreads);
     virtual ~CleanerSlave();
     bool initialized = false;
     void clean();
