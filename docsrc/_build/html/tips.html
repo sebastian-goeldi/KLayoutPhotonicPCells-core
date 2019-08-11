@@ -1,11 +1,12 @@
 
-<!DOCTYPE html>
+
+<!doctype html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
     <title>Tips &amp; Tricks &#8212; KLayout Photonic PCells 1.0.5 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -13,11 +14,15 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="C++ Source Code" href="sourcecodes.html" />
-    <link rel="prev" title="Example: Create Sample Library" href="photonics/example_library.html" /> 
+    <link rel="prev" title="Example: Create Sample Library" href="photonics/example_library.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -36,26 +41,7 @@
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">KLayout Photonic PCells 1.0.5 documentation</a> &#187;</li> 
       </ul>
-    </div>  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="tips-tricks">
-<h1>Tips &amp; Tricks<a class="headerlink" href="#tips-tricks" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="variable-names-in-klayout-python">
-<h2>Variable Names in KLayout Python<a class="headerlink" href="#variable-names-in-klayout-python" title="Permalink to this headline">¶</a></h2>
-<p>When using global variables in pymacros (scripts like cell libraries) be careful. Namespace is shared between macros. This means when for example defining the names of metal layers in two cells, one can overwrite the other one.
-Therefore the use of global variables is not advised and the use of a wrapper class is recommended instead. It can be defined in the same wrapper class used for defining layernames and cleaning information, for example.</p>
-</div>
-</div>
-
-
-          </div>
-        </div>
-      </div>
+    </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table of Contents</a></h3>
@@ -89,6 +75,25 @@ Therefore the use of global variables is not advised and the use of a wrapper cl
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tips-tricks">
+<h1>Tips &amp; Tricks<a class="headerlink" href="#tips-tricks" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="variable-names-in-klayout-python">
+<h2>Variable Names in KLayout Python<a class="headerlink" href="#variable-names-in-klayout-python" title="Permalink to this headline">¶</a></h2>
+<p>When using global variables in pymacros (scripts like cell libraries) be careful. Namespace is shared between macros. This means when for example defining the names of metal layers in two cells, one can overwrite the other one.
+Therefore the use of global variables is not advised and the use of a wrapper class is recommended instead. It can be defined in the same wrapper class used for defining layernames and cleaning information, for example.</p>
+</div>
+</div>
+
+
+          </div>
         </div>
       </div>
       <div class="clearer"></div>

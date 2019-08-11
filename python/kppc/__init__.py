@@ -3,6 +3,7 @@ from pathlib import Path
 import logging
 import logging.handlers
 
+
 class JSONObject:
     def __init__(self, dic):
         vars(self).update(dic)

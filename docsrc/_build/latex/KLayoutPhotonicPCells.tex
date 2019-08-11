@@ -2066,37 +2066,49 @@ the constraints for the DR-Cleaning. So let’s define a helper class that all o
 
 \begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=9,stepnumber=1]
 \PYG{k}{class} \PYG{n+nc}{FreePDK45Example}\PYG{p}{(}\PYG{n}{PhotDevice}\PYG{p}{)}\PYG{p}{:}
-    \PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}Class that provides technology specific data. Currently the backend needs 3 things to be supplied by the technology of the PCells.}
-\PYG{l+s+sd}{    As these are independent of specific PCells and parameters this should not give any difficulty with the requirement of Klayout to have the Classes stateless.}
+    \PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}Class that provides technology specific data. Currently the backend needs 3 things to be supplied by}
+\PYG{l+s+sd}{    the technology of the PCells.}
+\PYG{l+s+sd}{    As these are independent of specific PCells and parameters this should not give any difficulty with the requirement}
+\PYG{l+s+sd}{    of Klayout to have the Classes stateless.}
 
 \PYG{l+s+sd}{    The layermap was created from a forum suggestion}
-\PYG{l+s+sd}{        ({}`Post \PYGZlt{}https://community.cadence.com/cadence\PYGZus{}technology\PYGZus{}forums/f/custom\PYGZhy{}ic\PYGZhy{}design/37021/layer\PYGZhy{}map\PYGZhy{}file\PYGZhy{}for\PYGZhy{}gds\PYGZhy{}transfer\PYGZhy{}to\PYGZhy{}virtuoso\PYGZgt{}{}` ) and then some layers were added by hand.}
+\PYG{l+s+sd}{        ({}`Post \PYGZlt{}https://community.cadence.com/cadence\PYGZus{}technology\PYGZus{}forums/f/custom\PYGZhy{}ic\PYGZhy{}design/37021/}
+\PYG{l+s+sd}{        layer\PYGZhy{}map\PYGZhy{}file\PYGZhy{}for\PYGZhy{}gds\PYGZhy{}transfer\PYGZhy{}to\PYGZhy{}virtuoso\PYGZgt{}{}` ) and then some layers were added by hand.}
 
-\PYG{l+s+sd}{        layermap:       A dictionary containing layers with available purposes, which provide a layer/purpose. This is loaded from a .layermap file.}
-\PYG{l+s+sd}{                        Example of this FreePDK45:}
-\PYG{l+s+sd}{                            \PYGZob{}\PYGZsq{}active\PYGZsq{}: \PYGZob{}\PYGZsq{}blockage\PYGZsq{}: (1, 1), \PYGZsq{}drawing\PYGZsq{}: (1, 0)\PYGZcb{}, \PYGZsq{}pwell\PYGZsq{}: \PYGZob{}\PYGZsq{}blockage\PYGZsq{}: (2, 1), \PYGZsq{}drawing\PYGZsq{}: (2, 0)\PYGZcb{},...\PYGZcb{}}
+\PYG{l+s+sd}{        layermap:       A dictionary containing layers with available purposes, which provide a layer/purpose. This is}
+\PYG{l+s+sd}{            loaded from a .layermap file.}
+\PYG{l+s+sd}{            Example of this FreePDK45:}
+\PYG{l+s+sd}{                \PYGZob{}\PYGZsq{}active\PYGZsq{}: \PYGZob{}\PYGZsq{}blockage\PYGZsq{}: (1, 1), \PYGZsq{}drawing\PYGZsq{}: (1, 0)\PYGZcb{},}
+\PYG{l+s+sd}{                \PYGZsq{}pwell\PYGZsq{}: \PYGZob{}\PYGZsq{}blockage\PYGZsq{}: (2, 1), \PYGZsq{}drawing\PYGZsq{}: (2, 0)\PYGZcb{},...\PYGZcb{}}
 
-\PYG{l+s+sd}{        :ivar dataprep\PYGZus{}config: Filepath to a text file containing rules for dataprep. This file contains rules for the dataprep.}
-\PYG{l+s+sd}{                        Copied from the example dataprep.txt:}
-\PYG{l+s+sd}{                        File Format:}
-\PYG{l+s+sd}{                        File defining operations for dataprep}
-\PYG{l+s+sd}{                        Format:}
-\PYG{l+s+sd}{                        \PYGZlt{}operation\PYGZgt{} \PYGZlt{}source layers\PYGZgt{} \PYGZlt{}destination layers\PYGZgt{} \PYGZlt{}sizing amount in microns\PYGZgt{}}
-\PYG{l+s+sd}{                        Operations supported: add,sub}
-\PYG{l+s+sd}{                            * add: Create a region from all shapes of the source layers and combine this region with each destion layer region separately}
-\PYG{l+s+sd}{                            * sub: Same as add but don\PYGZsq{}t build combination but cross\PYGZhy{}section instead}
-\PYG{l+s+sd}{                        Sizing amount uses the klayout sizing operation to size the regions of the source layers}
-\PYG{l+s+sd}{                        During dataprep the regions are merged, meaning overlapping polygons will become one Polygon}
-\PYG{l+s+sd}{                        source/destination layers are separated by commas if there are multiple}
-\PYG{l+s+sd}{                        Each argument is separated by white spaces. How many should not matter as they will be parsed by a python str.split() operation which should be able to handle any white space amount.}
-\PYG{l+s+sd}{                        If the first word of a line is not a supported operation the line will be ignored}
-\PYG{l+s+sd}{                        The lines will be executed in order meaning and add sub operations on layers will be different than a first sub and then add}
-\PYG{l+s+sd}{                        :Examples:}
-\PYG{l+s+sd}{                            active.blockage,poly.blockage,metal1.blockage,metal2.blockage,metal3.blockage,metal4.blockage,metal5.blockage,nwell.drawing,nimplant.drawing 2.0}
+\PYG{l+s+sd}{        :ivar dataprep\PYGZus{}config: Filepath to a text file containing rules for dataprep. This file contains rules for}
+\PYG{l+s+sd}{        the dataprep.}
+\PYG{l+s+sd}{            Copied from the example dataprep.txt:}
+\PYG{l+s+sd}{            File Format:}
+\PYG{l+s+sd}{            File defining operations for dataprep}
+\PYG{l+s+sd}{            Format:}
+\PYG{l+s+sd}{            \PYGZlt{}operation\PYGZgt{} \PYGZlt{}source layers\PYGZgt{} \PYGZlt{}destination layers\PYGZgt{} \PYGZlt{}sizing amount in microns\PYGZgt{}}
+\PYG{l+s+sd}{            Operations supported: add,sub}
+\PYG{l+s+sd}{                * add: Create a region from all shapes of the source layers and combine this region with each}
+\PYG{l+s+sd}{                    destination layer region separately}
+\PYG{l+s+sd}{                * sub: Same as add but don\PYGZsq{}t build combination but cross\PYGZhy{}section instead}
+\PYG{l+s+sd}{                    Sizing amount uses the klayout sizing operation to size the regions of the source layers}
+\PYG{l+s+sd}{                    During dataprep the regions are merged, meaning overlapping polygons will become one Polygon}
+\PYG{l+s+sd}{                    source/destination layers are separated by commas if there are multiple}
+\PYG{l+s+sd}{                    Each argument is separated by white spaces. How many should not matter as they will be parsed by a}
+\PYG{l+s+sd}{                    python str.split() operation which should be able to handle any white space amount.}
+\PYG{l+s+sd}{                    If the first word of a line is not a supported operation the line will be ignored}
+\PYG{l+s+sd}{                    The lines will be executed in order meaning and add sub operations on layers will be different than}
+\PYG{l+s+sd}{                    a first sub and then add.}
+\PYG{l+s+sd}{                :Examples:}
+\PYG{l+s+sd}{                    add active.blockage,poly.blockage,metal1.blockage,metal2.blockage,metal3.blockage,metal4.blockage,}
+\PYG{l+s+sd}{                    metal5.blockage nwell.drawing,nimplant.drawing 2.0}
 
-\PYG{l+s+sd}{        :ivar clean\PYGZus{}rules:     list containing the layer/purpose numbers and the minWidth/minSpacing rules for the layer/purpose pair in microns}
-\PYG{l+s+sd}{                        :Examples:}
-\PYG{l+s+sd}{                            [[(1, 0), 0.097, 0.077],[(2, 0), 0.23, 0.189],[(3, 0), 0.169, 0.196],[(5, 0), 0.044, 0.052], ...]}
+\PYG{l+s+sd}{        :ivar clean\PYGZus{}rules:     list containing the layer/purpose numbers and the minWidth/minSpacing rules for}
+\PYG{l+s+sd}{        the layer/purpose pair in microns}
+\PYG{l+s+sd}{        :Examples:}
+\PYG{l+s+sd}{            [[(1, 0), 0.097, 0.077],[(2, 0), 0.23, 0.189],[(3, 0), 0.169, 0.196],}
+\PYG{l+s+sd}{            [(5, 0), 0.044, 0.052], ...]}
 \PYG{l+s+sd}{        \PYGZdq{}\PYGZdq{}\PYGZdq{}}
 
     \PYG{c+c1}{\PYGZsh{} Define the metals \PYGZam{} via names. They will be used in some PCells (Electrodes and ViaStack)}
@@ -2116,7 +2128,8 @@ the constraints for the DR-Cleaning. So let’s define a helper class that all o
         \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{isfile}\PYG{p}{:}
             \PYG{k+kn}{import} \PYG{n+nn}{sys}
             \PYG{n}{msg} \PYG{o}{=} \PYG{n}{pya}\PYG{o}{.}\PYG{n}{QMessageBox}\PYG{p}{(}\PYG{n}{pya}\PYG{o}{.}\PYG{n}{Application}\PYG{o}{.}\PYG{n}{instance}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{main\PYGZus{}window}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
-            \PYG{n}{msg}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please import the techfile of the technology to \PYGZob{}\PYGZcb{} before using the module and reopen KLayout}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{)}
+            \PYG{n}{msg}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please import the techfile of the technology to \PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o}{+} \PYGZbs{}
+                    \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ before using the module and reopen KLayout}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{)}
             \PYG{n}{msg}\PYG{o}{.}\PYG{n}{windowTitle} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ImportError}\PYG{l+s+s1}{\PYGZsq{}}
             \PYG{n}{msg}\PYG{o}{.}\PYG{n}{exec\PYGZus{}}\PYG{p}{(}\PYG{p}{)}
 
@@ -2130,74 +2143,87 @@ the constraints for the DR-Cleaning. So let’s define a helper class that all o
         \PYG{c+c1}{\PYGZsh{} CAREFUL: Will be imported for dataprep}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{dataprep\PYGZus{}config} \PYG{o}{=} \PYG{n}{techpath} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{/dataprep.txt}\PYG{l+s+s1}{\PYGZsq{}}
 
-        \PYG{c+c1}{\PYGZsh{} Rules for the cleaner in the form [[(layer1,purpose1),violation\PYGZus{}width1,violation\PYGZus{}space1],[(layer2,purpose2),violation\PYGZus{}width2,violation\PYGZus{}space2],...]}
-        \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} CAREFUL: This variable will be imported for the cleaning.}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{clean\PYGZus{}rules} \PYG{o}{=} \PYG{p}{[}\PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.111}\PYG{p}{,} \PYG{l+m+mf}{0.085}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.23}\PYG{p}{,} \PYG{l+m+mf}{0.188}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.14}\PYG{p}{,} \PYG{l+m+mf}{0.199}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.044}\PYG{p}{,} \PYG{l+m+mf}{0.049}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.046}\PYG{p}{,} \PYG{l+m+mf}{0.052}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.044}\PYG{p}{,} \PYG{l+m+mf}{0.062}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{11}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.076}\PYG{p}{,} \PYG{l+m+mf}{0.077}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{13}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.073}\PYG{p}{,} \PYG{l+m+mf}{0.089}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{15}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.067}\PYG{p}{,} \PYG{l+m+mf}{0.063}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{17}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.143}\PYG{p}{,} \PYG{l+m+mf}{0.137}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{19}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.158}\PYG{p}{,} \PYG{l+m+mf}{0.14}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{21}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.145}\PYG{p}{,} \PYG{l+m+mf}{0.123}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{23}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.514}\PYG{p}{,} \PYG{l+m+mf}{0.535}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{25}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.369}\PYG{p}{,} \PYG{l+m+mf}{0.311}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{27}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.908}\PYG{p}{,} \PYG{l+m+mf}{0.843}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{29}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.347}\PYG{p}{,} \PYG{l+m+mf}{0.771}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.247}\PYG{p}{,} \PYG{l+m+mf}{1.254}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.976}\PYG{p}{,} \PYG{l+m+mf}{0.905}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.165}\PYG{p}{,} \PYG{l+m+mf}{1.304}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.073}\PYG{p}{,} \PYG{l+m+mf}{0.958}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.058}\PYG{p}{,} \PYG{l+m+mf}{0.885}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.892}\PYG{p}{,} \PYG{l+m+mf}{0.825}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{11}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.003}\PYG{p}{,} \PYG{l+m+mf}{0.682}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{13}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.983}\PYG{p}{,} \PYG{l+m+mf}{0.73}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{15}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.086}\PYG{p}{,} \PYG{l+m+mf}{0.993}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{17}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.12}\PYG{p}{,} \PYG{l+m+mf}{0.812}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{19}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.941}\PYG{p}{,} \PYG{l+m+mf}{0.765}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{21}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.942}\PYG{p}{,} \PYG{l+m+mf}{0.889}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{23}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.044}\PYG{p}{,} \PYG{l+m+mf}{0.933}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{25}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.096}\PYG{p}{,} \PYG{l+m+mf}{1.039}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{27}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.798}\PYG{p}{,} \PYG{l+m+mf}{0.937}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{29}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.001}\PYG{p}{,} \PYG{l+m+mf}{1.286}\PYG{p}{]}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} Rules for the cleaner in the form [[(layer1,purpose1),violation\PYGZus{}width1,violation\PYGZus{}space1],[(layer2,}
+        \PYG{c+c1}{\PYGZsh{} purpose2),violation\PYGZus{}width2,violation\PYGZus{}space2],...]}
+        \PYG{c+c1}{\PYGZsh{} \PYGZsh{}\PYGZsh{} CAREFUL: This variable will be imported for the cleaning.}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{clean\PYGZus{}rules} \PYG{o}{=} \PYG{p}{[}\PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.111}\PYG{p}{,} \PYG{l+m+mf}{0.085}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.23}\PYG{p}{,} \PYG{l+m+mf}{0.188}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.14}\PYG{p}{,} \PYG{l+m+mf}{0.199}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.044}\PYG{p}{,} \PYG{l+m+mf}{0.049}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.046}\PYG{p}{,} \PYG{l+m+mf}{0.052}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.044}\PYG{p}{,} \PYG{l+m+mf}{0.062}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{11}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.076}\PYG{p}{,} \PYG{l+m+mf}{0.077}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{13}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.073}\PYG{p}{,} \PYG{l+m+mf}{0.089}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{15}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.067}\PYG{p}{,} \PYG{l+m+mf}{0.063}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{17}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.143}\PYG{p}{,} \PYG{l+m+mf}{0.137}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{19}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.158}\PYG{p}{,} \PYG{l+m+mf}{0.14}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{21}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.145}\PYG{p}{,} \PYG{l+m+mf}{0.123}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{23}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.514}\PYG{p}{,} \PYG{l+m+mf}{0.535}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{25}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.369}\PYG{p}{,} \PYG{l+m+mf}{0.311}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{27}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.908}\PYG{p}{,} \PYG{l+m+mf}{0.843}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{29}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.347}\PYG{p}{,} \PYG{l+m+mf}{0.771}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.247}\PYG{p}{,} \PYG{l+m+mf}{1.254}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.976}\PYG{p}{,} \PYG{l+m+mf}{0.905}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.165}\PYG{p}{,} \PYG{l+m+mf}{1.304}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.073}\PYG{p}{,} \PYG{l+m+mf}{0.958}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.058}\PYG{p}{,} \PYG{l+m+mf}{0.885}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.892}\PYG{p}{,} \PYG{l+m+mf}{0.825}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{11}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.003}\PYG{p}{,} \PYG{l+m+mf}{0.682}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{13}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.983}\PYG{p}{,} \PYG{l+m+mf}{0.73}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{15}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.086}\PYG{p}{,} \PYG{l+m+mf}{0.993}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{17}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.12}\PYG{p}{,} \PYG{l+m+mf}{0.812}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{19}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.941}\PYG{p}{,} \PYG{l+m+mf}{0.765}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{21}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.942}\PYG{p}{,} \PYG{l+m+mf}{0.889}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{23}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.044}\PYG{p}{,} \PYG{l+m+mf}{0.933}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{25}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.096}\PYG{p}{,} \PYG{l+m+mf}{1.039}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{27}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{0.798}\PYG{p}{,} \PYG{l+m+mf}{0.937}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{p}{(}\PYG{l+m+mi}{29}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mf}{1.001}\PYG{p}{,} \PYG{l+m+mf}{1.286}\PYG{p}{]}\PYG{p}{]}
 \end{sphinxVerbatim}
 
 This is our basic class. Now let’s create two basic PCells. First a linear taper and second a box. A box combined
 with 4 tapers will build a 2x2 MMI. To connect them we will use ports. The liner taper will have two ports, one on
 each side. The box will have four ports and each port of the box is the same size as the big part of the taper.
 
-\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=86,stepnumber=1]
+\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=109,stepnumber=1]
 \PYG{k}{class} \PYG{n+nc}{ExMMIBody}\PYG{p}{(}\PYG{n}{FreePDK45Example}\PYG{p}{)}\PYG{p}{:}
     \PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}MMI Body. Since this should be a 2x2 MMI it will have 4 ports}
 \PYG{l+s+sd}{    \PYGZdq{}\PYGZdq{}\PYGZdq{}}
 
     \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{FreePDK45Example}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}layer}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{lay}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{active.drawing}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
-        \PYG{c+c1}{\PYGZsh{} Important: If it should be a floating point parameter, use x.0 instead of x for default values that fall on integers, or it will be interpreted as integer}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}layer}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{lay}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{phot\PYGZus{}silicon.drawing}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} Important: If it should be a floating point parameter, use x.0 instead of x for default values that fall on}
+        \PYG{c+c1}{\PYGZsh{} integers, or it will be interpreted as integer}
         \PYG{n}{params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{length}\PYG{o}{=}\PYG{l+m+mf}{15.}\PYG{p}{,}
                     \PYG{n}{width}\PYG{o}{=}\PYG{l+m+mf}{5.}\PYG{p}{,}
                     \PYG{n}{port\PYGZus{}offset}\PYG{o}{=}\PYG{l+m+mf}{1.5}\PYG{p}{,}
-                    \PYG{n}{port\PYGZus{}width} \PYG{o}{=}\PYG{l+m+mf}{1.0}
+                    \PYG{n}{port\PYGZus{}width}\PYG{o}{=}\PYG{l+m+mf}{1.0}
                     \PYG{p}{)}
         \PYG{c+c1}{\PYGZsh{} Register the parameters}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}params}\PYG{p}{(}\PYG{n}{params}\PYG{p}{)}
 
     \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}param\PYGZus{}inst}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{c+c1}{\PYGZsh{} Create Ports here}
-        \PYG{n}{ports} \PYG{o}{=} \PYG{p}{[}\PYG{n}{PortCreation}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{180}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{,}
-                \PYG{n}{PortCreation}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{180}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{,}
-                \PYG{n}{PortCreation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{,}
-                \PYG{n}{PortCreation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{]}
+        \PYG{n}{ports} \PYG{o}{=} \PYG{p}{[}\PYG{n}{PortCreation}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{180}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{,}
+                \PYG{n}{PortCreation}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{180}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{,}
+                \PYG{n}{PortCreation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{,}
+                \PYG{n}{PortCreation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}offset}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{port\PYGZus{}width}\PYG{p}{)}\PYG{p}{]}
         \PYG{k}{return} \PYG{n}{ports}
 
     \PYG{k}{def} \PYG{n+nf}{shapes}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
-        \PYG{c+c1}{\PYGZsh{}Create the Rectangle}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{create\PYGZus{}polygon}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{lay}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} Create the Rectangle}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{create\PYGZus{}polygon}\PYG{p}{(}
+            \PYG{p}{[}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{lay}\PYG{p}{)}
+
 
 \PYG{k}{class} \PYG{n+nc}{ExLinTaper}\PYG{p}{(}\PYG{n}{FreePDK45Example}\PYG{p}{)}\PYG{p}{:}
 
     \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{FreePDK45Example}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}layer}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{lay}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{active.drawing}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
-        \PYG{n}{params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{width\PYGZus{}0} \PYG{o}{=} \PYG{o}{.}\PYG{l+m+mi}{5}\PYG{p}{,}
-                    \PYG{n}{width\PYGZus{}1} \PYG{o}{=} \PYG{l+m+mf}{1.0}\PYG{p}{,}
-                    \PYG{n}{length} \PYG{o}{=} \PYG{l+m+mf}{2.0}\PYG{p}{,}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}layer}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{lay}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{phot\PYGZus{}silicon.drawing}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+        \PYG{n}{params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{width\PYGZus{}0}\PYG{o}{=}\PYG{o}{.}\PYG{l+m+mi}{5}\PYG{p}{,}
+                    \PYG{n}{width\PYGZus{}1}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{,}
+                    \PYG{n}{length}\PYG{o}{=}\PYG{l+m+mf}{2.0}\PYG{p}{,}
                     \PYG{p}{)}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}params}\PYG{p}{(}\PYG{n}{params}\PYG{p}{)}
 
     \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}param\PYGZus{}inst}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{c+c1}{\PYGZsh{} Create left and right port}
-        \PYG{n}{port\PYGZus{}0} \PYG{o}{=} \PYG{n}{PortCreation}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{180}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}0}\PYG{p}{)}
-        \PYG{n}{port\PYGZus{}1} \PYG{o}{=} \PYG{n}{PortCreation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}1}\PYG{p}{)}
-        \PYG{k}{return} \PYG{n}{port\PYGZus{}0}\PYG{p}{,}\PYG{n}{port\PYGZus{}1}
+        \PYG{n}{port\PYGZus{}0} \PYG{o}{=} \PYG{n}{PortCreation}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{180}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}0}\PYG{p}{)}
+        \PYG{n}{port\PYGZus{}1} \PYG{o}{=} \PYG{n}{PortCreation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}1}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{port\PYGZus{}0}\PYG{p}{,} \PYG{n}{port\PYGZus{}1}
 
     \PYG{k}{def} \PYG{n+nf}{shapes}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{c+c1}{\PYGZsh{} Create taper polygon}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{create\PYGZus{}polygon}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}0}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}0}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}1}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}
-                            \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}1}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}\PYG{p}{]}\PYG{p}{,}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{create\PYGZus{}polygon}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}0} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}0} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}1} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,}
+                            \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width\PYGZus{}1} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{,} \PYG{p}{]}\PYG{p}{,}
                             \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{lay}\PYG{p}{)}
 \end{sphinxVerbatim}
 
@@ -2208,7 +2234,7 @@ If we only declare one {\hyperref[\detokenize{photonics/photonics:kppc.photonics
 Now let’s declare the MMI. In it we will create 4 instances of tapers and one box and then connect the tapers to
 the box.
 
-\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=139,stepnumber=1]
+\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=167,stepnumber=1]
 \PYG{k}{class} \PYG{n+nc}{Ex2x2MMI}\PYG{p}{(}\PYG{n}{FreePDK45Example}\PYG{p}{)}\PYG{p}{:}
     \PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}The MMI\PYGZhy{}cell class.}
 \PYG{l+s+sd}{    This class instantiates a body with 4 tapers and attaches the tapers to the the body.}
@@ -2216,7 +2242,7 @@ the box.
 
     \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{FreePDK45Example}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}layer}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{lay}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{active.drawing}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}layer}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{lay}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{phot\PYGZus{}silicon.drawing}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
         \PYG{n}{params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{wg\PYGZus{}width}\PYG{o}{=}\PYG{o}{.}\PYG{l+m+mi}{5}\PYG{p}{,}
                     \PYG{n}{length}\PYG{o}{=}\PYG{l+m+mf}{15.0}\PYG{p}{,}
                     \PYG{n}{taper\PYGZus{}width}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{,}
@@ -2233,51 +2259,51 @@ the box.
         \PYG{n}{tapername} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{LinearTaper}\PYG{l+s+s2}{\PYGZdq{}}
 
         \PYG{c+c1}{\PYGZsh{} Parameters used for the 4\PYGZhy{}port body}
-        \PYG{n}{body\PYGZus{}params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{lib} \PYG{o}{=} \PYG{n}{lib}\PYG{p}{,}
-                            \PYG{n}{cellname} \PYG{o}{=} \PYG{n}{bodyname}\PYG{p}{,}
-                            \PYG{n}{width}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width}\PYG{p}{,}
-                            \PYG{n}{length}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{p}{,}
-                            \PYG{n}{port\PYGZus{}offset}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{taper\PYGZus{}offset}\PYG{p}{,}
-                            \PYG{n}{port\PYGZus{}width} \PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{taper\PYGZus{}width}\PYG{p}{,}
-                            \PYG{p}{)}
+        \PYG{n}{body\PYGZus{}params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{lib}\PYG{o}{=}\PYG{n}{lib}\PYG{p}{,}
+                        \PYG{n}{cellname}\PYG{o}{=}\PYG{n}{bodyname}\PYG{p}{,}
+                        \PYG{n}{width}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{width}\PYG{p}{,}
+                        \PYG{n}{length}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{length}\PYG{p}{,}
+                        \PYG{n}{port\PYGZus{}offset}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{taper\PYGZus{}offset}\PYG{p}{,}
+                        \PYG{n}{port\PYGZus{}width}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{taper\PYGZus{}width}\PYG{p}{,}
+                        \PYG{p}{)}
         \PYG{c+c1}{\PYGZsh{} Parameters for tapers}
-        \PYG{n}{taper\PYGZus{}params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{lib} \PYG{o}{=} \PYG{n}{lib}\PYG{p}{,}
-                            \PYG{n}{cellname} \PYG{o}{=} \PYG{n}{tapername}\PYG{p}{,}
+        \PYG{n}{taper\PYGZus{}params} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{lib}\PYG{o}{=}\PYG{n}{lib}\PYG{p}{,}
+                            \PYG{n}{cellname}\PYG{o}{=}\PYG{n}{tapername}\PYG{p}{,}
                             \PYG{n}{width\PYGZus{}0}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{wg\PYGZus{}width}\PYG{p}{,}
                             \PYG{n}{width\PYGZus{}1}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{taper\PYGZus{}width}\PYG{p}{,}
                             \PYG{n}{length}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{taper\PYGZus{}length}\PYG{p}{,}
                             \PYG{p}{)}
         \PYG{c+c1}{\PYGZsh{} Create constructors for tapers and body}
-        \PYG{n}{tapers} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}pcell\PYGZus{}variant}\PYG{p}{(}\PYG{n}{taper\PYGZus{}params}\PYG{p}{,}\PYG{n}{number}\PYG{o}{=}\PYG{l+m+mi}{4}\PYG{p}{)}
+        \PYG{n}{tapers} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}pcell\PYGZus{}variant}\PYG{p}{(}\PYG{n}{taper\PYGZus{}params}\PYG{p}{,} \PYG{n}{number}\PYG{o}{=}\PYG{l+m+mi}{4}\PYG{p}{)}
         \PYG{n}{body} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{add\PYGZus{}pcell\PYGZus{}variant}\PYG{p}{(}\PYG{n}{body\PYGZus{}params}\PYG{p}{)}
 
         \PYG{c+c1}{\PYGZsh{} Connect the ports}
         \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{)}\PYG{p}{:}
-            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{connect\PYGZus{}port\PYGZus{}to\PYGZus{}port}\PYG{p}{(}\PYG{n}{body}\PYG{o}{.}\PYG{n}{port}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{p}{,}\PYG{n}{tapers}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{port}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{connect\PYGZus{}port\PYGZus{}to\PYGZus{}port}\PYG{p}{(}\PYG{n}{body}\PYG{o}{.}\PYG{n}{port}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{p}{,} \PYG{n}{tapers}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{port}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}
 
         \PYG{c+c1}{\PYGZsh{} Return constructors}
-        \PYG{k}{return} \PYG{n}{tapers}\PYG{p}{,}\PYG{n}{body}
+        \PYG{k}{return} \PYG{n}{tapers}\PYG{p}{,} \PYG{n}{body}
 \end{sphinxVerbatim}
 
 Finally create the Library so that we can call it in KLayout:
 
-\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=188,stepnumber=1]
+\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=217,stepnumber=1]
 \PYG{k}{class} \PYG{n+nc}{FreePDK45\PYGZus{}ExampleLib}\PYG{p}{(}\PYG{n}{pya}\PYG{o}{.}\PYG{n}{Library}\PYG{p}{)}\PYG{p}{:}
     \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{c+c1}{\PYGZsh{} Set the description}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{description} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{FirstExample}\PYG{l+s+s2}{\PYGZdq{}}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{technology} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{FreePDK45}\PYG{l+s+s2}{\PYGZdq{}}
         \PYG{c+c1}{\PYGZsh{} Create the PCell declarations}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layout}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{register\PYGZus{}pcell}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{2x2MMI}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{Ex2x2MMI}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layout}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{register\PYGZus{}pcell}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{MMIBody}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{ExMMIBody}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layout}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{register\PYGZus{}pcell}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{LinearTaper}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{ExLinTaper}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layout}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{register\PYGZus{}pcell}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{2x2MMI}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Ex2x2MMI}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layout}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{register\PYGZus{}pcell}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{MMIBody}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ExMMIBody}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layout}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{register\PYGZus{}pcell}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{LinearTaper}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ExLinTaper}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
 
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{register}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{FreePDK45\PYGZus{}Photonic\PYGZus{}FirstExample}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
 \end{sphinxVerbatim}
 
 And finally make KLayout compile the PCell-Library and add it to the PCell-Libraries:
 
-\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=200,stepnumber=1]
+\begin{sphinxVerbatim}[commandchars=\\\{\},numbers=left,firstnumber=230,stepnumber=1]
 \PYG{c+c1}{\PYGZsh{} Instantiate and register the library}
 \PYG{n}{FreePDK45\PYGZus{}ExampleLib}\PYG{p}{(}\PYG{p}{)}
 \end{sphinxVerbatim}
