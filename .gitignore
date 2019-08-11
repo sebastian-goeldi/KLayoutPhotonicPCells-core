@@ -134,3 +134,7 @@ dmypy.json
 
 # KDevelop4
 *.kdev4
+
+# Log Files
+*.log
+*.log.*

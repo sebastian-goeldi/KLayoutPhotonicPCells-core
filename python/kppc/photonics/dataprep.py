@@ -119,7 +119,7 @@ def dataprep(in_cell, layout, out_cell=None, config=None, layers_org=None):
         return
     layers = {}
 
-    if kppc.settings.qtprogress:
+    if kppc.settings.General.Progressbar:
         l = file_len(config)
         progress = pya.RelativeProgress('Layermapping from abstract to Foundry Layers', l)
 
@@ -135,6 +135,8 @@ def dataprep(in_cell, layout, out_cell=None, config=None, layers_org=None):
     def _sub(slayers, dlayers, amount=0, layers=layers):
         sub(layout, in_cell, slayers, dlayers, amount, layers, out_cell)
 
+    count = 0
+
     # process the config file
     with open(config, 'r') as df:
         for line in df:
@@ -145,17 +147,19 @@ def dataprep(in_cell, layout, out_cell=None, config=None, layers_org=None):
                     amount = float(strings[3])
                 else:
                     amount = 0
-                progress.format = 'Subtracting Layer(s) {} from Layer {}'.format(strings[1].split(','),
+                progress.format = 'Adding Layer(s) {} to Layer {}'.format(strings[1].split(','),
                                                                                  strings[2].split(','))
                 _add(strings[1].split(','), strings[2].split(','), amount)
                 progress.inc()
-            if strings[0] == 'sub':
+            elif strings[0] == 'sub':
                 if len(strings) == 4:
                     amount = float(strings[3])
                 else:
                     amount = 0
-                progress.format = 'Subtracting Layer {} from Layer {}'.format(strings[1].split(','),
+                progress.format = 'Subtracting Layer(s) {} from Layer {}'.format(strings[1].split(','),
                                                                               strings[2].split(','))
                 _sub(strings[1].split(','), strings[2].split(','), amount)
+                progress.inc()
+            else:
                 progress.inc()
     progress._destroy()

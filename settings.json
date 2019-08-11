@@ -1,10 +1,38 @@
 {
     "General": {
-        "Progressbar": true
+        "Progressbar": true,
+        "_Progressbar_DESC": "Show progressbars while calculating"
     },
     "Multithreading": {
         "Enabled": true,
+        "_Enabled_DESC": "Multi Threading (KPPC will create its own process which does the cleaning)",
         "Automatic": true,
-        "Threads": 4
+        "_Automatic_DESC": "Automatically set number of threads to number of CPU cores",
+        "Threads": 32,
+        "_Threads_DESC": "Number of threads to use if Automatic is disabled",
+        "_Threads_MIN": 1,
+        "_Threads_MAX": 32
+    },
+    "Logging": {
+        "Enabled": true,
+        "_Enabled_DESC": "Enable Logging to File and Stream (Console)",
+        "_StreamLevel_DESC": "Log Level of Stream (Console)",
+        "StreamLevel": [
+            2,
+            "DEBUG",
+            "INFO",
+            "WARNING",
+            "ERROR",
+            "CRITICAL"
+        ],
+        "_LogfileLevel_DESC": "Log Level for File Logging",
+        "LogfileLevel": [
+            0,
+            "DEBUG",
+            "INFO",
+            "WARNING",
+            "ERROR",
+            "CRITICAL"
+        ]
     }
 }

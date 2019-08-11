@@ -61,7 +61,7 @@ CleanerSlave::CleanerSlave(int nthreads)
     mux_inp = new bi::named_mutex(bi::open_only, "mux_inp");
     mux_out = new bi::named_mutex(bi::open_only, "mux_out");
     
-    uint n = nthreads;
+    int n = nthreads;
     
     if(n < 1)
     {
@@ -70,7 +70,7 @@ CleanerSlave::CleanerSlave(int nthreads)
         n = boost::thread::hardware_concurrency();
     }
 
-    pool = new boost::asio::thread_pool(boost::thread::hardware_concurrency());
+    pool = new boost::asio::thread_pool(n);
 
     if (input)
     {

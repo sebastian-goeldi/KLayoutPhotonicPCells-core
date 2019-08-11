@@ -1,0 +1,123 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+\let\spxpagem \sphinxstyleindexpagemain
+\let\spxentry \sphinxstyleindexentry
+\let\spxextra \sphinxstyleindexextra
+
+  \bigletter A
+  \item \spxentry{add()}\spxextra{in module kppc.photonics.dataprep}, \hyperpage{24}
+  \item \spxentry{add\_edge()}\spxextra{kppc.drc.PyCleanerMaster method}, \hyperpage{16}
+  \item \spxentry{add\_layer()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{20}
+  \item \spxentry{add\_params()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{20}
+  \item \spxentry{add\_pcell\_variant()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{20}
+  \item \spxentry{add\_pcells()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{20}
+
+  \indexspace
+  \bigletter C
+  \item \spxentry{calculate\_ports()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{20}
+  \item \spxentry{clean()}\spxextra{in module kppc.drc}, \hyperpage{13}
+  \item \spxentry{clean()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, \hyperpage{14}
+  \item \spxentry{clean\_space()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, 
+		\hyperpage{14}
+  \item \spxentry{clean\_width()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, 
+		\hyperpage{14}
+  \item \spxentry{CleanerMaster}\spxextra{C++ class}, \hyperpage{17}
+  \item \spxentry{CleanerMaster::add\_edge}\spxextra{C++ function}, \hyperpage{17}
+  \item \spxentry{CleanerMaster::CleanerMaster}\spxextra{C++ function}, \hyperpage{17}
+  \item \spxentry{CleanerMaster::done}\spxextra{C++ function}, \hyperpage{17}
+  \item \spxentry{CleanerMaster::get\_layer}\spxextra{C++ function}, \hyperpage{17}
+  \item \spxentry{CleanerMaster::get\_polygons}\spxextra{C++ function}, \hyperpage{17}
+  \item \spxentry{CleanerMaster::set\_box}\spxextra{C++ function}, \hyperpage{17}
+  \item \spxentry{CleanerSlave}\spxextra{C++ class}, \hyperpage{17}
+  \item \spxentry{CleanerSlave::clean}\spxextra{C++ member}, \hyperpage{17}
+  \item \spxentry{CleanerSlave::CleanerSlave}\spxextra{C++ member}, \hyperpage{17}
+  \item \spxentry{CleanerSlave::join\_threads}\spxextra{C++ member}, \hyperpage{18}
+  \item \spxentry{clear\_ports()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{21}
+  \item \spxentry{coerce\_parameters\_impl()}\spxextra{kppc.photonics.PhotDevice method}, 
+		\hyperpage{21}
+  \item \spxentry{connect\_port()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{21}
+  \item \spxentry{connect\_port\_to\_port()}\spxextra{kppc.photonics.PhotDevice method}, 
+		\hyperpage{21}
+  \item \spxentry{create\_param\_inst()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{21}
+  \item \spxentry{create\_path()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{21}
+  \item \spxentry{create\_polygon()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{22}
+  \item \spxentry{create\_port()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{22}
+
+  \indexspace
+  \bigletter D
+  \item \spxentry{dataprep()}\spxextra{in module kppc.photonics.dataprep}, \hyperpage{24}
+  \item \spxentry{decl()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{22}
+  \item \spxentry{done()}\spxextra{kppc.drc.PyCleanerMaster method}, \hyperpage{16}
+
+  \indexspace
+  \bigletter F
+  \item \spxentry{file\_len()}\spxextra{in module kppc.photonics.dataprep}, \hyperpage{25}
+  \item \spxentry{flip\_shape\_xaxis()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{22}
+  \item \spxentry{flip\_shape\_yaxis()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{22}
+
+  \indexspace
+  \bigletter G
+  \item \spxentry{get\_layer()}\spxextra{kppc.drc.PyCleanerMaster method}, \hyperpage{16}
+  \item \spxentry{get\_layer()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{22}
+  \item \spxentry{get\_row()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, \hyperpage{15}
+  \item \spxentry{get\_row\_types()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, 
+		\hyperpage{15}
+  \item \spxentry{get\_transformations()}\spxextra{kppc.photonics.PhotDevice method}, 
+		\hyperpage{23}
+
+  \indexspace
+  \bigletter I
+  \item \spxentry{init\_list()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, 
+		\hyperpage{14}
+  \item \spxentry{insert\_shape()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{23}
+  \item \spxentry{InstanceHolder}\spxextra{class in kppc.photonics}, \hyperpage{18}
+  \item \spxentry{is\_named\_tuple\_instance()}\spxextra{in module kppc.photonics}, \hyperpage{24}
+
+  \indexspace
+  \bigletter K
+  \item \spxentry{kppc.drc}\spxextra{module}, \hyperpage{13}
+  \item \spxentry{kppc.drc.slcleaner.PyDrcSl}\spxextra{class in kppc.drc}, \hyperpage{14}
+  \item \spxentry{kppc.photonics}\spxextra{module}, \hyperpage{18}
+  \item \spxentry{kppc.photonics.dataprep}\spxextra{module}, \hyperpage{24}
+  \item \spxentry{kppc.photonics.layermaps}\spxextra{module}, \hyperpage{25}
+
+  \indexspace
+  \bigletter L
+  \item \spxentry{load()}\spxextra{in module kppc.photonics.layermaps}, \hyperpage{25}
+
+  \indexspace
+  \bigletter M
+  \item \spxentry{move()}\spxextra{kppc.photonics.InstanceHolder method}, \hyperpage{19}
+  \item \spxentry{move\_instance()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{23}
+  \item \spxentry{multiprocessing\_clean()}\spxextra{in module kppc.drc}, \hyperpage{13}
+
+  \indexspace
+  \bigletter P
+  \item \spxentry{PhotDevice}\spxextra{class in kppc.photonics}, \hyperpage{19}
+  \item \spxentry{polygons()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, \hyperpage{15}
+  \item \spxentry{polygons()}\spxextra{kppc.drc.PyCleanerMaster method}, \hyperpage{16}
+  \item \spxentry{port()}\spxextra{kppc.photonics.InstanceHolder method}, \hyperpage{19}
+  \item \spxentry{port\_to\_port()}\spxextra{kppc.photonics.InstanceHolder method}, \hyperpage{19}
+  \item \spxentry{PortCreation}\spxextra{class in kppc.photonics}, \hyperpage{24}
+  \item \spxentry{printvector()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, 
+		\hyperpage{15}
+  \item \spxentry{produce\_impl()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{23}
+  \item \spxentry{PyCleanerMaster}\spxextra{class in kppc.drc}, \hyperpage{16}
+
+  \indexspace
+  \bigletter S
+  \item \spxentry{s()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, \hyperpage{15}
+  \item \spxentry{set\_box()}\spxextra{kppc.drc.PyCleanerMaster method}, \hyperpage{16}
+  \item \spxentry{set\_transformation()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{23}
+  \item \spxentry{shapes()}\spxextra{kppc.photonics.PhotDevice method}, \hyperpage{23}
+  \item \spxentry{sort()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, \hyperpage{15}
+  \item \spxentry{sub()}\spxextra{in module kppc.photonics.dataprep}, \hyperpage{25}
+  \item \spxentry{switch\_dimensions()}\spxextra{kppc.drc.kppc.drc.slcleaner.PyDrcSl method}, 
+		\hyperpage{15}
+
+  \indexspace
+  \bigletter U
+  \item \spxentry{update\_parameter\_list()}\spxextra{kppc.photonics.PhotDevice method}, 
+		\hyperpage{23}
+
+\end{sphinxtheindex}

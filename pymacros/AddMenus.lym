@@ -16,9 +16,12 @@
  <dsl-interpreter-name/>
  <text>import pya
 from pathlib import Path
-import kppc.settingsdialog
+import kppc.menu
 
 # Main
+
+kppc.menu.set_settings()
+
 iconpath = Path(__file__).parent.parent/"icon_128x128.png"
 app = pya.Application.instance()
 menu = app.main_window().menu()
@@ -26,7 +29,7 @@ menu = app.main_window().menu()
 open_settings = lambda : kppc.settingsdialog.Dialog(pya.Application.instance().main_window())
 kppc_action = pya.Action()
 kppc_action.title = "KLayout Photonic PCells Settings"
-kppc_action.on_triggered = open_settings#kppc.open_settings
+kppc_action.on_triggered = kppc.menu.dialog
 kppc_action.icon = str(iconpath)
 kppc_action.icon_text = "KPPC"
 menu.insert_item("@toolbar.end","KPPC",kppc_action)

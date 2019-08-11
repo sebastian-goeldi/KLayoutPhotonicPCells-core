@@ -695,7 +695,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
             # For the dataprep, do we want to keep the original shapes and child-cells?
         cl1 = clock()
 
-        if kppc.settings.multiprocessing:
+        if kppc.settings.Multithreading.Enabled:
 
             if self.keep:
                 # Yes, so we create a new child cell called 'DataPrep' to create the dataprep shapes in

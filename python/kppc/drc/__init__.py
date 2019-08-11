@@ -94,7 +94,7 @@ if not sl_path:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
             msg.text = 'The compilation was successful'
             msg.Title = 'Compilation'
-            can_multi = find_spec('kppc.drc.cleanermaster') and Path(dir_path / 'cleanermain').exists()
+            can_multi = find_spec('kppc.drc.cleanermaster') and Path(dir_path / 'cleanermain').exists() and kppc.settings.Multithreading.Enabled
             msg.exec_()
             import kppc.drc.slcleaner
         else:
@@ -103,6 +103,7 @@ if not sl_path:
                        'cleanermaster: {}\n Return Code: {}\n}'.format(p1.returncode, p2.returncode, p3.returncode)
             msg.Title = 'Compilation'
             msg.exec_()
+            kppc.logger.error(f'Compilation failed. Return codes: {p1.returncode} , {p2.returncode} {p3.returncode}')
             exit(-1)
     else:
         exit(-1)
@@ -111,11 +112,11 @@ else:
     import kppc.drc.slcleaner
 
 if not can_multi:
-    print("Cannot use multiprocessing, falling back to single thread cleaning")
+    kppc.logger.info("Cannot use multiprocessing, falling back to single thread cleaning")
     kppc.settings.Multithreading.Enabled = False
 else:
-    print("Using the multiprocessing module")
-
+    kppc.logger.info("Using the multiprocessing module")
+    
 if find_spec('kppc.drc.cleanermaster') and Path(cpp_path / 'build/cleanermain').exists():
     import kppc.drc.cleanermaster
 
@@ -206,14 +207,18 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
 
     cm = kppc.drc.cleanermaster.PyCleanerMaster()
     if kppc.settings.Multithreading.Automatic:
-        cs = subprocess.Popen([cpp_path / 'build/cleanermain', ], stdout=subprocess.PIPE,
-                              stderr=subprocess.STDOUT)
+        kppc.logger.info("Automatic Multithreading")
+        cs = subprocess.Popen([cpp_path / 'build/cleanermain', ],
+                              stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     else:
         n = kppc.settings.Multithreading.Threads
         if n < 1:
             n = 1
         elif n > multiprocessing.cpu_count():
+            kppc.logger.warning(f'Trying to intialize with {n} threads. The hardware only supports {multiprocessing.cpu_count()} threads. Settings to hardware maximum')
             n = multiprocessing.cpu_count()
+            kppc.settings.Multithreading._Threads_MAX = n
+        kppc.logger.info(f'Multithreading with {n} Threads')
         cs = subprocess.Popen([cpp_path / 'build/cleanermain', str(n), ],
                               stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT)
@@ -306,17 +311,17 @@ def multiprocessing_clean(cell: 'pya. Cell', cleanrules: list):
                     if kppc.settings.General.Progressbar:
                         processedlayers['{}/{}'.format(ln, ld)] = True
                         text = 'Cleaned Violations in {} of {} Layers. Next expected layer: {}'
-                        text.format(i + 1, count,
-                                    next((x for x in processedlayers.keys() if not processedlayers[x]), None))
+                        text = text.format(i + 1, count,
+                                           next((x for x in processedlayers.keys() if not processedlayers[x]), None))
                         progress.format = text
                         progress.inc()
                     break
 
     except Exception as e:
-        print(e)
+        kppc.logger.error(e)
         traceback.print_exc(file=sys.stdout)
     finally:
-        print("Done. Time passed: {}".format(time.time() - t))
+        kppc.logger.debug("Done. Time passed: {}".format(time.time() - t))
         cs.send_signal(signal.SIGUSR1)
         cs.wait()
         if kppc.settings.General.Progressbar:

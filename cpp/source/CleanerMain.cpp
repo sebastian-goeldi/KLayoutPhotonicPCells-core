@@ -19,15 +19,16 @@
 
 int main(int argc, char* argv[])
 {
-    drclean::CleanerSlave cs;
-    if(argc < 1)
+    drclean::CleanerSlave* cs;
+    if(argc < 2)
     {
-        cs = drclean::CleanerSlave();
-    } else if(argc == 1) {
-        cs = drclean::CleanerSlave(std::stoi(argv[0]));
+        cs = new drclean::CleanerSlave();
+    } else if(argc == 2) {
+        cs = new drclean::CleanerSlave(std::stoi(argv[1]));
     }
     
-    if (!cs.initialized)
+    
+    if (!cs->initialized)
     {
         return -1;
     }
@@ -37,11 +38,12 @@ int main(int argc, char* argv[])
 
     while(!signalHandler.isSignalSet())
     {
-        cs.clean();
+        cs->clean();
     }
 
-    cs.join_threads();
-
+//     Cleanup
+    cs->join_threads();
+    delete cs;
 
     return 0;
 }
