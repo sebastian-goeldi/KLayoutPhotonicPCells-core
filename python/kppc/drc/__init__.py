@@ -55,8 +55,7 @@ from importlib.util import find_spec
 dir_path = Path(__file__).parent
 cpp_path = dir_path.parent.parent.parent / "cpp"
 sl_path = find_spec('kppc.drc.slcleaner')
-can_multi = find_spec('kppc.drc.cleanermaster') and Path(
-    cpp_path / 'build/cleanermain').exists() and kppc.settings.Multithreading.Enabled
+can_multi = find_spec('kppc.drc.cleanermaster') and Path(cpp_path / 'build/cleanermain').exists() and kppc.settings.Multithreading.Enabled
 
 # Check if C++ cleaner is compiled
 

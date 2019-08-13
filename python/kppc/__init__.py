@@ -8,12 +8,15 @@ class JSONObject:
     def __init__(self, dic):
         vars(self).update(dic)
 
-
 settings_path = Path(__file__).resolve().parent.parent.parent / "settings.json"
 defaultsettings_path = Path(__file__).resolve().parent.parent.parent / "default-settings.json"
 
-with open(settings_path, 'r') as infile:
-    settings = json.load(infile, object_hook=JSONObject)
+def load_settings():
+    global settings
+    with open(settings_path, 'r') as infile:
+        settings = json.load(infile, object_hook=JSONObject)
+
+load_settings()
 
 logfile_path = settings_path.parent / "kppc.log"
 logger = logging.getLogger('KPPC')

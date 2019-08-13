@@ -8,17 +8,17 @@
         "_Enabled_DESC": "Multi Threading (KPPC will create its own process which does the cleaning)",
         "Automatic": true,
         "_Automatic_DESC": "Automatically set number of threads to number of CPU cores",
-        "Threads": 32,
+        "Threads": 4,
         "_Threads_DESC": "Number of threads to use if Automatic is disabled",
         "_Threads_MIN": 1,
-        "_Threads_MAX": 32
+        "_Threads_MAX": 4
     },
     "Logging": {
         "Enabled": true,
         "_Enabled_DESC": "Enable Logging to File and Stream (Console)",
         "_StreamLevel_DESC": "Log Level of Stream (Console)",
         "StreamLevel": [
-            2,
+            3,
             "DEBUG",
             "INFO",
             "WARNING",
@@ -27,7 +27,7 @@
         ],
         "_LogfileLevel_DESC": "Log Level for File Logging",
         "LogfileLevel": [
-            0,
+            2,
             "DEBUG",
             "INFO",
             "WARNING",

@@ -17,6 +17,7 @@
  <text>import pya
 from pathlib import Path
 import kppc.menu
+import kppc
 
 # Main
 

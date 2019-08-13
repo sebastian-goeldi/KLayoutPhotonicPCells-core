@@ -8,7 +8,7 @@
     "_Enabled_DESC": "Multi Threading (KPPC will create its own process which does the cleaning)",
     "Automatic": true,
     "_Automatic_DESC": "Automatically set number of threads to number of CPU cores",
-    "Threads": 32,
+    "Threads": 4,
     "_Threads_DESC": "Number of threads to use if Automatic is disabled",
     "_Threads_MIN": 1,
     "_Threads_MAX": 32
