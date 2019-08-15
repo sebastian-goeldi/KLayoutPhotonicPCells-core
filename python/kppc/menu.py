@@ -159,6 +159,8 @@ class Dialog(pya.QDialog):
         
     def recompile(self,checked):
     
+        prog = pya.RelativeProgress("Compiling Files 0/0",3)
+    
         dir_path = Path(__file__).parent / "drc"
         cpp_path = dir_path.parent.parent.parent / "cpp"
     
@@ -177,9 +179,16 @@ class Dialog(pya.QDialog):
              '-isystem',
              '/usr/include/boost/', '-lboost_system', '-pthread', '-lboost_thread', '-lrt'), stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT, cwd=src_dir)
+        pya.Application.instance().process_events()
         p1.wait()
+        prog.inc()
+        prog.format = "Compiling Files 1/3"
         p2.wait()
+        prog.inc()
+        prog.format = "Compiling Files 2/3"
         p3.wait()
+        prog.inc()
+        prog.format = "Compiling Files 3/3"
         if p1.returncode == 0 and p2.returncode == 0 and p3.returncode == 0:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
             msg.text = 'The compilation was successful'

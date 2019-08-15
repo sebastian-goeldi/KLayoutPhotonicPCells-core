@@ -16,12 +16,12 @@ help:
 
 pdf:
 	@make latexpdf
-	@cp _build/latex/*.pdf ../docs
-
+	@cp -a _build/latex/*.pdf ../docs
+	@make clean
 github:
 	@make html
 	@cp -a _build/html/. ../docs
-
+	@make clean
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
