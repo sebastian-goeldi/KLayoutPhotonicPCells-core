@@ -58,6 +58,7 @@ def add(layout, cell, slayers, dlayers, ex_amount, layers, out_cell=None):
     if ex_amount > 0:
         # increase the size of the region
         region.size(am)
+        region.merge()
     for layer in dstlayers:
         layer_n, layer_d = layers[layer]
         l = layout.layer(layer_n, layer_d)
@@ -91,14 +92,16 @@ def sub(layout, cell, slayers, dlayers, ex_amount, layers, out_cell=None):
             shapeit = layout.begin_shapes(cell, layer)
             region.insert(shapeit)
     region.merge()
-    if ex_amount > 0:
+    if ex_amount != 0:
         region.size(am)
+        region.merge()
     for layer in dstlayers:
         sub_region = pya.Region()
         layer_n, layer_d = layers[layer]
         l = layout.layer(layer_n, layer_d)
         shapeit = o_cell.begin_shapes_rec(l)
         sub_region.insert(shapeit)
+        sub_region.merge()
         o_cell.shapes(l).clear()
         o_cell.shapes(l).insert(sub_region - region)
 

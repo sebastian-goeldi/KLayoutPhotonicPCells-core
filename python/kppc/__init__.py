@@ -11,12 +11,29 @@ class JSONObject:
 settings_path = Path(__file__).resolve().parent.parent.parent / "settings.json"
 defaultsettings_path = Path(__file__).resolve().parent.parent.parent / "default-settings.json"
 
-def load_settings():
-    global settings
-    with open(settings_path, 'r') as infile:
-        settings = json.load(infile, object_hook=JSONObject)
+def load_settings(path):
+    obj = None
+    with open(path, 'r') as infile:
+        obj = json.load(infile, object_hook=JSONObject)
+        return obj
 
-load_settings()
+default = load_settings(defaultsettings_path)
+settings = load_settings(settings_path)
+if settings is None:
+    settings = default
+else:
+    ask = False
+    if settings.General.SettingsVersion is None:
+        ask = True
+    curversion = [int(x) for x in settings.General.SettingsVersion.split('.')]
+    defversion = [int(x) for x in default.General.SettingsVersion.split('.')]
+    for i,j in zip(curversion,defversion):
+        if j > i:
+            ask = True
+    if ask:
+        pass
+        #ask for replacement of option
+
 
 logfile_path = settings_path.parent / "kppc.log"
 logger = logging.getLogger('KPPC')

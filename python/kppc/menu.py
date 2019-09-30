@@ -49,24 +49,24 @@ class Dialog(pya.QDialog):
         vboxbuttons.addStretch()
         
         for i, cat in enumerate(categorydict.keys()):
-
             groupbox = pya.QGroupBox(cat, self)
             self.optionvbox.addWidget(groupbox)
             vb = pya.QVBoxLayout(groupbox)
             self.settings[cat] = {}
 
             settingdict = vars(categorydict[cat])
-
             for j, setting in enumerate(settingdict):
+                
                 if setting[0] == '_':
                     continue
+            
                 opt = settingdict[setting]
-                
                 desc_str = f"_{setting}_DESC"
                 if desc_str in settingdict:
                     desc = settingdict[desc_str]
                 else:
                     desc = setting
+                    
                 
                 if isinstance(opt, bool):
                     v = pya.QCheckBox(desc, self)
@@ -122,11 +122,16 @@ class Dialog(pya.QDialog):
 
     def save(self, checked):
         for c in self.settings.keys():
+            if c[0] == '_':
+                continue
             v = self.settings[c]
             for s in v.keys():
                 setattr(getattr(kppc.settings, c), s, self.settings[c][s][1](self.settings[c][s][0]))
         sdict = {}
         for k in kppc.settings.__dict__.keys():
+            if k[0] == '_':
+                sdict[k] = kppc.settings.__dict__[k]
+                continue
             sdict[k] = {}
             for kk in kppc.settings.__dict__[k].__dict__.keys():
                 sdict[k][kk] = kppc.settings.__dict__[k].__dict__[kk]
@@ -150,16 +155,18 @@ class Dialog(pya.QDialog):
         res = msg.exec_()
         if res == pya.QMessageBox.Ok.to_i():
             shutil.copy(df,sf)
-            kppc.load_settings()
+            kppc.load_settings(df)
             importlib.reload(kppc.photonics)
             importlib.reload(kppc.drc)
+            importlib.reload(kppc)
             self.accept()
         else:
             self.reject()
         
     def recompile(self,checked):
     
-        prog = pya.RelativeProgress("Compiling Files 0/0",3)
+        self.hide()
+        prog = pya.RelativeProgress("Compiling Modules",3)
     
         dir_path = Path(__file__).parent / "drc"
         cpp_path = dir_path.parent.parent.parent / "cpp"
@@ -179,16 +186,18 @@ class Dialog(pya.QDialog):
              '-isystem',
              '/usr/include/boost/', '-lboost_system', '-pthread', '-lboost_thread', '-lrt'), stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT, cwd=src_dir)
+        procs = [p1,p2,p3]
         pya.Application.instance().process_events()
-        p1.wait()
-        prog.inc()
-        prog.format = "Compiling Files 1/3"
-        p2.wait()
-        prog.inc()
-        prog.format = "Compiling Files 2/3"
-        p3.wait()
-        prog.inc()
-        prog.format = "Compiling Files 3/3"
+        
+        nfinished = 0
+        
+        while nfinished < 3:
+            nfinished = 0
+            for i in procs:
+                if not (i.poll() is None):
+                    nfinished += 1
+            prog.value = nfinished
+        
         if p1.returncode == 0 and p2.returncode == 0 and p3.returncode == 0:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
             msg.text = 'The compilation was successful'
@@ -198,7 +207,7 @@ class Dialog(pya.QDialog):
         else:
             msg = pya.QMessageBox(pya.Application.instance().main_window())
             msg.text = 'The compilation failed. Please compile manually\n Return Code slcleaner: {}\n Return Code ' \
-                       'cleanermaster: {}\n Return Code: {}\n}'.format(p1.returncode, p2.returncode, p3.returncode)
+                       'cleanermaster: {}\n Return Code: {}\n'.format(p1.returncode, p2.returncode, p3.returncode)
             msg.Title = 'Compilation'
             msg.exec_()
             kppc.logger.error(f'Compilation failed. Return codes: {p1.returncode} , {p2.returncode} {p3.returncode}')
