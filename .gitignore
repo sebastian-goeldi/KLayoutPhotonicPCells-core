@@ -138,3 +138,6 @@ dmypy.json
 # Log Files
 *.log
 *.log.*
+
+#settingfile
+settings.json

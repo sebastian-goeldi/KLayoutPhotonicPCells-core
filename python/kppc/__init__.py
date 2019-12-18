@@ -13,9 +13,12 @@ defaultsettings_path = Path(__file__).resolve().parent.parent.parent / "default-
 
 def load_settings(path):
     obj = None
-    with open(path, 'r') as infile:
+    try:
+      with open(path, 'r') as infile:
         obj = json.load(infile, object_hook=JSONObject)
         return obj
+    except:
+      return None
 
 default = load_settings(defaultsettings_path)
 settings = load_settings(settings_path)

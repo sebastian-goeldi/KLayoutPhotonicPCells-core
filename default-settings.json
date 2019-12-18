@@ -3,7 +3,9 @@
         "Progressbar": true,
         "_Progressbar_DESC": "Show progressbars while calculating",
         "SettingsVersion": "1.0.6",
-        "_Settings_DESC": "Version. Detect if newer default settings are available"
+        "_Settings_DESC": "Version. Detect if newer default settings are available",
+        "Debug": false,
+        "_Debug_DESC": "Show debug information in cells, such as the portlist and transformations"
     },
     "Multithreading": {
         "Enabled": true,

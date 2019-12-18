@@ -41,6 +41,7 @@ import kppc.drc
 import kppc.photonics.dataprep
 from time import clock
 import kppc
+import re
 
 
 # Class with port information.
@@ -58,11 +59,12 @@ class PortCreation:
     :param length: Port length [microns]
     :type length: float
     """
-    def __init__(self,x, y, rot, length):
+    def __init__(self,x, y, rot, length, name=''):
         self.x = x
         self.y = y
         self.rot = rot
         self.length = length
+        self.name = name
 
 
 def is_named_tuple_instance(x):
@@ -177,9 +179,9 @@ class PhotDevice(pya.PCellDeclarationHelper):
         the class.
         """
         pya.PCellDeclarationHelper.__init__(self)
-        self.param("portlist", self.TypeString, "Portlist", hidden=True, default="", readonly=True)
-        self.param("transformations", self.TypeString, "Child PCell Transformations", hidden=True, default="",
-                   readonly=True)
+        self.param("portlist", self.TypeString, "Portlist", hidden=not kppc.settings.General.Debug, default="", readonly=not kppc.settings.General.Debug)
+        self.param("transformations", self.TypeString, "Child PCell Transformations", hidden=not kppc.settings.General.Debug, default="",
+                   readonly=not kppc.settings.General.Debug)
         # Disable the option to flatten cell for the moment
         self.param("keep", self.TypeBoolean, "Keep original Cell?", hidden=True, default=True, readonly=True)
         self.param('dataprep', self.TypeBoolean, "Data Prep?", hidden=False, default=False, readonly=False)
@@ -234,7 +236,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
         """
         shape.transform(pya.ICplxTrans.M90)
 
-    def create_port(self, x: float, y: float, rot: int = 0, length: int = 0):
+    def create_port(self, x: float, y: float, rot: int = 0, length: int = 0, name: str = None):
         """Creates a Port at the specified coordinates.
 
         This function will be used when a port is created through the PortCreation tuple.
@@ -247,10 +249,21 @@ class PhotDevice(pya.PCellDeclarationHelper):
         # Append a serialized transformation to the code.
         if self.portlist != "":
             self.portlist += ";"
-        trans = pya.CplxTrans(1, rot, False, x / self.layout.dbu, y / self.layout.dbu)
+        trans = pya.CplxTrans(1, int(rot), False, int(x / self.layout.dbu), int(y / self.layout.dbu))
         self.portlist += trans.to_s()
         self.portlist += ":"
         self.portlist += str(int(length / self.layout.dbu))
+        if name:
+          self.portlist += f":name={name}"
+        else:
+          ori = 'E'
+          if 45<=rot<135:
+            ori = 'N'
+          elif 125<=rot<225:
+            ori = 'W'
+          elif 215<=rot<315:
+            ori = 'S'
+          self.portlist += f":name={ori}{{n}}"
 
     def clear_ports(self):
         """Clears self.portlist and by that delete all ports. This is used when updating the Ports
@@ -268,8 +281,8 @@ class PhotDevice(pya.PCellDeclarationHelper):
         :param portlist2: portlist of instance2
         :param port2: port number of instance2
         """
-        p1, l1 = portlist1.split(';')[port1].split(':')
-        p2, l2 = portlist2.split(';')[port2].split(':')
+        p1, l1 = portlist1.split(';')[port1].split(':')[:2]
+        p2, l2 = portlist2.split(';')[port2].split(':')[:2]
 
         if l1 != l2:
             return -1
@@ -427,22 +440,60 @@ class PhotDevice(pya.PCellDeclarationHelper):
                     continue
                 ports = [pya.ICplxTrans.from_s(k.split(':')[0]) for k in inst.params_mod[0].split(';')]
                 lengths = [k.split(':')[1] for k in inst.params_mod[0].split(';')]
-                for q, r in zip(ports, lengths):
-                    porttrans.append([trans[i] * q, r])
+                names = [k.split(':')[2] for k in inst.params_mod[0].split(';')]
+                for q,w,n in zip(ports, lengths, names):
+                    porttrans.append([trans[i] * q, w, n])
         if self.portlist != '':
             # Add manually created Ports
             porttrans.extend(
-                [[pya.ICplxTrans.from_s(p.split(':')[0]), p.split(':')[1]] for p in self.portlist.split(';')])
+                [[pya.ICplxTrans.from_s(p.split(':')[0]), p.split(':')[1], p.split(':')[2]] for p in self.portlist.split(';')])
 
         porttrans = sorted(porttrans, key=lambda x: (x[0].disp.x, x[0].disp.y))
         # Add the calculated ports as own ports
         self.portlist = ''
         M180 = pya.ICplxTrans(1, 180, True, 0, 0)
+        nn,ne,ns,nw = 0,0,0,0
+        
+        def regrep(match,nn,ne,ns,nw):
+          if match.group(1) == 'N':
+            ret = f'{match.group(1)}{nn}'
+            nn += 1
+            return ret
+          if match.group(1) == 'E':
+            ret = f'{match.group(1)}{ne}'
+            ne += 1
+            return ret
+          if match.group(1) == 'S':
+            ret = f'{match.group(1)}{ns}'
+            ns += 1
+            return ret
+          if match.group(1) == 'W':
+            ret = f'{match.group(1)}{nw}'
+            nw += 1
+            return ret
+        
         for p in porttrans:
             if not ([p[0] * pya.ICplxTrans.R180, p[1]] in porttrans or [p[0] * M180, p[1]] in porttrans):
                 if self.portlist != '':
                     self.portlist += ';'
-                self.portlist += str(p[0]) + ':' + p[1]
+                rawname = p[2]
+                regex = r"([NSEW])(?:\d+|{n})$"
+                name = re.sub(regex, lambda x: regrep(x,nn,ne,ns,nw), rawname)
+                
+                if name == rawname:                              
+                  if 'N{n}' in rawname:
+                    name = rawname.replace('{n}',str(nn))
+                    nn += 1
+                  elif 'E{n}' in rawname:
+                    name = rawname.replace('{n}',str(ne))
+                    ne += 1
+                  elif 'W{n}' in rawname:
+                    name = rawname.replace('{n}',str(nw))
+                    nw += 1
+                  elif 'S{n}' in rawname:
+                    name = rawname.replace('{n}',str(ns))
+                    ns += 1
+                self.portlist += str(p[0]) + ':' + p[1] + ':' +  name
 
     def get_transformations(self):
         """Convert transformation strings back to pya.ICplxTrans objects
@@ -558,7 +609,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
                 instance_id += 1
                 instances.append(inst_port)
             elif isinstance(inst_port, PortCreation):
-                self.create_port(inst_port.x, inst_port.y, inst_port.rot, inst_port.length)
+                self.create_port(inst_port.x, inst_port.y, inst_port.rot, inst_port.length, name=inst_port.name)
             elif type(inst_port) is list:
                 for iinst_port in inst_port:
                     if isinstance(iinst_port, InstanceHolder):
@@ -566,7 +617,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
                         instance_id += 1
                         instances.append(iinst_port)
                     elif isinstance(iinst_port, PortCreation):
-                        self.create_port(iinst_port.x, iinst_port.y, iinst_port.rot, iinst_port.length)
+                        self.create_port(iinst_port.x, iinst_port.y, iinst_port.rot, iinst_port.length, name=iinst_port.name)
             else:
                 raise ValueError(
                     "Expected type instances (InstanceHolder), ports (PortCreation) or a list of instances,"
@@ -578,8 +629,8 @@ class PhotDevice(pya.PCellDeclarationHelper):
                 self.transformations += ';'
             if inst.movement:
                 # Adjust movement for database
-                inst.movement.disp = pya.Vector(inst.movement.disp.x / self.layout.dbu,
-                                                inst.movement.disp.y / self.layout.dbu)
+                inst.movement.disp = pya.Vector(int(inst.movement.disp.x / self.layout.dbu),
+                                                int(inst.movement.disp.y / self.layout.dbu))
                 self.transformations += inst.movement.to_s()
                 inst.placed = True
             elif inst.connection:
@@ -685,8 +736,14 @@ class PhotDevice(pya.PCellDeclarationHelper):
                         valign = 2
                     else:
                         halign = 2
-
-                    text = pya.Text("Port {}".format(i), trans)
+                    
+                    
+                    name = [n.lstrip('name=') for n in p.split(':') if 'name=' in n][0]
+                    
+                    if name:
+                      text = pya.Text(name, trans)
+                    else:
+                      text = pya.Text(f'Port {i}',trans)
 
                     text.halign = halign
                     text.valign = valign
@@ -724,12 +781,12 @@ class PhotDevice(pya.PCellDeclarationHelper):
 
                     if self.drc_clean:
                         rules = self.clean_rules
-                        # Convert Micrometers to database units
+                        # vonvert Micrometers to database units
                         for cr in rules:
                             cr[1] = int(cr[1] / self.layout.dbu)
                             cr[2] = int(cr[2] / self.layout.dbu)
                         kppc.drc.multiprocessing_clean(temp_cell, rules)
-                    # Delete all child cells
+                    # felete all child cells
                     self.cell.clear()
                     self.cell.insert(pya.CellInstArray(temp_cell.cell_index(), pya.Trans.R0))
                     self.cell.flatten(True)
@@ -737,7 +794,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
         else:
 
             if self.keep:
-                # Yes, so we create a new child cell called 'DataPrep' to create the dataprep shapes in
+                # create a new child cell called 'DataPrep' to create the dataprep shapes in
                 if self.dataprep:
                     prep_cell = self.layout.create_cell('DataPrep')
                     prep_cell._create()
@@ -785,3 +842,5 @@ class PhotDevice(pya.PCellDeclarationHelper):
         :rtype: None
         """
         return
+    
+      
