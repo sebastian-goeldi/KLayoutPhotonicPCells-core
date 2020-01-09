@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>drc Module &#8212; KLayout Photonic PCells 1.0.6 documentation</title>
+    <title>drc Module &#8212; KLayout Photonic PCells 1.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="../modules.html" title="Code Documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../modules.html" accesskey="U">Code Documentation</a> &#187;</li> 
       </ul>
     </div>
@@ -136,8 +136,8 @@ This function will clear the output layers of any shapes and insert a cleaned re
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cell</strong> (<em>pya.Cell</em>) – pointer to the cell that needs to be cleaned</p></li>
-<li><p><strong>cleanrules</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
+<li><p><strong>cell</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cell</span></code>) – pointer to the cell that needs to be cleaned</p></li>
+<li><p><strong>cleanrules</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
 purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], …]</p></li>
 </ul>
 </dd>
@@ -154,8 +154,8 @@ which will calculate in parallel with multiple threads.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cell</strong> (<em>pya.Cell</em>) – pointer to the cell that needs to be cleaned</p></li>
-<li><p><strong>cleanrules</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
+<li><p><strong>cell</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cell</span></code>) – pointer to the cell that needs to be cleaned</p></li>
+<li><p><strong>cleanrules</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list with the layerpurposepairs, violationwidths and violationspaces in the form [[[layer,
 purpose], violationwidth, violationspace], [[layer2, purpose2], violationwidth2, violationspace2], …]</p></li>
 </ul>
 </dd>
@@ -184,10 +184,10 @@ Klayout already does this nicely.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – x position of p1 of the edge</p></li>
-<li><p><strong>x2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – y position of p1 of the edge</p></li>
-<li><p><strong>y1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – x position of p2 of the edge</p></li>
-<li><p><strong>y2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – y position of p2 of the edge</p></li>
+<li><p><strong>x1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – x position of p1 of the edge</p></li>
+<li><p><strong>x2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – y position of p1 of the edge</p></li>
+<li><p><strong>y1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – x position of p2 of the edge</p></li>
+<li><p><strong>y2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – y position of p2 of the edge</p></li>
 </ul>
 </dd>
 </dl>
@@ -227,10 +227,10 @@ Klayout already does this nicely.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – left bound of box</p></li>
-<li><p><strong>x2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – right bound of box</p></li>
-<li><p><strong>y1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – bottom bound of box</p></li>
-<li><p><strong>y2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – top bound of box</p></li>
+<li><p><strong>x1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – left bound of box</p></li>
+<li><p><strong>x2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – right bound of box</p></li>
+<li><p><strong>y1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – bottom bound of box</p></li>
+<li><p><strong>y2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – top bound of box</p></li>
 <li><p><strong>viospace</strong> (<em>minimum space violation in database units</em>) – minimum space violation in database units</p></li>
 <li><p><strong>viowidth</strong> (<em>minimum width violation in database units</em>) – minimum width violation in database units</p></li>
 </ul>
@@ -244,7 +244,7 @@ Klayout already does this nicely.</p>
 <dd><p>Get the edge data back to python from the C++ object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – index of the row to retrieve data from</p>
+<dd class="field-odd"><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – index of the row to retrieve data from</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>numpy array of the edges</p>
@@ -258,7 +258,7 @@ Klayout already does this nicely.</p>
 <dd><p>Get the type of edges in that row.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – index of the row</p>
+<dd class="field-odd"><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – index of the row</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>numpy array of types of edges (0 for upwards facing edge, 1 for downwards)</p>
@@ -287,8 +287,8 @@ Klayout already does this nicely.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>beg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – beginning of the rows/columns that should be printed</p></li>
-<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – ending of the rows/columns that should be printed</p></li>
+<li><p><strong>beg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – beginning of the rows/columns that should be printed</p></li>
+<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – ending of the rows/columns that should be printed</p></li>
 </ul>
 </dd>
 </dl>
@@ -303,7 +303,7 @@ Klayout already does this nicely.</p>
 <dd class="field-odd"><p>Size of the array of vectors.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -366,7 +366,7 @@ of the polygon edges.</p>
 <dd class="field-odd"><p>false if the buffer is empty and the data has been read by the slave.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -512,13 +512,13 @@ The constructor opens the shared memory and initializes the allocators for the s
         <li class="right" >
           <a href="../modules.html" title="Code Documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../modules.html" >Code Documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Sebastian Goeldi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>

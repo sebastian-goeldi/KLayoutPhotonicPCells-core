@@ -71,14 +71,25 @@ if not sl_path:
     msg.exec_()
 
     if msg.clickedButton() == compile_button:
+        
+        if sys.platform == 'linux':
+            rootfolder = '/usr/bin/'
+        elif sys.platform == 'Windows':
+            rootfolder = 'C:\\Program Files (x64)\\'
+        else:
+            RuntimeError(f'Platform {sys.platform} is not currently supported for automatic compilation')
+    
+        executable = pya.FileDialog.ask_open_file_name("Choose the Python executable to compile against", rootfolder, "All files (*)")
+        
+        
         src_dir = cpp_path / "source"
         print('Trying to Compile')
 
         (cpp_path / 'build').mkdir(parents=True, exist_ok=True)
 
-        p1 = subprocess.Popen(['python3', 'setup.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
+        p1 = subprocess.Popen([executable, 'setup.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, cwd=src_dir)
-        p2 = subprocess.Popen(['python3', 'setup_cc.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
+        p2 = subprocess.Popen([executable, 'setup_cc.py', 'build_ext', '-b', dir_path], stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, cwd=src_dir)
         p3 = subprocess.Popen(
             ('g++', cpp_path / 'source/CleanerMain.cpp', cpp_path / 'source/CleanerSlave.cpp',

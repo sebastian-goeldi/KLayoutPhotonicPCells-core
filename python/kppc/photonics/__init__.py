@@ -39,7 +39,6 @@ The main functionality for this module is in the class :class:`~kppc.photonics.P
 import pya
 import kppc.drc
 import kppc.photonics.dataprep
-from time import clock
 import kppc
 import re
 
@@ -750,8 +749,7 @@ class PhotDevice(pya.PCellDeclarationHelper):
 
                     self.cell.shapes(self._layers[0]).insert(text)
             # For the dataprep, do we want to keep the original shapes and child-cells?
-        cl1 = clock()
-
+        
         if kppc.settings.Multithreading.Enabled:
 
             if self.keep:

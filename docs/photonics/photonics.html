@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>photonics Module &#8212; KLayout Photonic PCells 1.0.6 documentation</title>
+    <title>photonics Module &#8212; KLayout Photonic PCells 1.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="../drc/drc.html" title="drc Module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../modules.html" accesskey="U">Code Documentation</a> &#187;</li> 
       </ul>
     </div>
@@ -102,7 +102,7 @@ reopen KLayout.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To reload a module during runtime use the following commands in the KLayout python console (not guaranteed to work in all cases):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">importlib</span> <span class="k">import</span> <span class="n">reload</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">importlib</span> <span class="k">import</span> <span class="n">reload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">reload</span><span class="p">(</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
@@ -132,7 +132,7 @@ aren’t declared, a runtime error will occur.</p>
 <dl class="class">
 <dt id="kppc.photonics.InstanceHolder">
 <em class="property">class </em><code class="sig-prename descclassname">kppc.photonics.</code><code class="sig-name descname">InstanceHolder</code><span class="sig-paren">(</span><em class="sig-param">cell_name</em>, <em class="sig-param">lib</em>, <em class="sig-param">pcell_decl</em>, <em class="sig-param">params=None</em>, <em class="sig-param">params_mod=None</em>, <em class="sig-param">id=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kppc/photonics.html#InstanceHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.InstanceHolder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class to keep track and hold the information of a pcell instance. The information will be processed to a PCell in
 <a class="reference internal" href="#kppc.photonics.PhotDevice.produce_impl" title="kppc.photonics.PhotDevice.produce_impl"><code class="xref py py-func docutils literal notranslate"><span class="pre">produce_impl()</span></code></a></p>
 <dl class="method">
@@ -142,11 +142,11 @@ aren’t declared, a runtime error will occur.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – x position where to move</p></li>
-<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – y position where to move</p></li>
-<li><p><strong>rot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Rotation of the object in degrees</p></li>
-<li><p><strong>mirrx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Mirror at x-axis if True</p></li>
-<li><p><strong>mag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Magnification of the Cell. This feature is not tested well.</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – x position where to move</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – y position where to move</p></li>
+<li><p><strong>rot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Rotation of the object in degrees</p></li>
+<li><p><strong>mirrx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Mirror at x-axis if True</p></li>
+<li><p><strong>mag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Magnification of the Cell. This feature is not tested well.</p></li>
 </ul>
 </dd>
 </dl>
@@ -159,7 +159,7 @@ aren’t declared, a runtime error will occur.</p>
 Available ports can be seen if such an object is instantiated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the port</p>
+<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the port</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>self, port</p>
@@ -174,8 +174,8 @@ Available ports can be seen if such an object is instantiated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – port of this instance</p></li>
-<li><p><strong>inst_holder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – Tuple of the the reference to the other instance and the port to connect to.
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – port of this instance</p></li>
+<li><p><strong>inst_holder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – Tuple of the the reference to the other instance and the port to connect to.
 This is a tuple returned from &lt;InstanceHolder object&gt;.port(&lt;portnumber&gt;).</p></li>
 </ul>
 </dd>
@@ -192,20 +192,20 @@ This is a tuple returned from &lt;InstanceHolder object&gt;.port(&lt;portnumber&
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>layermap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – The layermap dictionary. This value has to be written by a child class. If undefined this
+<li><p><strong>layermap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – The layermap dictionary. This value has to be written by a child class. If undefined this
 class won’t work and crash.</p></li>
-<li><p><strong>dataprep_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – String with the path to the file containing the dataprep instructions.
+<li><p><strong>dataprep_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – String with the path to the file containing the dataprep instructions.
 If left empty, dataprep will do nothing.</p></li>
-<li><p><strong>clean_rules</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – String with the path to the file containing the DR-Cleaning rules.
+<li><p><strong>clean_rules</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – String with the path to the file containing the DR-Cleaning rules.
 If left empty, DR-Cleaning will do nothing. If the cells are built similar to the FreePDK45-SampleCells example,
 DR-Cleaning will not work without dataprep, or will be without any effect.</p></li>
-<li><p><strong>keep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Parameter created during <code class="xref py py-func docutils literal notranslate"><span class="pre">__init__()</span></code> via pya.DeclarationHelper. If set to True in the PCell,
+<li><p><strong>keep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Parameter created during <code class="xref py py-func docutils literal notranslate"><span class="pre">__init__()</span></code> via pya.DeclarationHelper. If set to True in the PCell,
 all child-cells will be preserved at the end. If set to False only the Dataprep Sub-Cell will be preserved.</p></li>
-<li><p><a class="reference internal" href="#module-kppc.photonics.dataprep" title="kppc.photonics.dataprep"><strong>dataprep</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="#kppc.photonics.dataprep.dataprep" title="kppc.photonics.dataprep.dataprep"><code class="xref py py-func docutils literal notranslate"><span class="pre">kppc.photonics.dataprep.dataprep()</span></code></a> will be performed on the cell. The variable
+<li><p><a class="reference internal" href="#module-kppc.photonics.dataprep" title="kppc.photonics.dataprep"><strong>dataprep</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="#kppc.photonics.dataprep.dataprep" title="kppc.photonics.dataprep.dataprep"><code class="xref py py-func docutils literal notranslate"><span class="pre">kppc.photonics.dataprep.dataprep()</span></code></a> will be performed on the cell. The variable
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">dataprep_config</span></code> holds the path to the instructions for dataprep.</p></li>
-<li><p><a class="reference internal" href="../drc/cleaner.html#kppc.drc.slcleaner.PyDrcSl.clean" title="kppc.drc.slcleaner.PyDrcSl.clean"><strong>clean</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="../drc/drc.html#kppc.drc.clean" title="kppc.drc.clean"><code class="xref py py-func docutils literal notranslate"><span class="pre">kppc.drc.clean()</span></code></a> will be performed on the cell. Rules for the DR-Cleaning
+<li><p><a class="reference internal" href="../drc/cleaner.html#kppc.drc.slcleaner.PyDrcSl.clean" title="kppc.drc.slcleaner.PyDrcSl.clean"><strong>clean</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If this flag is set, <a class="reference internal" href="../drc/drc.html#kppc.drc.clean" title="kppc.drc.clean"><code class="xref py py-func docutils literal notranslate"><span class="pre">kppc.drc.clean()</span></code></a> will be performed on the cell. Rules for the DR-Cleaning
 are pulled from <code class="xref py py-attr docutils literal notranslate"><span class="pre">clean_rules</span></code>.</p></li>
-<li><p><strong>top</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Hidden parameter that indicates whether this cell is a top_cell. Default is yes. When an instance is
+<li><p><strong>top</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Hidden parameter that indicates whether this cell is a top_cell. Default is yes. When an instance is
 added through <a class="reference internal" href="#kppc.photonics.PhotDevice.add_pcell_variant" title="kppc.photonics.PhotDevice.add_pcell_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_pcell_variant()</span></code></a> these cells will not be set to top_cells as they are instantiated from
 another cell.</p></li>
 <li><p><strong>only_top_ports</strong> – GUI parameter. If set to true, only ports of the top most hierarchy level (top_cell) will be
@@ -220,11 +220,11 @@ annotated by text.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name of the variable</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name in the pcell window</p></li>
-<li><p><strong>layer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – layernumber</p></li>
-<li><p><strong>datatype</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – layerdatatype</p></li>
-<li><p><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – </p></li>
+<li><p><strong>var_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name of the variable</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name in the pcell window</p></li>
+<li><p><strong>layer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – layernumber</p></li>
+<li><p><strong>datatype</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – layerdatatype</p></li>
+<li><p><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – </p></li>
 <li><p><strong>hidden</strong> – hide in the GUI</p></li>
 </ul>
 </dd>
@@ -240,7 +240,7 @@ annotated by text.</p></li>
 <dd><p>Create the PCell conform dictionary from a parameter list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – Dictionary of parameters</p>
+<dd class="field-odd"><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – Dictionary of parameters</p>
 </dd>
 </dl>
 </dd></dl>
@@ -252,8 +252,8 @@ annotated by text.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – parameter list from which to create pcells</p></li>
-<li><p><strong>number</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of instances to create</p></li>
+<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – parameter list from which to create pcells</p></li>
+<li><p><strong>number</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of instances to create</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -268,7 +268,7 @@ annotated by text.</p></li>
 <dd><p>Creates list of instances of PCells. These are the effective Klayout cell instances.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>instance_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list of <a class="reference internal" href="#kppc.photonics.InstanceHolder" title="kppc.photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.InstanceHolder</span></code></a></p>
+<dd class="field-odd"><p><strong>instance_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list of <a class="reference internal" href="#kppc.photonics.InstanceHolder" title="kppc.photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.InstanceHolder</span></code></a></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>list of instantiated pya.CellInstArray</p>
@@ -282,7 +282,7 @@ annotated by text.</p></li>
 <dd><p>Calculates port locations in the cell layout. This is to propagate the port locations upwards</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>instances</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list containing <a class="reference internal" href="#kppc.photonics.InstanceHolder" title="kppc.photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.InstanceHolder</span></code></a></p>
+<dd class="field-odd"><p><strong>instances</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list containing <a class="reference internal" href="#kppc.photonics.InstanceHolder" title="kppc.photonics.InstanceHolder"><code class="xref py py-class docutils literal notranslate"><span class="pre">kppc.photonics.InstanceHolder</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -316,16 +316,16 @@ the majority of computation time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pos1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of instance1</p></li>
-<li><p><strong>portlist1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – portlist of instance1</p></li>
-<li><p><strong>port1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – port number of instance1</p></li>
-<li><p><strong>pos2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of instance2</p></li>
-<li><p><strong>portlist2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – portlist of instance2</p></li>
-<li><p><strong>port2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – port number of instance2</p></li>
+<li><p><strong>pos1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of instance1</p></li>
+<li><p><strong>portlist1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – portlist of instance1</p></li>
+<li><p><strong>port1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – port number of instance1</p></li>
+<li><p><strong>pos2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of instance2</p></li>
+<li><p><strong>portlist2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – portlist of instance2</p></li>
+<li><p><strong>port2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – port number of instance2</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -339,8 +339,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>port1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – &lt;InstanceHolder instance1&gt;.port(&lt;port1&gt;)</p></li>
-<li><p><strong>port2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – &lt;InstanceHolder instance2&gt;.port(&lt;port2&gt;)</p></li>
+<li><p><strong>port1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – &lt;InstanceHolder instance1&gt;.port(&lt;port1&gt;)</p></li>
+<li><p><strong>port2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – &lt;InstanceHolder instance2&gt;.port(&lt;port2&gt;)</p></li>
 </ul>
 </dd>
 </dl>
@@ -364,9 +364,9 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – The points describing the path [[x1,y1],[x2,y2],…] in microns</p></li>
-<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Path width</p></li>
-<li><p><strong>layer</strong> (<em>pya.LayerInfo</em>) – layer on which the path should be made</p></li>
+<li><p><strong>points</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – The points describing the path [[x1,y1],[x2,y2],…] in microns</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – Path width</p></li>
+<li><p><strong>layer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">LayerInfo</span></code>) – layer on which the path should be made</p></li>
 </ul>
 </dd>
 </dl>
@@ -379,8 +379,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – Points defining the corners of the polygon.</p></li>
-<li><p><strong>layer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – layer_index of the target layer</p></li>
+<li><p><strong>points</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – Points defining the corners of the polygon.</p></li>
+<li><p><strong>layer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – layer_index of the target layer</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -391,16 +391,16 @@ This will apply a transformation to Instance2. There can only be either a transf
 
 <dl class="method">
 <dt id="kppc.photonics.PhotDevice.create_port">
-<code class="sig-name descname">create_port</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">rot=0</em>, <em class="sig-param">length=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kppc/photonics.html#PhotDevice.create_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.create_port" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_port</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">rot=0</em>, <em class="sig-param">length=0</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kppc/photonics.html#PhotDevice.create_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PhotDevice.create_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a Port at the specified coordinates.</p>
 <p>This function will be used when a port is created through the PortCreation tuple.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – x Coordinate in microns</p></li>
-<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – y Coordinate in microns</p></li>
-<li><p><strong>rot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Rotation in degrees</p></li>
-<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – length of the port in microns</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – x Coordinate in microns</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – y Coordinate in microns</p></li>
+<li><p><strong>rot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Rotation in degrees</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – length of the port in microns</p></li>
 </ul>
 </dd>
 </dl>
@@ -413,8 +413,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>libname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the library</p></li>
-<li><p><strong>cellname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the cell</p></li>
+<li><p><strong>libname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the library</p></li>
+<li><p><strong>cellname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the cell</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -429,7 +429,7 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dd><p>Flip a polygon (or any shape) at the x-axis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>shape</strong> (<em>pya.Shape</em>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</p>
+<dd class="field-odd"><p><strong>shape</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -440,7 +440,7 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dd><p>Flip a polygon (or any shape) at the y-axis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>shape</strong> (<em>pya.Shape</em>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</p>
+<dd class="field-odd"><p><strong>shape</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code>) – pya.Shape object (e.g. through photonicpcell.create_polygon obtained)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -453,8 +453,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name of the layer</p></li>
-<li><p><strong>purpose</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – if not empty then layer and purpose are separate</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name of the layer</p></li>
+<li><p><strong>purpose</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – if not empty then layer and purpose are separate</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -481,8 +481,8 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>shape</strong> (<em>pya.Shape</em>) – pya.Shape object</p></li>
-<li><p><strong>layer</strong> (<em>pya.LayerInfo</em>) – layer where to write to</p></li>
+<li><p><strong>shape</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code>) – pya.Shape object</p></li>
+<li><p><strong>layer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">LayerInfo</span></code>) – layer where to write to</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -498,9 +498,9 @@ This will apply a transformation to Instance2. There can only be either a transf
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – id of the InstanceHolder</p></li>
-<li><p><strong>trans</strong> (<em>pya.ICplxTrans</em>) – list of transformations</p></li>
-<li><p><strong>mirror</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – bool whether to mirror the object</p></li>
+<li><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – id of the InstanceHolder</p></li>
+<li><p><strong>trans</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ICplxTrans</span></code>) – list of transformations</p></li>
+<li><p><strong>mirror</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – bool whether to mirror the object</p></li>
 </ul>
 </dd>
 </dl>
@@ -523,8 +523,8 @@ positioning.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the child cell</p></li>
-<li><p><strong>trans</strong> (<em>pya.ICplxTrans</em>) – Transformation object with which to transform the child cell</p></li>
+<li><p><strong>ind</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the child cell</p></li>
+<li><p><strong>trans</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ICplxTrans</span></code>) – Transformation object with which to transform the child cell</p></li>
 </ul>
 </dd>
 </dl>
@@ -536,7 +536,7 @@ positioning.</p>
 <dd><p>To be overwritten by effective PCell if shapes should be desired.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -548,8 +548,8 @@ positioning.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – dict of parameters</p></li>
-<li><p><strong>decl</strong> (<em>pya.PCellDeclaration</em>) – pya.PCellDeclaration reference</p></li>
+<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – dict of parameters</p></li>
+<li><p><strong>decl</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PCellDeclaration</span></code>) – pya.PCellDeclaration reference</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -562,17 +562,17 @@ positioning.</p>
 
 <dl class="class">
 <dt id="kppc.photonics.PortCreation">
-<em class="property">class </em><code class="sig-prename descclassname">kppc.photonics.</code><code class="sig-name descname">PortCreation</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">rot</em>, <em class="sig-param">length</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kppc/photonics.html#PortCreation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PortCreation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">kppc.photonics.</code><code class="sig-name descname">PortCreation</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">rot</em>, <em class="sig-param">length</em>, <em class="sig-param">name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kppc/photonics.html#PortCreation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kppc.photonics.PortCreation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Custom Class similar to a namedtuple</p>
 <p>This will hold informations for creating ports.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – x Coordinate [microns]</p></li>
-<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – y Coordinate [microns]</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – x Coordinate [microns]</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – y Coordinate [microns]</p></li>
 <li><p><strong>rot</strong> – Rotation in degrees</p></li>
-<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Port length [microns]</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Port length [microns]</p></li>
 </ul>
 </dd>
 </dl>
@@ -648,17 +648,17 @@ This allows to test if <cite>x</cite> is a port (PortCreation object) or just a 
 <dd><p>Simple routine to read a .layermap file into a dictionary</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Filename with path</p>
+<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Filename with path</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Dictionary of dictionaries in the form of {layer: {purpose1:(layer_number,purpose_number),
 purpose2:(layer_number1,purpose_number2)},layer2: {…} }</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
 </dd>
 <dt class="field-even">Examples</dt>
-<dd class="field-even"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">kppc.photonics.layermaps</span> <span class="k">as</span> <span class="nn">lm</span>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">kppc.photonics.layermaps</span> <span class="k">as</span> <span class="nn">lm</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lm</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/.klayout/salt/zccmos/FreePDK45_tech/tech/FreePDK45.layermap&#39;</span><span class="p">))</span>
 <span class="go">{&#39;pwell&#39;: {&#39;blockage&#39;: (&#39;109&#39;, &#39;1&#39;), &#39;drawing&#39;: (&#39;109&#39;, &#39;0&#39;)}, ... }</span>
 </pre></div>
@@ -692,13 +692,13 @@ purpose2:(layer_number1,purpose_number2)},layer2: {…} }</p>
         <li class="right" >
           <a href="../drc/drc.html" title="drc Module"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.0.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">KLayout Photonic PCells 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../modules.html" >Code Documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Sebastian Goeldi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>
